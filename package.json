@@ -13,6 +13,7 @@
     "@element-plus/icons-vue": "^1.1.4",
     "axios": "^0.27.2",
     "element-plus": "^2.2.0",
+    "uuid": "^8.3.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.15",
     "vuex": "^4.0.2"
@@ -30,6 +31,7 @@
     "husky": "^8.0.1",
     "lint-staged": "^12.4.1",
     "sass": "^1.51.0",
+    "unplugin-vue-components": "^0.19.5",
     "vite": "^2.9.9",
     "vite-plugin-eslint": "^1.6.0"
   },

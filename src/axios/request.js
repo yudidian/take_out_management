@@ -13,6 +13,10 @@ request.interceptors.request.use(config => {
   //   config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
   // }
   // get请求映射params参数
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.token = token
+  }
   return config
 }, error => {
   Promise.reject(error)

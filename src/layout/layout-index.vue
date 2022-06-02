@@ -9,7 +9,11 @@
         <el-main>
           <RouterView />
         </el-main>
-        <el-footer>Footer</el-footer>
+        <el-footer>
+          <p class="footer">
+            @考拉烘焙坊
+          </p>
+        </el-footer>
       </el-container>
     </el-container>
   </div>
@@ -22,5 +26,13 @@ import HeaderIndex from './header/headerIndex.vue'
 <style scoped lang="scss">
 .el-aside {
   background-color: #343744;
+}
+.footer{
+  text-align: center;
+  color: #8c939d;
+  line-height: 60px;
+}
+.el-container{
+  height: 100vh;
 }
 </style>

@@ -30,12 +30,14 @@
       <span class="el-dropdown-link">
         <el-avatar
           :size="40"
-          src="@/assets/logo.png"
+          src="https://img1.baidu.com/it/u=2029513305,2137933177&fm=253&fmt=auto&app=138&f=JPEG?w=40&h=40"
         />
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item @click="handlerExit">
+            退出
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -49,15 +51,22 @@ import {
   FullScreen,
   Bell
 } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import Breadcrumb from './Breadcrumb-index.vue'
 import { ref } from '@vue/reactivity'
 
+const router = useRouter()
 const store = useStore()
 const getters = store.getters
 const KeyWords = ref('')
 const changeCollapse = () => {
   store.commit('changeCollapse', !getters.isCollapse)
+}
+const handlerExit = () => {
+  localStorage.setItem('token', '')
+  localStorage.setItem('username', '')
+  router.replace('/login')
 }
 </script>
 

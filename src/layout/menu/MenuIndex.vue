@@ -77,7 +77,8 @@ const defineUrl = ref(sessionStorage.getItem('url') || '/')
 }
 .el-menu {
   border: 0;
-  height: calc(100vh - 95px);
+  height: calc(100% - 95px);
+  overflow-y: hidden;
   background-color: #343744;
   .el-menu-item{
     width: 160px;

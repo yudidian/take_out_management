@@ -3,13 +3,14 @@
     <div class="admin-header">
       <el-input
         v-model="keyWords"
-        placeholder="请输入关键字"
+        placeholder="请员工姓名"
         :prefix-icon="Search"
+        @keyup.enter="handlerSearch"
       />
       <el-button
         color="#FFC200"
-        round
         :icon="Plus"
+        @click="$router.push('/admin/add')"
       >
         添加新员工
       </el-button>
@@ -20,35 +21,117 @@
       style="width: 100%"
     >
       <el-table-column
-        prop="date"
-        label="Date"
+        prop="id"
+        label="ID"
         width="180"
       />
       <el-table-column
         prop="name"
-        label="Name"
+        label="员工姓名"
         width="180"
       />
       <el-table-column
-        prop="address"
-        label="Address"
+        prop="username"
+        label="账号"
+        width="180"
       />
+      <el-table-column
+        prop="phone"
+        label="手机号"
+      />
+      <el-table-column
+        prop="sex"
+        label="性别"
+        width="180"
+      />
+      <el-table-column
+        prop="status"
+        label="账号状态"
+      />
+      <el-table-column
+        label="操作"
+      >
+        <template #default="scope">
+          <el-button
+            size="small"
+            @click="handleEdit(scope.row)"
+          >
+            编辑
+          </el-button>
+          <el-button
+            v-if="username === 'admin'"
+            size="small"
+            type="danger"
+            @click="handleStop(scope.row)"
+          >
+            禁用
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="pagination">
       <el-pagination
-        v-model:currentPage="currentPage4"
-        v-model:page-size="pageSize4"
-        :page-sizes="[100, 200, 300, 400]"
-        :small="small"
-        :disabled="disabled"
-        :background="background"
+        v-model:currentPage="currentPage"
+        v-model:page-size="pageSize"
+        :page-sizes="[1, 2, 3, 4]"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="total"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
     </div>
   </div>
+  <el-dialog
+    v-model="dialogFormVisible"
+    title="Shipping address"
+  >
+    <el-form
+      ref="ruleFormRef"
+      :model="form"
+      :rules="rules"
+      label-width="120px"
+      label-position="top"
+    >
+      <el-form-item
+        label="员工姓名"
+        label-width="120px"
+        style="max-width: 360px"
+        prop="name"
+      >
+        <el-input v-model="form.name" />
+      </el-form-item>
+      <el-form-item
+        label="手机号"
+        label-width="120px"
+        style="max-width: 360px"
+        prop="phone"
+      >
+        <el-input v-model="form.phone" />
+      </el-form-item>
+      <el-form-item
+        label="性别"
+        prop="sex"
+      >
+        <el-radio-group v-model="form.sex">
+          <el-radio
+            label="男"
+          />
+          <el-radio
+            label="女"
+          />
+        </el-radio-group>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="submitForm(ruleFormRef)">确定</el-button>
+        <el-button
+          type="primary"
+          @click="dialogFormVisible = false"
+        >取消</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -56,57 +139,130 @@ import {
   Search,
   Plus
 } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-const keyWords = ref('')
-const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  }
-]
-const pageSize4 = ref(100)
-const small = ref(false)
-const background = ref(false)
-const disabled = ref(false)
+import { onMounted, reactive, ref } from 'vue'
+import { employeeInfo, updateEmployee } from '@/axios/api/employee'
+import { ElMessage } from 'element-plus'
 
+const username = localStorage.getItem('username')
+const keyWords = ref('')// 搜索关键词
+const tableData = ref([])// 表数据
+const pageSize = ref(100) // 每一页的大小
+const currentPage = ref(1) // 当前页号
+const total = ref(0) // 获取数据总条数
+const getEmployeeInfo = async () => {
+  const res = await employeeInfo({
+    page: currentPage.value,
+    pageSize: pageSize.value,
+    name: keyWords.value
+  })
+  console.log(res)
+  if (res.code === 1) {
+    tableData.value = res.info.records
+    total.value = res.info.total
+  }
+} // 获取用户列表数据
+const dialogFormVisible = ref(false)
+const ruleFormRef = ref(null)
+const form = reactive({
+  name: '',
+  phone: '',
+  sex: 0,
+  id: ''
+})
+onMounted(() => {
+  getEmployeeInfo()
+})
 const handleSizeChange = (val) => {
-  console.log(`${val} items per page`)
+  pageSize.value = val
+  getEmployeeInfo()
 }
 const handleCurrentChange = (val) => {
-  console.log(`current page: ${val}`)
+  currentPage.value = val
+  getEmployeeInfo()
+}
+const handleEdit = (info) => {
+  console.log(info)
+  dialogFormVisible.value = true
+  form.name = info.name
+  form.sex = info.sex
+  form.phone = info.phone
+  form.id = info.id
+}
+const handleStop = (info) => {
+  console.log(info)
+}
+const handlerSearch = () => {
+  console.log(keyWords)
+}
+const checkPhone = (rule, value, callback) => {
+  if (value.trim().length <= 0) {
+    callback(new Error('用户账号是必需的'))
+  } else if (!(/^(131|158|147|151)[0-9]{8}$/.test(value))) {
+    callback(new Error('请输入正确的手机号'))
+  } else {
+    callback()
+  }
+} // 校验手机号
+// 总的校验规则
+const rules = reactive({
+  name: [
+    { required: true, message: '用户名是必填的', trigger: 'blur' },
+    { min: 2, max: 10, message: '用户名长度为3到10', trigger: 'blur' }
+  ],
+  phone: [
+    { required: true },
+    { validator: checkPhone, trigger: 'blur' }
+  ],
+  sex: [
+    { required: true, message: '请选择性别', trigger: 'blur' }
+  ]
+})
+const submitForm = async (ruleFormRef) => {
+  if (!ruleFormRef) return
+  await ruleFormRef.validate(async (valid) => {
+    if (valid) {
+      const res = await updateEmployee(form)
+      res.code === 1 && ElMessage.success({
+        message: res.msg
+      })
+      res.code !== 1 && ElMessage.error({
+        message: res.msg
+      })
+      dialogFormVisible.value = false
+      getEmployeeInfo()
+    } else {
+      ElMessage.error({
+        message: '请补全表单'
+      })
+      dialogFormVisible.value = false
+    }
+  })
 }
 </script>
 
 <style scoped lang="scss">
-.admin{
-  .admin-header{
+.admin {
+  .admin-header {
     width: 100%;
-    height: 40px;
+    height: 60px;
     display: flex;
     align-items: center;
-    .el-input{
-      width: 180px;
+
+    .el-input {
+      width: 260px;
+      height: 45px;
       margin-right: 20px;
+    }
+
+    .el-button {
+      width: 160px;
+      height: 45px;
+      margin-left: auto;
     }
   }
 }
-.pagination{
+
+.pagination {
   display: flex;
   justify-content: center;
   text-align: center;

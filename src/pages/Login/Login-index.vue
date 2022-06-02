@@ -5,7 +5,7 @@
   >
     <div class="login-box">
       <img
-        src="@/assets/images/login/login-l.png"
+        src="@/assets/images/login/login.jpg"
         alt=""
       >
       <div class="login-form">
@@ -16,9 +16,8 @@
         >
           <div class="login-form-title">
             <img
-              src="@/assets/images/login/logo.png"
-              style="width:139px;height:42px;"
-              alt=""
+              src="@/assets/logo.png"
+              alt="考拉烘焙坊"
             >
           </div>
           <el-form-item prop="username">
@@ -102,7 +101,7 @@ const submitForm = async (formEl) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   background-color: #333;
   .login-box {
     width: 1000px;
@@ -126,6 +125,14 @@ const submitForm = async (formEl) => {
       .el-form {
         width: 214px;
         height: 307px;
+        .login-form-title{
+          width: 180px;
+          height: 84px;
+          img{
+            width: 100%;
+            height: 84px;
+          }
+        }
         .el-form-item {
           margin-top: 30px;
           margin-bottom: 30px;

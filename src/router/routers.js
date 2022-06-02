@@ -52,6 +52,14 @@ const router = [
         meta: {
           title: '套餐管理'
         }
+      },
+      {
+        path: '/admin/add',
+        name: 'admin-add',
+        component: () => import('@/pages/admin/child/admin-add.vue'),
+        meta: {
+          title: '添加员工'
+        }
       }
     ]
   }

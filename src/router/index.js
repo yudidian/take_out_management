@@ -7,7 +7,20 @@ const myRouter = createRouter({
   routes
 })
 myRouter.beforeEach((to, from, next) => {
-  next()
+  const token = localStorage.getItem('token')
+  // const username= localStorage.getItem('username')
+  if (token) {
+    if (to.path === '/login') {
+      next(from.path)
+    }
+    next()
+  } else {
+    if (to.path === '/login') {
+      next()
+    } else {
+      next('/login')
+    }
+  }
 })
 myRouter.afterEach((to, from) => {
   to.path && sessionStorage.setItem('url', to.path)
