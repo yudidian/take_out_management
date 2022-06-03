@@ -33,16 +33,18 @@ export const updateDishInfo = (data) => {
   })
 }
 // 删除或禁用商品信息
-export const deleteAndForbiddenDish = (info) => {
-  if (info.type === 'delete') {
-    return request({
-      url: `/dish/delete/${info.id}`,
-      method: 'GET'
-    })
-  } else {
-    return request({
-      url: `/dish/static/${info.id}`,
-      method: 'delete'
-    })
-  }
+export const deleteAndForbiddenDish = (data) => {
+  return request({
+    url: '/dish/status',
+    method: 'PUT',
+    data
+  })
+}
+// 删除或禁用商品信息
+export const updateListDish = (data) => {
+  return request({
+    url: '/dish/all',
+    method: 'PUT',
+    data
+  })
 }

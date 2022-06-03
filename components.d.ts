@@ -3,6 +3,7 @@
 // Read more: https://github.com/vuejs/vue-next/pull/3399
 import '@vue/runtime-core'
 
+// eslint-disable-next-line
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElAside: typeof import('element-plus/es')['ElAside']

@@ -2,12 +2,15 @@
   <Header
     @show-dialog="dialogFormVisible = $event"
     @get-key-words="keyWords = $event"
+    :list-id="listId"
+    @updatePage="sendDishPage()"
   />
   <el-table
     ref="multipleTableRef"
     :data="tableData.pages"
     style="width: 100%"
-    @selection-change="handleSelectionChange"
+    @select="handleSelectionChange"
+    v-loading="tableData.pages.length<=0"
   >
     <el-table-column
       type="selection"
@@ -42,7 +45,11 @@
     <el-table-column
       label="销售状态"
       prop="status"
-    />
+    >
+      <template #default="scope">
+        <span>{{ scope.row.status === 1 ? '销售中' : '停售' }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="最后操作时间"
       property="updateTime"
@@ -276,6 +283,7 @@ const tableData = ref({
   total: 0,
   pages: []
 })
+const listId = ref([])
 const flag = ref(false) // false为添加true为编辑
 const dialogFormVisible = ref(false)
 const categoryInfo = ref([])
@@ -310,8 +318,10 @@ watch(selectFlavorData.value, () => {
   })
 })
 // 选择框变化
-const handleSelectionChange = () => {
-  console.log()
+const handleSelectionChange = (selection) => {
+  selection.forEach(item => {
+    listId.value.push(item.id)
+  })
 }
 // 图片上传成功
 const handleAvatarSuccess = (response) => {
@@ -415,9 +425,6 @@ const sendDishPage = async () => {
     name: keyWords.value
   })
   if (res.code === 1) {
-    ElMessage.success({
-      message: res.msg
-    })
     tableData.value.total = res.info.total
     tableData.value.pages = res.info.records
   } else {
@@ -466,10 +473,15 @@ const closeHandler = () => {
 }
 // 禁用商品
 const forbiddenAndDeleteDishHandler = async (id, type) => {
-  const res = await deleteAndForbiddenDish({
-    id,
-    type
-  })
+  const data = {
+    id
+  }
+  if (type === 'delete') {
+    data.isDeleted = 1
+  } else {
+    data.status = 0
+  }
+  const res = await deleteAndForbiddenDish(data)
   if (res.code === 1) {
     ElMessage.success({
       message: res.msg
@@ -480,6 +492,8 @@ const forbiddenAndDeleteDishHandler = async (id, type) => {
       message: res.msg
     })
   }
+  delete data.isDeleted
+  delete data.status
 }
 // 删除商品
 </script>

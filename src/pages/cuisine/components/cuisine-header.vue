@@ -29,12 +29,49 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { updateListDish } from '@/axios/api/dish'
 
-const emits = defineEmits(['showDialog', 'getKeyWords'])
+const props = defineProps({
+  listId: {
+    type: Array,
+    default: () => []
+  }
+})
+const emits = defineEmits(['showDialog', 'getKeyWords', 'updatePage'])
 const keyWords = ref('')
 
-const operationHandler = (type) => {
-  console.log(type)
+const operationHandler = async (type) => {
+  let res
+  switch (type) {
+    case 1 : {
+      res = await updateListDish({
+        allId: props.listId,
+        isDeleted: 1
+      })
+      break
+    }
+    case 2 : {
+      res = await updateListDish({
+        allId: props.listId,
+        status: 1
+      })
+      break
+    }
+    case 3 : {
+      res = await updateListDish({
+        allId: props.listId,
+        status: 0
+      })
+      break
+    }
+  }
+  emits('updatePage')
+  if (res.code !== 1) {
+    ElMessage.error({
+      message: res.msg
+    })
+  }
 }
 </script>
 
@@ -59,6 +96,7 @@ const operationHandler = (type) => {
       font-size: 19px;
       font-weight: 600;
       border-color: #6d75ee;
+      cursor: pointer;
       &:nth-child(1){
         color: #6d75ee;
         border-right: 1px solid #5e5d5d;
