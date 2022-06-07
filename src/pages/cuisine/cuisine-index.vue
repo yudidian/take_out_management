@@ -1,9 +1,8 @@
 <template>
-  <Header
+  <MyHeader
     @show-dialog="dialogFormVisible = $event"
-    @get-key-words="keyWords = $event"
-    :list-id="listId"
-    @updatePage="sendDishPage()"
+    @get-key-words="searchHandler"
+    @list-handler="listHandler"
   />
   <el-table
     ref="multipleTableRef"
@@ -265,13 +264,12 @@
 </template>
 
 <script setup>
-import Header from './components/cuisine-header.vue'
 import { Plus } from '@element-plus/icons-vue'
 import { onMounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useStore } from 'vuex'
 import { getCategoryInfo } from '@/axios/api/category'
-import { addDish, getDishPage, getDishInfoById, updateDishInfo, deleteAndForbiddenDish } from '@/axios/api/dish'
+import { addDish, getDishPage, getDishInfoById, updateDishInfo, deleteAndForbiddenDish, updateListDish } from '@/axios/api/dish'
 import { v4 as uuidv4 } from 'uuid'
 const store = useStore()
 const keyWords = ref('')
@@ -495,7 +493,38 @@ const forbiddenAndDeleteDishHandler = async (id, type) => {
   delete data.isDeleted
   delete data.status
 }
-// 删除商品
+// 批量操作
+const listHandler = async (type) => {
+  switch (type) {
+    case 1 : {
+      await updateListDish({
+        allId: listId.value,
+        isDeleted: 1
+      })
+      break
+    }
+    case 2 : {
+      await updateListDish({
+        allId: listId.value,
+        status: 1
+      })
+      break
+    }
+    case 3 : {
+      await updateListDish({
+        allId: listId.value,
+        status: 0
+      })
+      break
+    }
+  }
+  await sendDishPage()
+}
+// 搜索功能
+const searchHandler = async (val) => {
+  keyWords.value = val
+  await sendDishPage()
+}
 </script>
 
 <style scoped lang="scss">

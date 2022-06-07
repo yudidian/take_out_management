@@ -1,3 +1,4 @@
+import { RouterView } from 'vue-router'
 const router = [
   {
     path: '/login',
@@ -39,11 +40,25 @@ const router = [
       },
       {
         path: '/menu',
-        name: 'menu',
-        component: () => import('@/pages/menu/menu-index.vue'),
+        component: RouterView,
         meta: {
           title: '套餐管理'
-        }
+        },
+        children: [
+          {
+            path: '',
+            name: 'menu',
+            component: () => import('@/pages/menu/menu-index.vue')
+          },
+          {
+            path: 'add',
+            name: 'menu-add',
+            component: () => import('@/pages/menu/menu-add.vue'),
+            meta: {
+              title: '添加套餐'
+            }
+          }
+        ]
       },
       {
         path: '/order',

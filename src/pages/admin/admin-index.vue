@@ -19,6 +19,7 @@
       :data="tableData"
       stripe
       style="width: 100%"
+      v-loading="tableData.length<=0"
     >
       <el-table-column
         prop="id"
@@ -47,7 +48,11 @@
       <el-table-column
         prop="status"
         label="账号状态"
-      />
+      >
+        <template #default="scope">
+          <span>{{ scope.row.status === 1 ? '正常' : '停用' }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         label="操作"
       >
@@ -64,7 +69,7 @@
             type="danger"
             @click="handleStop(scope.row)"
           >
-            禁用
+            {{ scope.row.status === 1 ? '禁用' : '启用' }}
           </el-button>
         </template>
       </el-table-column>
@@ -155,7 +160,6 @@ const getEmployeeInfo = async () => {
     pageSize: pageSize.value,
     name: keyWords.value
   })
-  console.log(res)
   if (res.code === 1) {
     tableData.value = res.info.records
     total.value = res.info.total
@@ -181,18 +185,21 @@ const handleCurrentChange = (val) => {
   getEmployeeInfo()
 }
 const handleEdit = (info) => {
-  console.log(info)
   dialogFormVisible.value = true
   form.name = info.name
   form.sex = info.sex
   form.phone = info.phone
   form.id = info.id
 }
-const handleStop = (info) => {
-  console.log(info)
+const handleStop = async (info) => {
+  await updateEmployee({
+    id: info.id,
+    status: 0
+  })
+  await getEmployeeInfo()
 }
-const handlerSearch = () => {
-  console.log(keyWords)
+const handlerSearch = async () => {
+  await getEmployeeInfo()
 }
 const checkPhone = (rule, value, callback) => {
   if (value.trim().length <= 0) {

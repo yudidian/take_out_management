@@ -29,49 +29,12 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue'
 import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
-import { updateListDish } from '@/axios/api/dish'
 
-const props = defineProps({
-  listId: {
-    type: Array,
-    default: () => []
-  }
-})
-const emits = defineEmits(['showDialog', 'getKeyWords', 'updatePage'])
+const emits = defineEmits(['showDialog', 'getKeyWords', 'listHandler'])
 const keyWords = ref('')
 
-const operationHandler = async (type) => {
-  let res
-  switch (type) {
-    case 1 : {
-      res = await updateListDish({
-        allId: props.listId,
-        isDeleted: 1
-      })
-      break
-    }
-    case 2 : {
-      res = await updateListDish({
-        allId: props.listId,
-        status: 1
-      })
-      break
-    }
-    case 3 : {
-      res = await updateListDish({
-        allId: props.listId,
-        status: 0
-      })
-      break
-    }
-  }
-  emits('updatePage')
-  if (res.code !== 1) {
-    ElMessage.error({
-      message: res.msg
-    })
-  }
+const operationHandler = (type) => {
+  emits('listHandler', type)
 }
 </script>
 
