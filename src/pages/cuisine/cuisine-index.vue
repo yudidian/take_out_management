@@ -29,7 +29,7 @@
           shape="square"
           :size="100"
           fit="fill"
-          :src="`http://localhost:8080/download?fileName=${scope.row.image}`"
+          :src="IMG_URL+scope.row.image"
         />
       </template>
     </el-table-column>
@@ -271,6 +271,7 @@ import { useStore } from 'vuex'
 import { getCategoryInfo } from '@/axios/api/category'
 import { addDish, getDishPage, getDishInfoById, updateDishInfo, deleteAndForbiddenDish, updateListDish } from '@/axios/api/dish'
 import { v4 as uuidv4 } from 'uuid'
+const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const store = useStore()
 const keyWords = ref('')
 const inputVisible = ref(false)
