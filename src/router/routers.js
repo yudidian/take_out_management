@@ -39,6 +39,14 @@ const router = [
         }
       },
       {
+        path: '/cuisine/description',
+        name: 'cuisineDescription',
+        component: () => import('@/pages/CuisineDescription/CuisineDescription.vue'),
+        meta: {
+          title: '菜品描述管理'
+        }
+      },
+      {
         path: '/menu',
         component: RouterView,
         meta: {

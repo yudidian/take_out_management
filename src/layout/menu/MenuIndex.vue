@@ -32,6 +32,14 @@
         <span>菜品管理</span>
       </template>
     </el-menu-item>
+    <el-menu-item index="/cuisine/description">
+      <template #title>
+        <el-icon>
+          <ForkSpoon />
+        </el-icon>
+        <span>菜品描述管理</span>
+      </template>
+    </el-menu-item>
     <el-menu-item index="/menu">
       <template #title>
         <el-icon>
@@ -80,7 +88,7 @@ const defineUrl = ref(sessionStorage.getItem('url') || '/')
   height: calc(100% - 95px);
   overflow-y: hidden;
   background-color: #343744;
-  .el-menu-item{
+  .el-menu-item,.el-sub-menu{
     width: 160px;
     height: 50px;
     margin-bottom: 10px;

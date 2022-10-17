@@ -6,7 +6,7 @@
       :suffix-icon="Search"
       @blur="emits('getKeyWords',keyWords)"
     />
-    <ul>
+    <ul v-if="isShowBulk">
       <li @click="operationHandler(1)">
         批量删除
       </li>
@@ -18,6 +18,7 @@
       </li>
     </ul>
     <el-button
+      v-if="isShowBulk"
       type="primary"
       @click="emits('showDialog',true)"
     >
@@ -32,7 +33,12 @@ import { ref } from 'vue'
 
 const emits = defineEmits(['showDialog', 'getKeyWords', 'listHandler'])
 const keyWords = ref('')
-
+defineProps({
+  isShowBulk: {
+    type: Boolean,
+    default: true
+  }
+})
 const operationHandler = (type) => {
   emits('listHandler', type)
 }
