@@ -33,6 +33,7 @@ import HeaderIndex from './header/headerIndex.vue'
   line-height: 60px;
 }
 .el-container{
+  position: relative;
   height: 100vh;
 }
 </style>

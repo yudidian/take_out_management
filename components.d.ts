@@ -34,6 +34,7 @@ declare module '@vue/runtime-core' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
     MyPagination: typeof import('./src/components/MyPagination/MyPagination.vue')['default']
+    MyImage: typeof import('./src/components/MyImage/MyImage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

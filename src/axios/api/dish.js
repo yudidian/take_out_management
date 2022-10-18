@@ -48,3 +48,19 @@ export const updateListDish = (data) => {
     data
   })
 }
+// 获取菜品描述信息
+export const sendGetDishDescription = (params) => {
+  return request({
+    url: '/goods/description/list',
+    method: 'get',
+    params
+  })
+}
+// 改变菜品描述信息
+export const sendChangeDishDescription = (data) => {
+  return request({
+    url: '/goods/description/change',
+    method: 'post',
+    data
+  })
+}
