@@ -9,6 +9,7 @@ export const sendGetOrderList = (params) => {
     params
   })
 }
+// 获取订单状态
 export const sendGetOrderStatus = (params) => {
   /**
    * number: 当前订单号
@@ -16,6 +17,18 @@ export const sendGetOrderStatus = (params) => {
    */
   return request({
     url: '/orders/state',
+    method: 'get',
+    params
+  })
+}
+// 获取订单状态
+export const sendGetOrderCount = (params) => {
+  /**
+   * number: 当前订单号
+   * flag：操作标志 flag=0 获取当前订单状态 否则修改订单状态为已派送
+   */
+  return request({
+    url: '/orders/count',
     method: 'get',
     params
   })

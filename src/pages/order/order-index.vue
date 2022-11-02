@@ -1,9 +1,5 @@
 <template>
-  <MyHeader
-    @show-dialog="dialogFormVisible = $event"
-    @get-key-words="searchHandler"
-    :is-show-bulk="false"
-  />
+  <OrderHeader @get-key-words="searchHandler" />
   <el-table
     ref="multipleTableRef"
     :data="tableData.pages"
@@ -166,6 +162,7 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
+import OrderHeader from './component/OrderHeader.vue'
 import { sendGetOrderList, sendGetOrderStatus } from '@/axios/api/orders'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // const IMG_URL = import.meta.env.VITE_IMAGE_URL
@@ -200,7 +197,6 @@ const showOrderStatus = (row) => {
   }
   dialogFormVisible.value = true
   getOrderStatus(params)
-  console.log(row)
 }
 
 const getOrderStatus = async (params) => {
@@ -263,7 +259,11 @@ const getStatus = (status) => {
 // 搜索功能
 const searchHandler = async (val) => {
   keyWords.value = val
-  await getOrderList()
+  await getOrderList({
+    page: 0,
+    pageSize: 10,
+    state: val
+  })
 }
 </script>
 

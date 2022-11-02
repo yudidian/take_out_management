@@ -56,7 +56,7 @@
         <span>订单管理</span>
       </template>
     </el-menu-item>
-    <el-menu-item index="/order">
+    <el-menu-item index="/review">
       <template #title>
         <el-icon>
           <Tickets />
