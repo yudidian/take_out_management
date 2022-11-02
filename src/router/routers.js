@@ -73,7 +73,15 @@ const router = [
         name: 'order',
         component: () => import('@/pages/order/order-index.vue'),
         meta: {
-          title: '套餐管理'
+          title: '订单管理'
+        }
+      },
+      {
+        path: '/review',
+        name: 'review',
+        component: () => import('@/pages/review/ReviewPage.vue'),
+        meta: {
+          title: '评论管理'
         }
       },
       {

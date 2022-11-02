@@ -102,7 +102,8 @@ const submitForm = async (formEl) => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #333;
+  background: url("@/assets/images/detail_banner.svg") no-repeat;
+  background-size: cover;
   .login-box {
     width: 1000px;
     height: 474px;
@@ -115,7 +116,7 @@ const submitForm = async (formEl) => {
     .login-form {
       background: #ffffff;
       width: 40%;
-      border-radius: 0px 8px 8px 0px;
+      border-radius: 0 8px 8px 0;
       display: flex;
       justify-content: center;
       align-items: center;

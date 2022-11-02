@@ -53,7 +53,15 @@
         <el-icon>
           <Tickets />
         </el-icon>
-        <span>订单明细</span>
+        <span>订单管理</span>
+      </template>
+    </el-menu-item>
+    <el-menu-item index="/order">
+      <template #title>
+        <el-icon>
+          <Tickets />
+        </el-icon>
+        <span>评论管理</span>
       </template>
     </el-menu-item>
   </el-menu>

@@ -325,7 +325,7 @@ const handleSelectionChange = (selection) => {
 // 图片上传成功
 const handleAvatarSuccess = (response) => {
   form.value.image = response.msg
-  imageUrl.value = `http://localhost:8080/download?fileName=${response.msg}`
+  imageUrl.value = IMG_URL + response.msg
 }
 // 图片上传之前
 const beforeAvatarUpload = (rawFile) => {

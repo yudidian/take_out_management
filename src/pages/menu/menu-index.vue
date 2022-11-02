@@ -29,7 +29,7 @@
           shape="square"
           :size="100"
           fit="fill"
-          :src="`http://localhost:8080/download?fileName=${scope.row.image}`"
+          :src="IMG_URL + scope.row.image"
         />
       </template>
     </el-table-column>
@@ -100,7 +100,7 @@ import { onMounted, ref } from 'vue'
 import { getPageInfo, deleteMeal, forbiddenMeal } from '@/axios/api/setMeal'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
-
+const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const router = useRouter()
 const listId = ref([])
 const keyWords = ref('')
