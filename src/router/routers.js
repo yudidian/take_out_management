@@ -9,6 +9,14 @@ const router = [
     }
   },
   {
+    path: '/dataDashboard',
+    name: 'dataDashboard',
+    component: () => import('@/pages/DataDashboard/DataDashboard.vue'),
+    meta: {
+      title: '大数据看板'
+    }
+  },
+  {
     path: '/',
     name: 'index',
     redirect: '/admin',

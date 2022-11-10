@@ -127,7 +127,7 @@
           :disabled="score.row.status !== 2"
           @click="sendOrder(score.row)"
         >
-          出餐
+          <span style="font-weight: 900; font-size: 16px">出餐</span>
         </el-button>
       </template>
     </el-table-column>
@@ -226,7 +226,7 @@ const getOrderStatus = async (params) => {
 const sendOrder = (row) => {
   ElMessageBox.confirm(
     '是否确认出餐?',
-    'Warning',
+    '提示',
     {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
