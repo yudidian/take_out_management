@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="left-2">
-        123
+        <LeftTwo />
       </div>
       <div class="left-3">
         123
@@ -31,21 +31,42 @@
     </div>
     <div class="content-center">
       <div class="center-1">
-        123
+        <CenterOne :count="78564" />
       </div>
       <div class="center-2">
         <div class="center-2-1">
-          123
+          <div class="content">
+            <div class="title">
+              菜品销售额第一
+            </div>
+            <div class="money">
+              47,522
+            </div>
+          </div>
         </div>
         <div class="center-2-2">
-          123
+          <div class="content">
+            <div class="title">
+              菜品销售额第二
+            </div>
+            <div class="money">
+              47,522
+            </div>
+          </div>
         </div>
         <div class="center-2-3">
-          123
+          <div class="content">
+            <div class="title">
+              菜品销售额第三
+            </div>
+            <div class="money">
+              47,522
+            </div>
+          </div>
         </div>
       </div>
       <div class="center-3">
-        123000
+        <CenterThree />
       </div>
       <div class="center-4">
         123
@@ -53,7 +74,7 @@
     </div>
     <div class="content-right">
       <div class="right-1">
-        123
+        <RightOne />
       </div>
       <div class="right-2">
         123
@@ -63,23 +84,31 @@
 </template>
 
 <script setup name="DataDashboard">
+import CenterThree from './component/CenterThree.vue'
+import LeftTwo from './component/LeftTow.vue'
+import CenterOne from './component/CenterOne.vue'
+import RightOne from './component/RightOne.vue'
 import { onMounted } from 'vue'
 import * as echarts from 'echarts'
 const setLeft1 = () => {
   const myEcharts = echarts.init(document.querySelector('#left_1_echarts'))
   myEcharts.setOption({
     grid: {
-      top: 120
+      top: 10,
+      bottom: 40
     },
     xAxis: {
-      show: false,
+      show: true,
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: ['一', '三', '五', '七', '九', '十一']
+    },
+    tooltip: {
+      show: true
     },
     yAxis: {
-      show: false,
+      show: true,
       type: 'value',
-      max: 140
+      max: 100
     },
     color: {
       type: 'linear',
@@ -96,11 +125,20 @@ const setLeft1 = () => {
     },
     series: [
       {
-        data: [8, 48, 88, 3, 120, 130, 1],
+        data: [8, 48, 88, 20, 40, 60],
         type: 'line',
+        symbolSize: (vale, params) => {
+          if (vale === 60) {
+            return 8
+          } else {
+            return 0
+          }
+        },
         smooth: true,
+        clip: false,
         lineStyle: {
-          width: 5
+          width: 5,
+          cap: 'round'
         }
       }
     ]
@@ -184,8 +222,10 @@ onMounted(() => {
       }
     }
     .left-2{
+      position: relative;
       width: 519px;
       height: 531px;
+      overflow: hidden;
       border-radius: 20px;
       background: url("./image/left-2.png") no-repeat;
       background-size: cover;
@@ -217,24 +257,65 @@ onMounted(() => {
         height: 104px;
         background: url("./image/center-2-1.png") no-repeat;
         background-size: cover;
+        overflow: hidden;
+        .content{
+          margin-top: 20px;
+          margin-left: 130px;
+          color: #fffdef;
+          .title{
+            font-size: 14px;
+            font-weight: 600;
+          }
+          .money{
+            font-size: 30px;
+            font-weight: 900;
+          }
+        }
       }
       .center-2-2{
         width: 302px;
         height: 104px;
         background: url("./image/center-2-2.png") no-repeat;
         background-size: cover;
+        .content{
+          margin-top: 20px;
+          margin-left: 130px;
+          color: #fffdef;
+          .title{
+            font-size: 14px;
+            font-weight: 600;
+          }
+          .money{
+            font-size: 30px;
+            font-weight: 900;
+          }
+        }
       }
       .center-2-3{
         width: 302px;
         height: 104px;
         background: url("./image/center-2-3.png") no-repeat;
         background-size: cover;
+        .content{
+          margin-top: 20px;
+          margin-left: 130px;
+          color: #fffdef;
+          .title{
+            font-size: 14px;
+            font-weight: 600;
+          }
+          .money{
+            font-size: 30px;
+            font-weight: 900;
+          }
+        }
       }
     }
 
     .center-3{
       width: 100%;
       height: 356px;
+      overflow: hidden;
       background: url("./image/center-3.png") no-repeat;
       background-size: cover;
     }
