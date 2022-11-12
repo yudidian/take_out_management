@@ -52,6 +52,15 @@
       </div>
     </div>
   </div>
+  <div class="sale-count">
+    <div class="count-one">
+      <span class="all-count">总下单数：</span>
+      <span class="number">47,556</span>
+    </div>
+    <div class="info">
+      *当日数据为模拟数据，非最终封账数据
+    </div>
+  </div>
 </template>
 
 <script setup name="LeftTow">
@@ -192,6 +201,32 @@ onMounted(() => {
         color: #ffffff;
       }
     }
+  }
+}
+.sale-count {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .count-one{
+    color: #ffffff;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    .all-count{
+      font-size: 14px;
+    }
+    .number{
+      font-size: 30px;
+      font-weight: 900;
+    }
+  }
+  .info{
+    color: #BCC9D4;
+    font-size: 14px;
   }
 }
 </style>

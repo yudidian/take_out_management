@@ -42,16 +42,60 @@
           200
         </div>
       </div>
-    </div>
-    <div class="swiper-wrapper">
       <div class="swiper-slide">
         <div class="index">
           1
         </div>
         <div class="image">
           <img
-              src="../image/center-3-logo.png"
-              alt=""
+            src="../image/center-3-logo.png"
+            alt=""
+          >
+        </div>
+        <div class="name">
+          xxx
+        </div>
+        <div class="description">
+          xxxxxxxxxxxxxxxxxxx
+        </div>
+        <div class="price">
+          ￥16.80
+        </div>
+        <div class="sales">
+          200
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="index">
+          1
+        </div>
+        <div class="image">
+          <img
+            src="../image/center-3-logo.png"
+            alt=""
+          >
+        </div>
+        <div class="name">
+          xxx
+        </div>
+        <div class="description">
+          xxxxxxxxxxxxxxxxxxx
+        </div>
+        <div class="price">
+          ￥16.80
+        </div>
+        <div class="sales">
+          200
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="index">
+          1
+        </div>
+        <div class="image">
+          <img
+            src="../image/center-3-logo.png"
+            alt=""
           >
         </div>
         <div class="name">
@@ -68,145 +112,64 @@
         </div>
       </div>
     </div>
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="index">
-          1
-        </div>
-        <div class="image">
-          <img
-              src="../image/center-3-logo.png"
-              alt=""
-          >
-        </div>
-        <div class="name">
-          xxx
-        </div>
-        <div class="description">
-          xxxxxxxxxxxxxxxxxxx
-        </div>
-        <div class="price">
-          ￥16.80
-        </div>
-        <div class="sales">
-          200
-        </div>
-      </div>
-    </div>
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="index">
-          1
-        </div>
-        <div class="image">
-          <img
-              src="../image/center-3-logo.png"
-              alt=""
-          >
-        </div>
-        <div class="name">
-          xxx
-        </div>
-        <div class="description">
-          xxxxxxxxxxxxxxxxxxx
-        </div>
-        <div class="price">
-          ￥16.80
-        </div>
-        <div class="sales">
-          200
-        </div>
-      </div>
-    </div>
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="index">
-          1
-        </div>
-        <div class="image">
-          <img
-              src="../image/center-3-logo.png"
-              alt=""
-          >
-        </div>
-        <div class="name">
-          xxx
-        </div>
-        <div class="description">
-          xxxxxxxxxxxxxxxxxxx
-        </div>
-        <div class="price">
-          ￥16.80
-        </div>
-        <div class="sales">
-          200
-        </div>
-      </div>
-    </div>
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="index">
-          1
-        </div>
-        <div class="image">
-          <img
-              src="../image/center-3-logo.png"
-              alt=""
-          >
-        </div>
-        <div class="name">
-          xxx
-        </div>
-        <div class="description">
-          xxxxxxxxxxxxxxxxxxx
-        </div>
-        <div class="price">
-          ￥16.80
-        </div>
-        <div class="sales">
-          200
-        </div>
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script setup name="CenterThree">
-import { onMounted } from 'vue'
-import Swiper from 'swiper'
+import { onBeforeUnmount, onMounted } from 'vue'
+import { clearAllTimer } from '@/utils'
 onMounted(() => {
-  const swiper = new Swiper('#case4', {
-    loop: true, // 允许从第一张到最后一张，或者从最后一张到第一张  循环属性
-    slidesPerView: 4, // 设置显示三张
-    freeMode: true, // 使幻灯片滑动时不止滑动一格，且不会自动贴合
-    slidesPerGroup: 1, // 定义1张图片为一组
-    speed: 2500, // 设置过度时间
-    grabCursor: true, // 鼠标样式根据浏览器不同而定
-    autoplay: {
-      delay: 1,
-      disableOnInteraction: false
-    },
-    /*  设置每隔3000毫秒切换 */
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true
-    },
-    scrollbar: {
-      el: '.swiper-scrollbar',
-      hide: true
-    }
-  })
-  /* 鼠标悬停 停止动画 */
-  const swiperHover = document.querySelector('.swiper-wrapper')
-  swiperHover.addEventListener('mouseenter', function () {
-    swiper.autoplay.stop()
-  })
-  /* 鼠标离开 开始动画 */
-  swiperHover.addEventListener('mouseleave', function () {
-    swiper.autoplay.start()
-  })
+  runItem()
 })
+onBeforeUnmount(() => {
+  console.log('组件销毁')
+  clearAllTimer()
+})
+const runItem = () => {
+  const itemHeight = document.querySelector('.swiper-slide').clientHeight
+  const itemWrapper = document.querySelector('.swiper-wrapper')
+  const items = document.querySelectorAll('.swiper-slide')
+  const itemsLength = items.length
+  for (let i = 1; i < itemsLength + 2; i++) {
+    if (i > itemsLength) {
+      // 到最后一个
+      setTimeout(() => {
+        itemWrapper.style.transition = 'none'
+        itemWrapper.style.transform = 'translateY(210px)'
+        runItem2()
+      }, 2000 * (itemsLength + 1))
+    } else {
+      setTimeout(() => {
+        if (itemWrapper.style.transition !== 'all 1.5s ease 0s' || itemWrapper.style.transition === '') {
+          itemWrapper.style.transition = 'all 1.5s ease 0s'
+        }
+        itemWrapper.style.transform = `translateY(${-i * itemHeight}px)`
+      }, 2000 * i)
+    }
+  }
+}
+const runItem2 = () => {
+  const itemHeight = document.querySelector('.swiper-slide').clientHeight
+  const itemWrapper = document.querySelector('.swiper-wrapper')
+  const items = document.querySelectorAll('.swiper-slide')
+  const itemsLength = items.length
+  for (let i = -2; i < itemsLength + 1; i++) {
+    setTimeout(() => {
+      if (itemWrapper.style.transition !== 'all 1.5s ease 0s' || itemWrapper.style.transition === '') {
+        itemWrapper.style.transition = 'all 1.5s ease 0s'
+      }
+      itemWrapper.style.transform = `translateY(${-i * itemHeight}px)`
+    }, 2000 * (i + 2))
+    if (i === itemsLength) {
+      // 到最后一个
+      setTimeout(() => {
+        itemWrapper.style.transition = 'none'
+        itemWrapper.style.transform = 'translateY(210px)'
+        runItem2()
+      }, 2000 * (itemsLength + 3))
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -258,24 +221,54 @@ onMounted(() => {
   }
 }
 .swiper-container {
+  position: relative;
   width: 100%;
-  height: 200px;
-  padding: 20px;
+  height: 220px;
   margin: 0 auto;
-  background-color: rgba(0,0,0,.3);
-  .swiper-slide {
+  overflow: hidden;
+  .swiper-wrapper{
+    position: absolute;
     width: 100%;
-    height: 40px;
+    height: auto;
+    .swiper-slide {
+    width: 100%;
+    height: 70px;
     display: flex;
+    font-size: 18px;
     color: #fffdef;
     font-weight: 900;
-    margin-left: 20px;
+    margin-left: 60px;
+    margin-top: 2px;
     align-items: center;
+    .index{
+      width: 40px;
+    }
     .image{
+      width: 80px;
+      text-align: center;
+      background-color: red;
       img{
         width: 30px;
       }
     }
+    .name{
+      text-align: center;
+      width: 130px;
+    }
+    .description{
+      text-align: center;
+      width: 360px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .price{
+      width: 130px;
+      color: #797dff;
+    }
+     .sales{
+       color: #ff6d87;;
+     }
+  }
   }
 }
 

@@ -26,7 +26,7 @@
         <LeftTwo />
       </div>
       <div class="left-3">
-        123
+        <LeftThree />
       </div>
     </div>
     <div class="content-center">
@@ -69,7 +69,7 @@
         <CenterThree />
       </div>
       <div class="center-4">
-        123
+        <CenterFours />
       </div>
     </div>
     <div class="content-right">
@@ -77,13 +77,16 @@
         <RightOne />
       </div>
       <div class="right-2">
-        123
+        <RightTow />
       </div>
     </div>
   </div>
 </template>
 
 <script setup name="DataDashboard">
+import RightTow from '@/pages/DataDashboard/component/RightTow.vue'
+import CenterFours from './component/CenterFours.vue'
+import LeftThree from '@/pages/DataDashboard/component/LeftThree.vue'
 import CenterThree from './component/CenterThree.vue'
 import LeftTwo from './component/LeftTow.vue'
 import CenterOne from './component/CenterOne.vue'
@@ -234,6 +237,7 @@ onMounted(() => {
     .left-3{
       width: 519px;
       height: 280px;
+      overflow: hidden;
       border-radius: 20px;
       background: url("./image/left-3.png") no-repeat;
       background-size: cover;
@@ -322,6 +326,7 @@ onMounted(() => {
     .center-4{
       width: 100%;
       height: 310px;
+      overflow: hidden;
       background: url("./image/center-4.png") no-repeat;
       background-size: cover;
     }
@@ -335,6 +340,7 @@ onMounted(() => {
       background-size: cover;
     }
     .right-2{
+      overflow: hidden;
       width: 100%;
       height: 926px;
       background: url("./image/right-2.png") no-repeat;
