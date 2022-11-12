@@ -1,13 +1,12 @@
 <template>
-  <div
-    class="login"
-    id="login-app"
-  >
+  <div class="login-container flx-center">
     <div class="login-box">
-      <img
-        src="@/assets/images/login/login.jpg"
-        alt=""
-      >
+      <div class="login-left">
+        <img
+          src="@/assets/images/login/login_left.svg"
+          alt="login"
+        >
+      </div>
       <div class="login-form">
         <el-form
           :model="loginForm"
@@ -97,61 +96,5 @@ const submitForm = async (formEl) => {
 </script>
 
 <style scoped lang="scss">
-.login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: url("@/assets/images/detail_banner.svg") no-repeat;
-  background-size: cover;
-  .login-box {
-    width: 1000px;
-    height: 474px;
-    border-radius: 8px;
-    display: flex;
-    img {
-      width: 60%;
-      height: auto;
-    }
-    .login-form {
-      background: #ffffff;
-      width: 40%;
-      border-radius: 0 8px 8px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .login-form-title{
-        text-align: center;
-      }
-      .el-form {
-        width: 214px;
-        height: 307px;
-        .login-form-title{
-          width: 180px;
-          height: 84px;
-          img{
-            width: 100%;
-            height: 84px;
-          }
-        }
-        .el-form-item {
-          margin-top: 30px;
-          margin-bottom: 30px;
-          :deep(.el-form-item__content){
-            justify-content: center;
-            .login-btn{
-              width: 180px;
-              height: 36px;
-              border-radius: 30px;
-              justify-self: center;
-            }
-          }
-          :deep(.el-input__wrapper){
-            padding: 0;
-          }
-        }
-      }
-    }
-  }
-}
+@import "./index.scss";
 </style>
