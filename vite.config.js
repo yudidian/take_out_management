@@ -25,5 +25,11 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
+  },
+  // build configure
+  build: {
+    outDir: 'dist',
+    // esbuild 打包更快，但是不能去除 console.log
+    minify: 'esbuild'
   }
 })
