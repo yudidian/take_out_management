@@ -81,6 +81,15 @@
       </div>
     </div>
   </div>
+  <Teleport
+    to="body"
+    v-if="show"
+  >
+    <div class="loading">
+      <img src="./image/loading.gif">
+      <span class="message">koala</span>
+    </div>
+  </Teleport>
 </template>
 
 <script setup name="DataDashboard">
@@ -91,8 +100,9 @@ import CenterThree from './component/CenterThree.vue'
 import LeftTwo from './component/LeftTow.vue'
 import CenterOne from './component/CenterOne.vue'
 import RightOne from './component/RightOne.vue'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import * as echarts from 'echarts'
+const show = ref(true)
 const setLeft1 = () => {
   const myEcharts = echarts.init(document.querySelector('#left_1_echarts'))
   myEcharts.setOption({
@@ -148,12 +158,39 @@ const setLeft1 = () => {
   })
 }
 onMounted(() => {
+  setTimeout(() => {
+    show.value = false
+  }, 2000)
   setLeft1()
 })
 
 </script>
 
 <style scoped lang="scss">
+.loading{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  overflow: hidden;
+  background: rgb(15, 42, 66);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  img{
+    width: 120px;
+  }
+  .message{
+    width: 120px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fffdef;
+  }
+}
 .data-content{
   width: 100%;
   background-image: none;
