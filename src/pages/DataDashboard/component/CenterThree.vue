@@ -246,7 +246,6 @@ const runItem2 = () => {
     .image{
       width: 80px;
       text-align: center;
-      background-color: red;
       img{
         width: 30px;
       }

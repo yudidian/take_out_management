@@ -32,6 +32,7 @@ onMounted(() => {
   const chartDom = document.querySelector('.center-fours')
   const myChart = echarts.init(chartDom)
   const option = {
+    backgroundColor: 'transparent',
     color: ['#ff6d87', '#797dff'],
     tooltip: {
       trigger: 'axis',
@@ -137,8 +138,8 @@ onMounted(() => {
 .header{
   width: 100%;
   height: 47px;
-  margin-top: 16px;
-  margin-left: 30px;
+  margin-top: 14px;
+  margin-left: -2px;
   display: flex;
   .left{
     display: flex;
@@ -157,7 +158,7 @@ onMounted(() => {
     margin-left: auto;
     width: 120px;
     display: flex;
-    margin-top: 4px;
+    margin-top: -36px;
     flex-direction: column;
     .top,.bottom {
       display: flex;
@@ -187,6 +188,5 @@ onMounted(() => {
 .center-fours{
   width: 100%;
   height: 240px;
-  background-color: rgba(0,0,0,.2);
 }
 </style>

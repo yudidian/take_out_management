@@ -222,7 +222,7 @@ onMounted(() => {
   width: 100%;
   height: 47px;
   margin-top: 16px;
-  margin-left: 30px;
+  margin-left: -2px;
   display: flex;
   .left{
     display: flex;
@@ -241,14 +241,13 @@ onMounted(() => {
     margin-left: auto;
     width: 120px;
     display: flex;
-    margin-top: 4px;
+    margin-top: -36px;
     flex-direction: column;
     .top,.bottom {
       display: flex;
       align-items: center;
       font-size: 12px;
       color: #8c98bf;
-      margin-bottom: 5px;
       .color{
         width: 12px;
         height: 12px;
@@ -257,6 +256,7 @@ onMounted(() => {
       }
     }
     .top{
+      margin-bottom: 10px;
       .color {
         background-color: #ff6d87;
       }
@@ -271,6 +271,5 @@ onMounted(() => {
 .left-three{
   width: 100%;
   height: 240px;
-  background-color: rgba(0,0,0,.2);
 }
 </style>

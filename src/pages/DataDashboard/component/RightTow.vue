@@ -153,9 +153,6 @@
 </template>
 
 <script>
-export default {
-  name: 'RightTow'
-}
 </script>
 
 <style  lang="scss">
@@ -191,6 +188,7 @@ export default {
 .content{
   margin-top: 6px;
   .item{
+    cursor: pointer;
     display: flex;
     justify-content: flex-start;
     align-items: center;
