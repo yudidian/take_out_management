@@ -1,70 +1,86 @@
 <template>
-  <div class="logo">
-    <img src="@/assets/logo.png">
-  </div>
-  <el-menu
-    class="el-menu-vertical-demo"
-    :collapse="getters.isCollapse"
-    :router="true"
-    :default-active="defineUrl"
-  >
-    <el-menu-item index="/admin">
-      <template #title>
+  <div class="content">
+    <div
+      :class="isCollapse ? 'collapse-logo' : 'logo'"
+    >
+      <img
+        v-if="!isCollapse"
+        src="@/assets/logo.png"
+      >
+      <span v-else>koala</span>
+    </div>
+    <el-menu
+      class="el-menu-vertical-demo"
+      :collapse="store.getters.isCollapse"
+      :router="true"
+      :default-active="defineUrl"
+    >
+      <el-menu-item index="/dataDashboard">
+        <el-icon>
+          <Platform />
+        </el-icon>
+        <template #title>
+          <span>大数据看板</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="/admin">
         <el-icon>
           <Avatar />
         </el-icon>
-        <span>员工管理</span>
-      </template>
-    </el-menu-item>
-    <el-menu-item index="/class">
-      <template #title>
+        <template #title>
+          <span>员工管理</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="/class">
         <el-icon>
           <Grid />
         </el-icon>
-        <span>分类管理</span>
-      </template>
-    </el-menu-item>
-    <el-menu-item index="/cuisine">
-      <template #title>
+        <template #title>
+          <span>分类管理</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="/cuisine">
         <el-icon>
           <ForkSpoon />
         </el-icon>
-        <span>菜品管理</span>
-      </template>
-    </el-menu-item>
-    <el-menu-item index="/cuisine/description">
-      <template #title>
+        <template #title>
+          <span>菜品管理</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="/cuisine/description">
         <el-icon>
           <ForkSpoon />
         </el-icon>
-        <span>菜品描述管理</span>
-      </template>
-    </el-menu-item>
-    <el-menu-item index="/menu">
-      <template #title>
+        <template #title>
+          <span>菜品描述管理</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="/menu">
         <el-icon>
           <Management />
         </el-icon>
-        <span>套餐管理</span>
-      </template>
-    </el-menu-item>
-    <el-menu-item index="/order">
-      <template #title>
+        <template #title>
+          <span>套餐管理</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="/order">
         <el-icon>
           <Tickets />
         </el-icon>
-        <span>订单管理</span>
-      </template>
-    </el-menu-item>
-    <el-menu-item index="/review">
-      <template #title>
+        <template #title>
+          <span>订单管理</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="/review">
         <el-icon>
           <Tickets />
         </el-icon>
-        <span>评论管理</span>
-      </template>
-    </el-menu-item>
-  </el-menu>
+        <template #title>
+          <span>评论管理</span>
+        </template>
+      </el-menu-item>
+    </el-menu>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -73,23 +89,44 @@ import {
   Grid,
   ForkSpoon,
   Tickets,
-  Management
+  Management,
+  Platform
 } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
-import { ref } from '@vue/runtime-core'
+import { ref, watch } from 'vue'
 
 const store = useStore()
-const getters = store.getters
+const isCollapse = ref(store.getters.isCollapse)
+watch(() => store.getters.isCollapse, (val) => {
+  isCollapse.value = val
+}, { immediate: true })
 const defineUrl = ref(sessionStorage.getItem('url') || '/')
 </script>
 
 <style scoped lang="scss">
+.content{
+  display: flex;
+  flex-direction: column;
+}
 .logo {
+  width: 200px;
   height: 95px;
   background-color: #343744;
+  transition: width 0.25s;
   img {
     width: 200px;
   }
+}
+.collapse-logo{
+  width: 64px;
+  height: 30px;
+  color: #fffdef;
+  font-weight: 900;
+  text-align: center;
+  line-height: 30px;
+  font-size: 20px;
+  background-color: #343744;
+  transition: width 0.4s;
 }
 .el-menu {
   border: 0;
@@ -104,7 +141,7 @@ const defineUrl = ref(sessionStorage.getItem('url') || '/')
     color: #8c939d;
     &:hover:not(.is-active){
       color: #fff;
-      background-color: #343744;
+      background-color: #8c939d;
     }
   }
   .is-active{

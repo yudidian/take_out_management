@@ -4,16 +4,27 @@
   </el-config-provider>
 </template>
 <script>
-import { defineComponent } from 'vue'
+import lodash from 'lodash'
+import { defineComponent, onMounted } from 'vue'
 import { ElConfigProvider } from 'element-plus'
-
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
-
+import { useStore } from 'vuex'
 export default defineComponent({
   components: {
     ElConfigProvider
   },
   setup () {
+    const store = useStore()
+    onMounted(() => {
+      window.addEventListener('resize', lodash.throttle((e) => {
+        console.log(e.target.innerHeight, e.target.innerWidth)
+        if (e.target.innerWidth < 1200) {
+          store.dispatch('getIsCollapse', true)
+        } else {
+          store.dispatch('getIsCollapse', false)
+        }
+      }, 500))
+    })
     return {
       locale: zhCn
     }

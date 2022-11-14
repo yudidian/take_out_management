@@ -1,9 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside width="200px">
-        <MenuIndex />
-      </el-aside>
+      <MenuIndex />
       <el-container>
         <HeaderIndex />
         <el-main>
@@ -24,9 +22,6 @@ import HeaderIndex from './header/headerIndex.vue'
 </script>
 
 <style scoped lang="scss">
-.el-aside {
-  background-color: #343744;
-}
 .footer{
   text-align: center;
   color: #8c939d;

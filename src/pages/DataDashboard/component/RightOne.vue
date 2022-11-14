@@ -20,11 +20,17 @@
       </div>
     </div>
     <div class="right-content">
-      <div class="now">
-        当前时间：{{ nowTime !== '' ? nowTime: '2001-01-15 08:08:08' }}
-      </div>
-      <div class="open-now">
-        营业时间：08:00:00 ~ 20:00:00
+      <span
+        class="left"
+        @click="$router.replace('/index')"
+      >返回控制面板</span>
+      <div class="right">
+        <div class="now">
+          当前时间：{{ nowTime !== '' ? nowTime: '2001-01-15 08:08:08' }}
+        </div>
+        <div class="open-now">
+          营业时间：08:00:00 ~ 20:00:00
+        </div>
       </div>
     </div>
   </div>
@@ -77,13 +83,20 @@ onBeforeUnmount(() => {
   .right-content{
     width: 100%;
     display: flex;
-    flex-direction: column;
     color: rgb(140, 152, 191);
     font-size: 12px;
-    .now{
-      margin: 10px 15px 10px auto;
+    margin-top: 20px;
+    .left{
+      cursor: pointer;
+      width: 100px;
+      height: 30px;
+      margin-left: 20px;
+      text-align: center;
+      line-height: 30px;
+      border: 1px solid #8C98BFFF;
     }
-    .open-now{
+    .right{
+      width: auto;
       margin-left: auto;
       margin-right: 20px;
     }

@@ -9,6 +9,10 @@ const router = [
     }
   },
   {
+    path: '/',
+    redirect: '/dataDashboard'
+  },
+  {
     path: '/dataDashboard',
     name: 'dataDashboard',
     component: () => import('@/pages/DataDashboard/DataDashboard.vue'),
@@ -17,7 +21,7 @@ const router = [
     }
   },
   {
-    path: '/',
+    path: '/index',
     name: 'index',
     redirect: '/admin',
     component: () => import('@/layout/layout-index.vue'),

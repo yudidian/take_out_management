@@ -28,6 +28,10 @@ defineProps({
   srcList: {
     type: Array,
     default: () => []
+  },
+  width: {
+    type: String,
+    default: () => '100px'
   }
 })
 </script>
@@ -37,8 +41,7 @@ defineProps({
   padding: 0 5px;
   max-width: 100px;
   max-height: 100px;
-  width: 140px;
-  height: 82px;
+  width: v-bind(width);
   border-radius: 10px;
   .image-slot {
     display: flex;

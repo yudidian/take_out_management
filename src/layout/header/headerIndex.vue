@@ -15,8 +15,15 @@
     />
     <el-icon
       :size="30"
+      v-if="!isFullscreen"
     >
-      <FullScreen />
+      <FullScreen @click="fullScreenHandler" />
+    </el-icon>
+    <el-icon
+      :size="30"
+      v-else
+    >
+      <SwitchButton @click="fullScreenHandler" />
     </el-icon>
     <el-badge
       :value="12"
@@ -44,12 +51,14 @@
   </el-header>
 </template>
 <script lang="ts" setup>
+import screenfull from 'screenfull'
 import {
   Expand,
   Fold,
   Search,
   FullScreen,
-  Bell
+  Bell,
+  SwitchButton
 } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -60,13 +69,23 @@ const router = useRouter()
 const store = useStore()
 const getters = store.getters
 const KeyWords = ref('')
+const isFullscreen = ref(false)
 const changeCollapse = () => {
-  store.commit('changeCollapse', !getters.isCollapse)
+  store.dispatch('getIsCollapse', !getters.isCollapse)
 }
 const handlerExit = () => {
   localStorage.setItem('token', '')
   localStorage.setItem('username', '')
   router.replace('/login')
+}
+const fullScreenHandler = () => {
+  if (screenfull.isFullscreen) {
+    screenfull.exit()
+    isFullscreen.value = false
+  } else {
+    screenfull.request()
+    isFullscreen.value = true
+  }
 }
 </script>
 
