@@ -90,6 +90,49 @@
       align="center"
     />
     <el-table-column
+      label="商家回复"
+      prop="storeReview"
+      width="340"
+      align="center"
+    >
+      <template #default="scope">
+        <span>
+          {{ scope.row.storeReview === null ? "暂无" : scope.row.storeReview }}
+        </span>
+        <el-button
+          v-if="scope.row.storeReview !== null"
+          type="danger"
+          text
+          size="small"
+          @click="changReview(scope.row)"
+        >
+          修改
+        </el-button>
+        <el-button
+          v-if="scope.row.storeReview !== null"
+          type="danger"
+          text
+          size="small"
+          @click="deleteStoreReview(scope.row.id)"
+        >
+          删除
+        </el-button>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="商家回复时间"
+      prop="reviewTime"
+      width="340"
+      sortable
+      align="center"
+    >
+      <template #default="scope">
+        <span>
+          {{ scope.row.reviewTime === null ? "暂无" : scope.row.reviewTime }}
+        </span>
+      </template>
+    </el-table-column>
+    <el-table-column
       label="操作"
       align="center"
       width="300px"
@@ -100,18 +143,9 @@
           text
           size="small"
           type="primary"
-          @click="showOrderStatus(score.row)"
+          @click="reviewHandler(score.row)"
         >
           回复
-        </el-button>
-        <el-button
-          text
-          size="small"
-          type="danger"
-          :disabled="score.row.status !== 2"
-          @click="sendOrder(score.row)"
-        >
-          删除
         </el-button>
       </template>
     </el-table-column>
@@ -123,38 +157,46 @@
   />
   <el-dialog
     v-model="dialogFormVisible"
-    title="编辑商品描述"
+    title="回复用户"
     destroy-on-close
     :close-on-click-modal="false"
-    :width="750"
+    :width="350"
   >
-    <el-timeline>
-      <el-timeline-item
-        v-for="(item, index) in orderStatusInfo"
-        :timestamp="item.time"
-        :key="index"
-        placement="top"
-      >
-        <el-card>
-          <h4>{{ item.message }}</h4>
-          <p>时间：{{ item.time }}</p>
-        </el-card>
-      </el-timeline-item>
-    </el-timeline>
+    <el-form>
+      <el-form-item>
+        <el-input
+          type="textarea"
+          v-model="review.text"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          @click="reviewUserHandler"
+        >
+          确定
+        </el-button>
+        <el-button @click="dialogFormVisible = false">
+          取消
+        </el-button>
+      </el-form-item>
+    </el-form>
   </el-dialog>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import { sendGetOrderStatus } from '@/axios/api/orders'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { sendGetAllReviews } from '@/axios/api/reviews'
+import { sendDeleteReview, sendGetAllReviews, sendReviewUser } from '@/axios/api/reviews'
 const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const keyWords = ref('')
-const orderStatusInfo = ref([])
 const tableData = reactive({
   total: 0,
   pages: []
+})
+const review = reactive({
+  text: '',
+  id: ''
 })
 const dialogFormVisible = ref(false)
 
@@ -164,6 +206,7 @@ onMounted(() => {
     pageSize: 10
   })
 })
+
 const getAllReviews = async (params) => {
   const res = await sendGetAllReviews(params)
   console.log(res)
@@ -174,43 +217,16 @@ const getAllReviews = async (params) => {
     ElMessage.error(res.msg)
   }
 }
-const showOrderStatus = (row) => {
-  const params = {
-    flag: 0,
-    number: row.number
-  }
+// 修改回复
+const changReview = (row) => {
   dialogFormVisible.value = true
-  getOrderStatus(params)
-  console.log(row)
+  review.id = row.id
+  review.storeReview = row.storeReview
 }
-
-const getOrderStatus = async (params) => {
-  const res = await sendGetOrderStatus(params)
-  if (res.code !== 1) {
-    return ElMessage.error(res.msg)
-  }
-  if (res.data.orderTime) {
-    orderStatusInfo.value.push({
-      time: res.data.orderTime,
-      message: '已下单'
-    })
-  }
-  if (res.data.dinnerOutTime) {
-    orderStatusInfo.value.push({
-      time: res.data.dinnerOutTime,
-      message: '商家发货'
-    })
-  }
-  if (res.data.orderCompleteTime) {
-    orderStatusInfo.value.push({
-      time: res.data.orderCompleteTime,
-      message: '用户收货'
-    })
-  }
-}
-const sendOrder = (row) => {
+// 删除回复
+const deleteStoreReview = (id) => {
   ElMessageBox.confirm(
-    '是否确认出餐?',
+    '确认删除该回复？',
     'Warning',
     {
       confirmButtonText: '确定',
@@ -219,18 +235,37 @@ const sendOrder = (row) => {
     }
   )
     .then(async () => {
-      await getOrderStatus({
-        number: row.number,
-        flag: 1
-      })
-      ElMessage.success('出餐成功')
+      const res = await sendDeleteReview(id)
+      if (res.code === 1) {
+        ElMessage.success('删除成功')
+      } else {
+        ElMessage.error(res.msg)
+      }
     })
     .catch(() => {
       ElMessage({
         type: 'info',
-        message: '取消出餐'
+        message: '已取消'
       })
     })
+}
+const reviewHandler = (row) => {
+  dialogFormVisible.value = true
+  review.id = row.id
+}
+
+const reviewUserHandler = async () => {
+  const data = {
+    productReviewsId: review.id,
+    text: review.text
+  }
+  const res = await sendReviewUser(data)
+  dialogFormVisible.value = false
+  if (res.code === 1) {
+    ElMessage.success(res.msg)
+  } else {
+    return ElMessage.error(res.msg)
+  }
 }
 // 搜索功能
 const searchHandler = async (val) => {
