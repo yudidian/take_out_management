@@ -56,22 +56,32 @@ const props = defineProps({
     required: true
   }
 })
+const start = {
+  0: 0,
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+  7: 0
+}
 
 onMounted(() => {
   const items = document.querySelectorAll('span.number-item')
   const strArray = setCountNumber(props.count)
   for (let i = strArray.length - 1; i >= 0; i--) {
-    let start = 0
     const end = 118 * parseInt(strArray[i])
     const timer = setInterval(() => {
-      start += 3
-      if (start >= end) {
-        start = end
+      start[i] += (i + 10) * 2
+      if (start[i] >= end) {
+        start[i] = 0
         clearInterval(timer)
         items[i].style.transform = `translateY(${-end}px)`
+        return
       }
-      items[i].style.transform = `translateY(${-start}px)`
-    }, 32 / i)
+      items[i].style.transform = `translateY(${-start[i]}px)`
+    }, 80 / i)
   }
 })
 // 补零操作
