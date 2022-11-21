@@ -48,11 +48,11 @@
 </template>
 
 <script setup name="CenterOne">
-import { onMounted } from 'vue'
+import { watch } from 'vue'
 const MAX_COUNT = 8
 const props = defineProps({
-  count: {
-    type: Number,
+  centerOne: {
+    type: Object,
     required: true
   }
 })
@@ -67,9 +67,9 @@ const start = {
   7: 0
 }
 
-onMounted(() => {
+watch(() => props.centerOne.allSales, () => {
   const items = document.querySelectorAll('span.number-item')
-  const strArray = setCountNumber(props.count)
+  const strArray = setCountNumber(props.centerOne.allSales / 100)
   for (let i = strArray.length - 1; i >= 0; i--) {
     const end = 118 * parseInt(strArray[i])
     const timer = setInterval(() => {
@@ -83,14 +83,16 @@ onMounted(() => {
       items[i].style.transform = `translateY(${-start[i]}px)`
     }, 80 / i)
   }
-})
+}, { immediate: false })
 // 补零操作
 const setCountNumber = (count) => {
+  if (count.toString.length === MAX_COUNT) {
+    return count.toString.split('')
+  }
   let str = ''
   for (let i = 0; i < MAX_COUNT - count.toString().length; i++) {
     str += '0'
   }
-  console.log(str)
   str = str + count
   return str.split('')
 }

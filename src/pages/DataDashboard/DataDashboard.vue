@@ -2,25 +2,7 @@
   <div class="data-content">
     <div class="content-left">
       <div class="left-1">
-        <div class="left-1-header">
-          <img
-            src="./image/left-1-logo.png"
-            alt=""
-          >
-          <span class="title">
-            数据概览
-          </span>
-        </div>
-        <div class="left-1-wrapper">
-          <div class="left">
-            <span class="user-title">小店总用户</span>
-            <span class="user-count">78,518</span>
-          </div>
-          <div
-            class="right"
-            id="left_1_echarts"
-          />
-        </div>
+        <LeftOne :left-one="scoreData.leftOne" />
       </div>
       <div class="left-2">
         <LeftTwo />
@@ -31,7 +13,9 @@
     </div>
     <div class="content-center">
       <div class="center-1">
-        <CenterOne :count="78564" />
+        <CenterOne
+          :center-one="scoreData.centerOne"
+        />
       </div>
       <div class="center-2">
         <div class="center-2-1">
@@ -40,7 +24,7 @@
               菜品销售额第一
             </div>
             <div class="money">
-              47,522
+              ￥ {{ scoreData.centerOne.first }}
             </div>
           </div>
         </div>
@@ -50,7 +34,7 @@
               菜品销售额第二
             </div>
             <div class="money">
-              47,522
+              ￥ {{ scoreData.centerOne.second }}
             </div>
           </div>
         </div>
@@ -60,13 +44,13 @@
               菜品销售额第三
             </div>
             <div class="money">
-              47,522
+              ￥ {{ scoreData.centerOne.three }}
             </div>
           </div>
         </div>
       </div>
       <div class="center-3">
-        <CenterThree />
+        <CenterThree :center-three="scoreData.centerThree" />
       </div>
       <div class="center-4">
         <CenterFours />
@@ -86,7 +70,10 @@
     v-if="show"
   >
     <div class="loading">
-      <img src="./image/loading.gif">
+      <img
+        src="./image/loading.gif"
+        alt=""
+      >
       <span class="message">koala</span>
     </div>
   </Teleport>
@@ -98,72 +85,46 @@ import CenterFours from './component/CenterFours.vue'
 import LeftThree from '@/pages/DataDashboard/component/LeftThree.vue'
 import CenterThree from './component/CenterThree.vue'
 import LeftTwo from './component/LeftTow.vue'
+import LeftOne from './component/LeftOne.vue'
 import CenterOne from './component/CenterOne.vue'
 import RightOne from './component/RightOne.vue'
-import { onMounted, ref } from 'vue'
-import * as echarts from 'echarts'
+import { onMounted, reactive, ref } from 'vue'
+import { sendGetAllDishInfo, sendGetAllUser } from '@/axios/api/sourceData'
+import { formatNumber } from '@/utils'
+const scoreData = reactive({
+  leftOne: {
+    allCount: '000,000'
+  },
+  centerOne: {
+    first: '00,000',
+    second: '00,000',
+    three: '00,000',
+    allSales: '00000000'
+  },
+  centerThree: {
+    dishInfo: [],
+    setMeal: []
+  }
+})
 const show = ref(true)
-const setLeft1 = () => {
-  const myEcharts = echarts.init(document.querySelector('#left_1_echarts'))
-  myEcharts.setOption({
-    grid: {
-      top: 10,
-      bottom: 40
-    },
-    xAxis: {
-      show: true,
-      type: 'category',
-      data: ['一', '三', '五', '七', '九', '十一']
-    },
-    tooltip: {
-      show: true
-    },
-    yAxis: {
-      show: true,
-      type: 'value',
-      max: 100
-    },
-    color: {
-      type: 'linear',
-      x: 0,
-      y: 0,
-      x2: 1,
-      y2: 1,
-      colorStops: [{
-        offset: 0, color: '#9B75FF' // 0% 处的颜色
-      }, {
-        offset: 1, color: '#FF6B85' // 100% 处的颜色
-      }],
-      global: false // 缺省为 false
-    },
-    series: [
-      {
-        data: [8, 48, 88, 20, 40, 60],
-        type: 'line',
-        symbolSize: (vale, params) => {
-          if (vale === 60) {
-            return 8
-          } else {
-            return 0
-          }
-        },
-        smooth: true,
-        clip: false,
-        lineStyle: {
-          width: 5,
-          cap: 'round'
-        }
-      }
-    ]
-  })
-}
 onMounted(() => {
+  getScoreData()
   setTimeout(() => {
     show.value = false
   }, 2000)
-  setLeft1()
 })
-
+const getScoreData = async () => {
+  const res = await Promise.allSettled([sendGetAllUser(), sendGetAllDishInfo()])
+  scoreData.leftOne.allCount = formatNumber(res[0].value.info.allCount, 5)
+  scoreData.centerOne = {
+    first: formatNumber(res[1].value.info.first / 100, 5),
+    second: formatNumber(res[1].value.info.second / 100, 5),
+    three: formatNumber(res[1].value.info.three / 100, 5),
+    allSales: res[1].value.info.allSales
+  }
+  scoreData.centerThree.dishInfo = res[1].value.info.dish
+  scoreData.centerThree.setMeal = res[1].value.info.setmeal
+}
 </script>
 
 <style scoped lang="scss">

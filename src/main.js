@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import './static/styles/common.css'
 import './style/element/index.scss'
 
-import ElementPlus from 'element-plus'
+import ElementPlus from 'my-element-plus-change'
 
 import App from './App.vue'
 import router from './router'

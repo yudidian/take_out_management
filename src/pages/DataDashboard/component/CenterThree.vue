@@ -19,96 +19,31 @@
     id="swiper"
   >
     <div class="swiper-wrapper">
-      <div class="swiper-slide">
+      <div
+        class="swiper-slide"
+        v-for="(item, index) in centerThree.dishInfo"
+        :key="item.id"
+      >
         <div class="index">
-          1
+          {{ index + 1 }}
         </div>
         <div class="image">
           <img
-            src="../image/center-3-logo.png"
+            :src="IMG_URL + item.image"
             alt=""
           >
         </div>
         <div class="name">
-          xxx
+          {{ item.name }}
         </div>
         <div class="description">
-          xxxxxxxxxxxxxxxxxxx
+          {{ item.description }}
         </div>
         <div class="price">
-          ￥16.80
+          ￥{{ (item.price / 100).toFixed(2) }}
         </div>
         <div class="sales">
-          200
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="index">
-          1
-        </div>
-        <div class="image">
-          <img
-            src="../image/center-3-logo.png"
-            alt=""
-          >
-        </div>
-        <div class="name">
-          xxx
-        </div>
-        <div class="description">
-          xxxxxxxxxxxxxxxxxxx
-        </div>
-        <div class="price">
-          ￥16.80
-        </div>
-        <div class="sales">
-          200
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="index">
-          1
-        </div>
-        <div class="image">
-          <img
-            src="../image/center-3-logo.png"
-            alt=""
-          >
-        </div>
-        <div class="name">
-          xxx
-        </div>
-        <div class="description">
-          xxxxxxxxxxxxxxxxxxx
-        </div>
-        <div class="price">
-          ￥16.80
-        </div>
-        <div class="sales">
-          200
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="index">
-          1
-        </div>
-        <div class="image">
-          <img
-            src="../image/center-3-logo.png"
-            alt=""
-          >
-        </div>
-        <div class="name">
-          xxx
-        </div>
-        <div class="description">
-          xxxxxxxxxxxxxxxxxxx
-        </div>
-        <div class="price">
-          ￥16.80
-        </div>
-        <div class="sales">
-          200
+          {{ item.salesVolume }}
         </div>
       </div>
     </div>
@@ -116,10 +51,19 @@
 </template>
 
 <script setup name="CenterThree">
-import { onBeforeUnmount, onMounted } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted } from 'vue'
 import { clearAllTimer } from '@/utils'
+const IMG_URL = import.meta.env.VITE_IMAGE_URL
+defineProps({
+  centerThree: {
+    type: Object,
+    required: true
+  }
+})
 onMounted(() => {
-  runItem()
+  nextTick(() => {
+    runItem()
+  })
 })
 onBeforeUnmount(() => {
   console.log('组件销毁')
@@ -244,17 +188,24 @@ const runItem2 = () => {
       width: 40px;
     }
     .image{
-      width: 80px;
+      width: 40px;
+      height: 40px;
       text-align: center;
       img{
-        width: 30px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
     .name{
+      font-size: 14px;
       text-align: center;
       width: 130px;
     }
     .description{
+      font-size: 12px;
+      padding: 0 10px;
+      text-overflow: ellipsis;
       text-align: center;
       width: 360px;
       overflow: hidden;

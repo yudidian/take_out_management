@@ -17,6 +17,7 @@
     </div>
     <el-table
       :data="tableData"
+      :is-show-export="true"
       stripe
       style="width: 100%"
       v-loading="tableData.length<=0"
