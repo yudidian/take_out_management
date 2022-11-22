@@ -5,7 +5,7 @@
         src="../image/left-3-logo.png"
         alt=""
       >
-      <span class="name">流量趋势</span>
+      <span class="name">菜品销售趋势</span>
     </div>
     <div class="right">
       <div class="top">
@@ -33,7 +33,7 @@ onMounted(() => {
   const chartDom = document.querySelector('.left-three')
   const myChart = echarts.init(chartDom)
   const option = {
-    color: ['#ff6d87', '#797dff'],
+    color: ['#ff6d87', '#797dff', '#0599f5', '#05f5d9'],
     tooltip: {
       trigger: 'axis',
       backgroundColor: '#35394B',
@@ -71,7 +71,7 @@ onMounted(() => {
     ],
     series: [
       {
-        name: 'Line 1',
+        name: '第一',
         type: 'line',
         stack: 'Total',
         smooth: true,
@@ -98,7 +98,7 @@ onMounted(() => {
         data: [140, 232, 101, 264, 90, 340, 250]
       },
       {
-        name: 'Line 2',
+        name: '第二',
         type: 'line',
         stack: 'Total',
         smooth: true,
@@ -125,7 +125,7 @@ onMounted(() => {
         data: [120, 282, 111, 234, 220, 340, 310]
       },
       {
-        name: 'Line 3',
+        name: '第三',
         type: 'line',
         stack: 'Total',
         smooth: true,
@@ -152,7 +152,7 @@ onMounted(() => {
         data: [320, 132, 201, 334, 190, 130, 220]
       },
       {
-        name: 'Line 4',
+        name: '第四',
         type: 'line',
         stack: 'Total',
         smooth: true,
@@ -177,37 +177,6 @@ onMounted(() => {
           focus: 'series'
         },
         data: [220, 402, 231, 134, 190, 230, 120]
-      },
-      {
-        name: 'Line 5',
-        type: 'line',
-        stack: 'Total',
-        smooth: true,
-        lineStyle: {
-          width: 0
-        },
-        showSymbol: false,
-        label: {
-          show: true,
-          position: 'top'
-        },
-        areaStyle: {
-          opacity: 0.8,
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgb(255, 191, 0)'
-            },
-            {
-              offset: 1,
-              color: 'rgb(224, 62, 76)'
-            }
-          ])
-        },
-        emphasis: {
-          focus: 'series'
-        },
-        data: [220, 302, 181, 234, 210, 290, 150]
       }
     ]
   }

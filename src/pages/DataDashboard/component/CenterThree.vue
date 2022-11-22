@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
   clearAllTimer()
 })
 const runItem = () => {
-  const itemHeight = document.querySelector('.swiper-slide').clientHeight
+  const itemHeight = 72
   const itemWrapper = document.querySelector('.swiper-wrapper')
   const items = document.querySelectorAll('.swiper-slide')
   const itemsLength = items.length
@@ -93,7 +93,7 @@ const runItem = () => {
   }
 }
 const runItem2 = () => {
-  const itemHeight = document.querySelector('.swiper-slide').clientHeight
+  const itemHeight = 72
   const itemWrapper = document.querySelector('.swiper-wrapper')
   const items = document.querySelectorAll('.swiper-slide')
   const itemsLength = items.length
@@ -103,7 +103,7 @@ const runItem2 = () => {
         itemWrapper.style.transition = 'all 1.5s ease 0s'
       }
       itemWrapper.style.transform = `translateY(${-i * itemHeight}px)`
-    }, 2000 * (i + 2))
+    }, 2000 * (i + 3))
     if (i === itemsLength) {
       // 到最后一个
       setTimeout(() => {
@@ -190,6 +190,8 @@ const runItem2 = () => {
     .image{
       width: 40px;
       height: 40px;
+      overflow: hidden;
+      border-radius: 10px;
       text-align: center;
       img{
         width: 100%;
@@ -212,10 +214,14 @@ const runItem2 = () => {
       white-space: nowrap;
     }
     .price{
-      width: 130px;
+      width: 120px;
+      text-align: center;
       color: #797dff;
     }
      .sales{
+       width: 80px;
+       text-align: center;
+       margin-left: 10px;
        color: #ff6d87;;
      }
   }

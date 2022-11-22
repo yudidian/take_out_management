@@ -6,7 +6,7 @@
           koala数据可视化
         </div>
         <div class="left-user">
-          用户数量：6666
+          用户数量：{{ allCount }}
         </div>
       </div>
       <div class="right">
@@ -38,6 +38,12 @@
 <script setup name="RightOne">
 import dayjs from 'dayjs'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+defineProps({
+  allCount: {
+    type: String,
+    required: true
+  }
+})
 const nowTime = ref('')
 let timer
 onMounted(() => {

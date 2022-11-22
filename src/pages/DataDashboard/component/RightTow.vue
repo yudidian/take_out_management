@@ -11,11 +11,15 @@
         </div>
       </div>
       <div class="right">
-        订单数量：1425
+        订单数量：{{ rightTow.allCount }}
       </div>
     </div>
     <ul class="content">
-      <li class="item">
+      <li
+        class="item"
+        v-for="(item) in rightTow.list"
+        :key="item.id"
+      >
         <div class="item-left">
           <img
             src="../image/right-2-imag.png"
@@ -24,135 +28,28 @@
         </div>
         <div class="item-center">
           <div class="top">
-            下单人：xxx
+            收货人：{{ item.consignee }}
           </div>
           <div class="bottom">
-            地址：xxxx
+            地址：{{ item.address }}
           </div>
         </div>
         <div class="item-right">
-          08:00:00
-        </div>
-      </li>
-      <li class="item">
-        <div class="item-left">
-          <img
-            src="../image/right-2-imag.png"
-            alt=""
-          >
-        </div>
-        <div class="item-center">
-          <div class="top">
-            下单人：xxx
-          </div>
-          <div class="bottom">
-            地址：xxxx
-          </div>
-        </div>
-        <div class="item-right">
-          08:00:00
-        </div>
-      </li>
-      <li class="item">
-        <div class="item-left">
-          <img
-            src="../image/right-2-imag.png"
-            alt=""
-          >
-        </div>
-        <div class="item-center">
-          <div class="top">
-            下单人：xxx
-          </div>
-          <div class="bottom">
-            地址：xxxx
-          </div>
-        </div>
-        <div class="item-right">
-          08:00:00
-        </div>
-      </li>
-      <li class="item">
-        <div class="item-left">
-          <img
-            src="../image/right-2-imag.png"
-            alt=""
-          >
-        </div>
-        <div class="item-center">
-          <div class="top">
-            下单人：xxx
-          </div>
-          <div class="bottom">
-            地址：xxxx
-          </div>
-        </div>
-        <div class="item-right">
-          08:00:00
-        </div>
-      </li>
-      <li class="item">
-        <div class="item-left">
-          <img
-            src="../image/right-2-imag.png"
-            alt=""
-          >
-        </div>
-        <div class="item-center">
-          <div class="top">
-            下单人：xxx
-          </div>
-          <div class="bottom">
-            地址：xxxx
-          </div>
-        </div>
-        <div class="item-right">
-          08:00:00
-        </div>
-      </li>
-      <li class="item">
-        <div class="item-left">
-          <img
-            src="../image/right-2-imag.png"
-            alt=""
-          >
-        </div>
-        <div class="item-center">
-          <div class="top">
-            下单人：xxx
-          </div>
-          <div class="bottom">
-            地址：xxxx
-          </div>
-        </div>
-        <div class="item-right">
-          08:00:00
-        </div>
-      </li>
-      <li class="item">
-        <div class="item-left">
-          <img
-            src="../image/right-2-imag.png"
-            alt=""
-          >
-        </div>
-        <div class="item-center">
-          <div class="top">
-            下单人：xxx
-          </div>
-          <div class="bottom">
-            地址：xxxx
-          </div>
-        </div>
-        <div class="item-right">
-          08:00:00
+          {{ dayjs(item.orderTime).format('HH:mm:ss') }}
         </div>
       </li>
     </ul>
   </div>
 </template>
 
-<script>
+<script setup>
+import dayjs from 'dayjs'
+defineProps({
+  rightTow: {
+    type: Object,
+    required: true
+  }
+})
 </script>
 
 <style  lang="scss">
@@ -207,11 +104,13 @@
       font-weight: 900;
       margin-left: 20px;
       .top{
+        padding: 0 10px 0 0;
         font-size: 16px;
         color: rgb(140, 152, 191);
         margin-bottom: 10px;
       }
       .bottom{
+        padding: 0 10px 0 0;
         font-size: 12px;
       }
     }

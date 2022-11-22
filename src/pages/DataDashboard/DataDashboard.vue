@@ -5,7 +5,7 @@
         <LeftOne :left-one="scoreData.leftOne" />
       </div>
       <div class="left-2">
-        <LeftTwo />
+        <LeftTwo :left-two="scoreData.leftTwo" />
       </div>
       <div class="left-3">
         <LeftThree />
@@ -58,10 +58,10 @@
     </div>
     <div class="content-right">
       <div class="right-1">
-        <RightOne />
+        <RightOne :all-count="scoreData.leftOne.allCount" />
       </div>
       <div class="right-2">
-        <RightTow />
+        <RightTow :right-tow="scoreData.rightTow" />
       </div>
     </div>
   </div>
@@ -89,11 +89,22 @@ import LeftOne from './component/LeftOne.vue'
 import CenterOne from './component/CenterOne.vue'
 import RightOne from './component/RightOne.vue'
 import { onMounted, reactive, ref } from 'vue'
-import { sendGetAllDishInfo, sendGetAllUser } from '@/axios/api/sourceData'
+import {
+  sendGetAllDishInfo,
+  sendGetAllUser,
+  sendGetNewOrdersInfo,
+  sendGetOrdersInfo,
+  sendGetReviewInfo
+} from '@/axios/api/sourceData'
 import { formatNumber } from '@/utils'
 const scoreData = reactive({
   leftOne: {
     allCount: '000,000'
+  },
+  leftTwo: {
+    goodReviewCount: '99.9',
+    allReviewCount: '99,999',
+    allOrderCount: '99,999'
   },
   centerOne: {
     first: '00,000',
@@ -104,6 +115,10 @@ const scoreData = reactive({
   centerThree: {
     dishInfo: [],
     setMeal: []
+  },
+  rightTow: {
+    list: [],
+    allCount: '000,000'
   }
 })
 const show = ref(true)
@@ -114,8 +129,14 @@ onMounted(() => {
   }, 2000)
 })
 const getScoreData = async () => {
-  const res = await Promise.allSettled([sendGetAllUser(), sendGetAllDishInfo()])
+  const res = await Promise.allSettled([sendGetAllUser(), sendGetAllDishInfo(), sendGetOrdersInfo(), sendGetNewOrdersInfo(), sendGetReviewInfo()])
+  console.log(res)
   scoreData.leftOne.allCount = formatNumber(res[0].value.info.allCount, 5)
+  scoreData.leftTwo = {
+    goodReviewCount: ((res[4].value.info.goodReviewCount / res[4].value.info.allCount) * 100).toFixed(1),
+    allReviewCount: formatNumber(res[4].value.info.allCount, 5),
+    allOrderCount: formatNumber(res[2].value.info.allCount, 5)
+  }
   scoreData.centerOne = {
     first: formatNumber(res[1].value.info.first / 100, 5),
     second: formatNumber(res[1].value.info.second / 100, 5),
@@ -124,6 +145,8 @@ const getScoreData = async () => {
   }
   scoreData.centerThree.dishInfo = res[1].value.info.dish
   scoreData.centerThree.setMeal = res[1].value.info.setmeal
+  scoreData.rightTow.list = res[3].value.info.list
+  scoreData.rightTow.allCount = formatNumber(res[2].value.info.allCount, 5)
 }
 </script>
 

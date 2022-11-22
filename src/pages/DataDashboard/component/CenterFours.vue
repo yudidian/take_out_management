@@ -71,7 +71,7 @@ onMounted(() => {
     ],
     series: [
       {
-        name: 'Line 1',
+        name: '销售金额',
         type: 'line',
         stack: 'Total',
         smooth: false,
@@ -99,7 +99,7 @@ onMounted(() => {
         data: [140, 232, 101, 264, 90, 340, 250]
       },
       {
-        name: 'Line 2',
+        name: '成本',
         type: 'line',
         stack: 'Total',
         smooth: false,

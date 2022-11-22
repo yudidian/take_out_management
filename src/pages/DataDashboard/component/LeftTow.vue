@@ -5,7 +5,7 @@
   />
   <div class="message">
     <div class="count">
-      88.8
+      {{ leftTwo.goodReviewCount }}
       <span>%</span>
     </div>
     <div class="review">
@@ -17,7 +17,7 @@
       TOTAL REVIEW
     </div>
     <div class="all-count">
-      <span class="number">14,452</span>
+      <span class="number">{{ leftTwo.allReviewCount }}</span>
       <span class="unit">条</span>
     </div>
     <div class="all-review">
@@ -55,7 +55,7 @@
   <div class="sale-count">
     <div class="count-one">
       <span class="all-count">总下单数：</span>
-      <span class="number">47,556</span>
+      <span class="number">{{ leftTwo.allOrderCount }}</span>
     </div>
     <div class="info">
       *当日数据为模拟数据，非最终封账数据
@@ -66,7 +66,12 @@
 <script setup name="LeftTow">
 import * as echarts from 'echarts'
 import { onMounted } from 'vue'
-
+defineProps({
+  leftTwo: {
+    type: Object,
+    required: true
+  }
+})
 onMounted(() => {
   const chartDom = document.getElementById('leftTwo')
   const myChart = echarts.init(chartDom)

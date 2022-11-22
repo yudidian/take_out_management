@@ -14,15 +14,17 @@
     "axios": "^0.27.2",
     "dayjs": "^1.11.6",
     "echarts": "^5.4.0",
-    "element-plus": "^2.2.18",
+    "element-plus": "^2.2.21",
     "lodash": "^4.17.21",
+    "my-element-plus-change": "^0.0.9",
     "screenfull": "^6.0.2",
     "swiper": "^8.4.4",
     "uuid": "^8.3.2",
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vue": "^3.2.25",
     "vue-router": "^4.0.15",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "xlsx-js-style": "^1.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.3.0",
