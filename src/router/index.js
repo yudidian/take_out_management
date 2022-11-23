@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import router from './routers'
+import { okTip } from '@/utils/messageTip'
 const routes = router
 
 const myRouter = createRouter({
@@ -11,6 +12,8 @@ myRouter.beforeEach((to, from, next) => {
   // const username= localStorage.getItem('username')
   if (token) {
     if (to.path === '/login') {
+      // 登录了就不用再去登录
+      okTip('无需重复登录')
       next(from.path)
     }
     next()

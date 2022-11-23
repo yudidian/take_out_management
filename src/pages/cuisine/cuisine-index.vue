@@ -40,7 +40,11 @@
     <el-table-column
       label="售价"
       prop="price"
-    />
+    >
+      <template #default="scope">
+        <span>￥{{ scope.row.price / 100 }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="销售状态"
       prop="status"
@@ -69,7 +73,7 @@
           text
           size="small"
           type="warning"
-          @click="forbiddenAndDeleteDishHandler(score.row.id, 'delete')"
+          @click="forbiddenAndDeleteDishHandler(score.row.id, 'delete', score.row.status)"
         >
           删除
         </el-button>
@@ -77,9 +81,9 @@
           text
           size="small"
           type="danger"
-          @click="forbiddenAndDeleteDishHandler(score.row.id, 'forbidden')"
+          @click="forbiddenAndDeleteDishHandler(score.row.id, 'forbidden', score.row.status)"
         >
-          禁用
+          {{ score.row.status === 1 ? '禁用' : '起售' }}
         </el-button>
       </template>
     </el-table-column>
@@ -102,6 +106,10 @@
       <el-form-item
         label="菜品名称"
         label-width="200px"
+        prop="name"
+        :rules="[
+          { required: true, message: '请输入菜品名称' }
+        ]"
       >
         <el-input
           v-model="form.name"
@@ -126,13 +134,17 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        label="菜品价格"
+        label="菜品价格(单位分)"
         :label-width="200"
+        prop="price"
+        :rules="[
+          { required: true, message: '请输入菜品价格' }
+        ]"
       >
         <el-input-number
           v-model="form.price"
           :min="1"
-          :max="1000"
+          :max="100000"
         />
       </el-form-item>
       <el-form-item
@@ -241,6 +253,10 @@
         label="菜品描述"
         :label-width="200"
         class="flavor-textArea"
+        prop="description"
+        :rules="[
+          { required: true, message: '请输入菜品描述' }
+        ]"
       >
         <el-input
           v-model="form.description"
@@ -266,11 +282,12 @@
 <script setup>
 import { Plus } from '@element-plus/icons-vue'
 import { onMounted, ref, watch } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useStore } from 'vuex'
 import { getCategoryInfo } from '@/axios/api/category'
 import { addDish, getDishPage, getDishInfoById, updateDishInfo, deleteAndForbiddenDish, updateListDish } from '@/axios/api/dish'
 import { v4 as uuidv4 } from 'uuid'
+import { errorTip } from '@/utils/messageTip'
 const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const store = useStore()
 const keyWords = ref('')
@@ -387,10 +404,14 @@ const categoryChange = (val) => {
 const sendAddDish = async () => {
   let res
   if (flag.value) {
-    res = await updateDishInfo(form.value)
+    res = await updateDishInfo({
+      ...form.value
+    })
     flag.value = false
   } else {
-    res = await addDish(form.value)
+    res = await addDish(
+      { ...form.value }
+    )
   }
   dialogFormVisible.value = false
   if (res.code === 1) {
@@ -440,7 +461,7 @@ const exitDishHandler = async (id) => {
     dialogFormVisible.value = true
     form.value = res.info
     categoryValue.value = res.info.categoryName
-    imageUrl.value = `http://localhost:8080/download?fileName=${res.info.image}`
+    imageUrl.value = IMG_URL + res.info.image
     selectFlavorData.value = res.info.flavors.map(item => {
       return {
         name: item.name,
@@ -471,55 +492,91 @@ const closeHandler = () => {
   selectFlavorData.value = []
 }
 // 禁用商品
-const forbiddenAndDeleteDishHandler = async (id, type) => {
-  const data = {
-    id
-  }
-  if (type === 'delete') {
-    data.isDeleted = 1
-  } else {
-    data.status = 0
-  }
-  const res = await deleteAndForbiddenDish(data)
-  if (res.code === 1) {
-    ElMessage.success({
-      message: res.msg
+const forbiddenAndDeleteDishHandler = async (id, type, status) => {
+  ElMessageBox.confirm(
+    '操作不可逆是否执行?',
+    '提示',
+    {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }
+  )
+    .then(async () => {
+      const data = {
+        id
+      }
+      if (type === 'delete') {
+        data.isDeleted = 1
+      } else {
+        data.status = status === 1 ? 0 : 1
+      }
+      const res = await deleteAndForbiddenDish(data)
+      if (res.code === 1) {
+        ElMessage.success({
+          message: res.msg
+        })
+        await sendDishPage()
+      } else {
+        ElMessage.error({
+          message: res.msg
+        })
+      }
+      delete data.isDeleted
+      delete data.status
     })
-    await sendDishPage()
-  } else {
-    ElMessage.error({
-      message: res.msg
-    })
-  }
-  delete data.isDeleted
-  delete data.status
 }
 // 批量操作
 const listHandler = async (type) => {
+  if (listId.value.length === 0) {
+    errorTip('请至少选择一个选项')
+    return
+  }
+  let tip = ''
   switch (type) {
     case 1 : {
-      await updateListDish({
-        allId: listId.value,
-        isDeleted: 1
-      })
+      tip = '是否要批量删除'
       break
     }
     case 2 : {
-      await updateListDish({
-        allId: listId.value,
-        status: 1
-      })
+      tip = '是否要批量删除'
       break
     }
     case 3 : {
-      await updateListDish({
-        allId: listId.value,
-        status: 0
-      })
+      tip = '是否要批量删除'
       break
     }
   }
-  await sendDishPage()
+  ElMessageBox.confirm(tip, '提示', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(async () => {
+    switch (type) {
+      case 1 : {
+        await updateListDish({
+          allId: listId.value,
+          isDeleted: 1
+        })
+        break
+      }
+      case 2 : {
+        await updateListDish({
+          allId: listId.value,
+          status: 1
+        })
+        break
+      }
+      case 3 : {
+        await updateListDish({
+          allId: listId.value,
+          status: 0
+        })
+        break
+      }
+    }
+    await sendDishPage()
+  })
 }
 // 搜索功能
 const searchHandler = async (val) => {

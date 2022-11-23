@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import router from '@/router'
 
 const request = axios.create({
   baseURL: '/api',
@@ -23,6 +24,14 @@ request.interceptors.request.use(config => {
 })
 
 request.interceptors.response.use(res => {
+  if (res.data.msg === '无token') {
+    // 登录过期的时候清除路由对HomePage的缓存
+    ElMessage({
+      message: '用户信息过期',
+      type: 'warning'
+    })
+    router.replace('/login')
+  }
   return res.data
 }, error => {
   let { message } = error
@@ -32,6 +41,9 @@ request.interceptors.response.use(res => {
     message = '系统接口请求超时'
   } else if (message.includes('Request failed with status code')) {
     message = '系统接口异常'
+  } else if (message.includes('token')) {
+    message = '登录异常请重新登录'
+    router.replace('/login')
   }
   ElMessage({
     message,

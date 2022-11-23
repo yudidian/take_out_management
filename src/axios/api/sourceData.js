@@ -21,13 +21,6 @@ export const sendGetReviewInfo = () => {
     method: 'GET'
   })
 }
-// 获取订单数量情况
-export const sendGetNewOrdersInfo = () => {
-  return request({
-    url: '/data/newOrder',
-    method: 'GET'
-  })
-}
 // 获取最新订单
 export const sendGetOrdersInfo = () => {
   return request({

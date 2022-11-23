@@ -88,11 +88,10 @@ import LeftTwo from './component/LeftTow.vue'
 import LeftOne from './component/LeftOne.vue'
 import CenterOne from './component/CenterOne.vue'
 import RightOne from './component/RightOne.vue'
-import { onMounted, reactive, ref } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import {
   sendGetAllDishInfo,
   sendGetAllUser,
-  sendGetNewOrdersInfo,
   sendGetOrdersInfo,
   sendGetReviewInfo
 } from '@/axios/api/sourceData'
@@ -121,20 +120,26 @@ const scoreData = reactive({
     allCount: '000,000'
   }
 })
+let timer
 const show = ref(true)
 onMounted(() => {
   getScoreData()
-  setTimeout(() => {
+  timer = setTimeout(() => {
     show.value = false
   }, 2000)
+  setInterval(() => {
+    getScoreData()
+  }, 5000)
+})
+onBeforeUnmount(() => {
+  clearInterval(timer)
 })
 const getScoreData = async () => {
-  const res = await Promise.allSettled([sendGetAllUser(), sendGetAllDishInfo(), sendGetOrdersInfo(), sendGetNewOrdersInfo(), sendGetReviewInfo()])
-  console.log(res)
+  const res = await Promise.allSettled([sendGetAllUser(), sendGetAllDishInfo(), sendGetOrdersInfo(), sendGetReviewInfo()])
   scoreData.leftOne.allCount = formatNumber(res[0].value.info.allCount, 5)
   scoreData.leftTwo = {
-    goodReviewCount: ((res[4].value.info.goodReviewCount / res[4].value.info.allCount) * 100).toFixed(1),
-    allReviewCount: formatNumber(res[4].value.info.allCount, 5),
+    goodReviewCount: ((res[3].value.info.goodReviewCount / res[3].value.info.allCount) * 100).toFixed(1),
+    allReviewCount: formatNumber(res[3].value.info.allCount, 5),
     allOrderCount: formatNumber(res[2].value.info.allCount, 5)
   }
   scoreData.centerOne = {
@@ -145,7 +150,7 @@ const getScoreData = async () => {
   }
   scoreData.centerThree.dishInfo = res[1].value.info.dish
   scoreData.centerThree.setMeal = res[1].value.info.setmeal
-  scoreData.rightTow.list = res[3].value.info.list
+  scoreData.rightTow.list = res[2].value.info.list
   scoreData.rightTow.allCount = formatNumber(res[2].value.info.allCount, 5)
 }
 </script>
