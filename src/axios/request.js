@@ -25,6 +25,7 @@ request.interceptors.request.use(config => {
 
 request.interceptors.response.use(res => {
   if (res.data.msg === '无token') {
+    localStorage.clear()
     // 登录过期的时候清除路由对HomePage的缓存
     ElMessage({
       message: '用户信息过期',
