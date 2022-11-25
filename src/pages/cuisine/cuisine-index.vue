@@ -56,7 +56,11 @@
     <el-table-column
       label="最后操作时间"
       property="updateTime"
-    />
+    >
+      <template #default="scorp">
+        <span style="color: red">{{ dayjs(scorp.row.updateTime).format('YYYY-MM-DD HH:ss:mm') }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="操作"
     >
@@ -171,6 +175,7 @@
                 :key="flavorIndex"
                 :label="item.name"
                 :value="item.name"
+                :disabled="item.disabled"
               />
             </el-select>
             <el-tag
@@ -188,7 +193,7 @@
               v-show="data.value && data.value.length>0"
             >
               <el-input
-                v-if="inputVisible"
+                v-if="data.inputVisible"
                 ref="InputRef"
                 v-model="inputValue"
                 class="ml-1 w-20"
@@ -201,7 +206,7 @@
                 class="ml-1"
                 size="small"
                 type="success"
-                @click="showInput"
+                @click="showInput(index)"
               >
                 添加
               </el-button>
@@ -209,7 +214,7 @@
                 class="delete-flavor"
                 size="small"
                 type="danger"
-                @click="deleteFlavor(index)"
+                @click="deleteFlavor(data.name,index)"
               >
                 删除
               </el-button>
@@ -280,8 +285,9 @@
 </template>
 
 <script setup>
+import dayjs from 'dayjs'
 import { Plus } from '@element-plus/icons-vue'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useStore } from 'vuex'
 import { getCategoryInfo } from '@/axios/api/category'
@@ -291,7 +297,6 @@ import { errorTip } from '@/utils/messageTip'
 const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const store = useStore()
 const keyWords = ref('')
-const inputVisible = ref(false)
 const inputValue = ref('')
 const InputRef = ref(null)
 const imageUrl = ref('')
@@ -304,12 +309,12 @@ const flag = ref(false) // false为添加true为编辑
 const dialogFormVisible = ref(false)
 const categoryInfo = ref([])
 const categoryValue = ref('')
-const dishFlavorsData = [
-  { name: '甜味', value: ['无糖', '少糖', '半糖', '多糖', '全糖'] },
-  { name: '温度', value: ['热饮', '常温', '去冰', '少冰', '多冰'] },
-  { name: '忌口', value: ['不要葱', '不要蒜', '不要香菜', '不要辣'] },
-  { name: '辣度', value: ['不辣', '微辣', '中辣', '重辣'] }
-] // 口味数据
+const dishFlavorsData = reactive([
+  { name: '甜味', value: ['无糖', '少糖', '半糖', '多糖', '全糖'], inputVisible: false, disabled: false },
+  { name: '温度', value: ['热饮', '常温', '去冰', '少冰', '多冰'], inputVisible: false, disabled: false },
+  { name: '忌口', value: ['不要葱', '不要蒜', '不要香菜', '不要辣'], inputVisible: false, disabled: false },
+  { name: '辣度', value: ['不辣', '微辣', '中辣', '重辣'], inputVisible: false, disabled: false }
+]) // 口味数据
 const code = uuidv4()
 const selectFlavorData = ref([])
 const form = ref({
@@ -325,14 +330,18 @@ onMounted(() => {
   sendCategoryInfo()
   sendDishPage()
 })
-watch(selectFlavorData.value, () => {
-  form.value.flavors = selectFlavorData.value.map(item => {
-    return {
-      name: item.name,
-      value: JSON.stringify(item.value)
+watch(selectFlavorData, () => {
+  const list = []
+  for (const selectFlavorDatum of selectFlavorData.value) {
+    if (selectFlavorDatum.name) {
+      list.push({
+        name: selectFlavorDatum.name,
+        value: JSON.stringify(selectFlavorDatum.value)
+      })
     }
-  })
-})
+  }
+  form.value.flavors = list
+}, { deep: true })
 // 选择框变化
 const handleSelectionChange = (selection) => {
   selection.forEach(item => {
@@ -368,25 +377,28 @@ const handleClose = (tag, index) => {
 // 添加标签
 const handleInputConfirm = (index) => {
   selectFlavorData.value[index].value.push(inputValue.value)
-  inputVisible.value = false
+  selectFlavorData.value[index].inputVisible = false
+  inputValue.value = ''
 }
 // 显示输入框
-const showInput = () => {
-  inputVisible.value = true
+const showInput = (index) => {
+  selectFlavorData.value[index].inputVisible = true
 }
 const showFlavor = () => {
   selectFlavorData.value.push({})
 }
 // 口味发生改变
 const flavorChange = (value, index) => {
-  const flavor = dishFlavorsData.find(item => {
+  const i = dishFlavorsData.findIndex(item => {
     return item.name === value
   })
-  selectFlavorData.value[index] = flavor
+  dishFlavorsData[i].disabled = true
+  selectFlavorData.value[index] = dishFlavorsData[i]
 }
 // 删除添加的口味
-const deleteFlavor = (index) => {
+const deleteFlavor = (name, index) => {
   selectFlavorData.value.splice(index, 1)
+  dishFlavorsData[dishFlavorsData.findIndex(item => item.name === name)].disabled = false
 }
 // 获取分类列表
 const sendCategoryInfo = async () => {
@@ -465,8 +477,19 @@ const exitDishHandler = async (id) => {
     selectFlavorData.value = res.info.flavors.map(item => {
       return {
         name: item.name,
-        value: JSON.parse(item.value)
+        value: JSON.parse(item.value),
+        inputVisible: false
       }
+    })
+    // 请求数据若是有dishFlavorsData中口味则禁止dishFlavorsData的选项
+    dishFlavorsData.forEach(item => {
+      let flag = false
+      res.info.flavors.forEach(flavor => {
+        if (flavor.name === item.name) {
+          flag = true
+        }
+      })
+      item.disabled = flag
     })
   } else {
     ElMessage.error({
@@ -614,8 +637,15 @@ const searchHandler = async (val) => {
             .el-tag{
               margin-left: 10px;
             }
-            .el-button{
+            .handler-btn{
+              display: flex;
               margin-left: 10px;
+              .el-input{
+                width: 70px;
+              }
+              .el-button{
+                margin-left: 10px;
+              }
             }
           }
         }
