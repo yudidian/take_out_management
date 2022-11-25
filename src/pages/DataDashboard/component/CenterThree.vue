@@ -66,7 +66,6 @@ onMounted(() => {
   })
 })
 onBeforeUnmount(() => {
-  console.log('组件销毁')
   clearAllTimer()
 })
 const runItem = () => {

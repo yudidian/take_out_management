@@ -209,7 +209,6 @@ onMounted(() => {
 
 const getAllReviews = async (params) => {
   const res = await sendGetAllReviews(params)
-  console.log(res)
   if (res.code === 1) {
     tableData.pages = res.info.records
     tableData.total = res.info.total

@@ -1,7 +1,7 @@
 <template>
   <el-image
     class="my-image"
-    :fit="fit"
+    :fit="'cover'"
     :src="src"
     :preview-teleported="true"
     :preview-src-list="srcList"
@@ -38,11 +38,9 @@ defineProps({
 
 <style scoped lang="scss">
 .my-image {
+  width: 100%;
+  height: 100%;
   padding: 0 5px;
-  max-width: 100px;
-  max-height: 100px;
-  width: v-bind(width);
-  border-radius: 10px;
   .image-slot {
     display: flex;
     justify-content: center;

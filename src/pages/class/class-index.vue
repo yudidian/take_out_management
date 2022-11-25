@@ -205,7 +205,6 @@ const sendForm = () => {
   formRef.value.validate(async (valid) => {
     if (valid) {
       let res
-      console.log(form.value.id)
       if (form.value.id === '') {
         res = await addCategory({
           name: form.value.name,

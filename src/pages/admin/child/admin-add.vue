@@ -145,11 +145,8 @@ const submitForm = async (ruleFormRef) => {
       })
     }
   })
-  console.log(ruleFormRef)
 }
-const resetForm = (ruleFormRef) => {
-  console.log(ruleFormRef)
-}
+const resetForm = (ruleFormRef) => {}
 </script>
 <style scoped lang="scss">
 .el-form {

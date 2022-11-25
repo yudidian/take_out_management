@@ -9,7 +9,6 @@
     :data="tableData.pages"
     style="width: 100%"
     @select="handleSelectionChange"
-    @row-click="rowClickHandler"
     v-loading="tableData.pages.length<=0"
   >
     <el-table-column
@@ -29,11 +28,13 @@
       align="center"
     >
       <template #default="scope">
-        <MyImage
-          :src="IMG_URL+scope.row.image"
-          fit="cover"
-          :src-list="[IMG_URL+scope.row.image]"
-        />
+        <div class="table-image">
+          <MyImage
+            :src="IMG_URL+scope.row.image"
+            fit="cover"
+            :src-list="[IMG_URL+scope.row.image]"
+          />
+        </div>
       </template>
     </el-table-column>
     <el-table-column
@@ -227,11 +228,6 @@ const rules = reactive({
 onMounted(() => {
   getDishDescription()
 })
-const rowClickHandler = (row, column, event) => {
-  if (column.property === 'description') {
-    console.log(123)
-  }
-}
 // 点击确定
 const submitForm = async () => {
   await ruleFormRef.value.validate(async (valid, fields) => {
@@ -243,8 +239,6 @@ const submitForm = async () => {
       } else {
         ElMessage.error(res.msg)
       }
-    } else {
-      console.log('error submit!')
     }
   })
 }
@@ -293,6 +287,12 @@ const searchHandler = async (val) => {
 </script>
 
 <style scoped lang="scss">
+.table-image{
+  width: 140px;
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+}
 .el-dialog {
   .el-form {
     .el-form-item {

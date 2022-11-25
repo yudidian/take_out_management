@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 export const clearAllTimer = () => {
   const length = setTimeout(() => {}, 0)
   for (let i = 0; i < length; i++) {
@@ -20,4 +19,3 @@ export const formatNumber = (number, max) => {
   const r = len % 3
   return r > 0 ? b.slice(0, r) + ',' + b.slice(r, len).match(/\d{3}/g).join(',') : b.slice(r, len).match(/\d{3}/g).join(',')
 }
-

@@ -355,7 +355,6 @@ const handleAvatarSuccess = (response) => {
 }
 // 图片上传之前
 const beforeAvatarUpload = (rawFile) => {
-  console.log(rawFile.type)
   const image = ['image/png', 'image/jpeg']
   const index = image.findIndex(item => {
     return item === rawFile.type
