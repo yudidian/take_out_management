@@ -94,12 +94,16 @@ import {
 } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
 import { ref, watch } from 'vue'
-
+import { useRoute } from 'vue-router'
+const route = useRoute()
 const store = useStore()
 const isCollapse = ref(store.getters.isCollapse)
 watch(() => store.getters.isCollapse, (val) => {
   isCollapse.value = val
 }, { immediate: true })
+watch(() => route.path, () => {
+  defineUrl.value = route.path
+})
 const defineUrl = ref(sessionStorage.getItem('url') || '/')
 </script>
 

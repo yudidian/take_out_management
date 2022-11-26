@@ -516,7 +516,7 @@ const closeHandler = () => {
 // 禁用商品
 const forbiddenAndDeleteDishHandler = async (id, type, status) => {
   ElMessageBox.confirm(
-    '操作不可逆是否执行?',
+    '是否要执行改操作?',
     '提示',
     {
       confirmButtonText: '确认',

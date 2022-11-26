@@ -26,8 +26,9 @@
       <SwitchButton @click="fullScreenHandler" />
     </el-icon>
     <el-badge
-      :value="12"
+      :value="store.getters.totalMessage.newTotal - store.getters.totalMessage.oldTotal"
       class="item"
+      @click="showTip"
     >
       <el-icon :size="30">
         <Bell />
@@ -64,6 +65,7 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import Breadcrumb from './Breadcrumb-index.vue'
 import { ref } from '@vue/reactivity'
+import { ElNotification } from 'element-plus'
 
 const router = useRouter()
 const store = useStore()
@@ -86,6 +88,21 @@ const fullScreenHandler = () => {
     screenfull.request()
     isFullscreen.value = true
   }
+}
+const showTip = () => {
+  ElNotification({
+    title: '未处理的信息',
+    dangerouslyUseHTMLString: true,
+    duration: 5000,
+    offset: 50,
+    message: `<div><span style="margin-right: 20px">你有<span style="color: red;">${store.getters.totalMessage.newTotal - store.getters.totalMessage.oldTotal}</span>条订单未处理</span><a href="#/order">去处理</a></div>`,
+    onClose: () => {
+      store.commit('setTotalMessage', {
+        newTotal: store.getters.totalMessage.newTotal,
+        oldTotal: store.getters.totalMessage.newTotal
+      })
+    }
+  })
 }
 </script>
 

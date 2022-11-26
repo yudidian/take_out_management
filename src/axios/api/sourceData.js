@@ -28,3 +28,10 @@ export const sendGetOrdersInfo = () => {
     method: 'GET'
   })
 }
+// 获取订单数量
+export const sendGetOrdersCount = () => {
+  return request({
+    url: '/data/order/count',
+    method: 'GET'
+  })
+}

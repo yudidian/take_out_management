@@ -4,5 +4,8 @@ export default {
   },
   isCollapse: (state) => {
     return state.common.isCollapse
+  },
+  totalMessage: (state) => {
+    return state.common.totalMessage
   }
 }

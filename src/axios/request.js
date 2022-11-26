@@ -35,16 +35,18 @@ request.interceptors.response.use(res => {
   }
   return res.data
 }, error => {
+  console.log(error)
   let { message } = error
   if (message === 'Network Error') {
     message = '后端接口连接异常'
   } else if (message.includes('timeout')) {
     message = '系统接口请求超时'
+  } else if (message.includes('Request failed with status code 403')) {
+    message = '登录过期'
+    localStorage.clear()
+    router.replace('/login')
   } else if (message.includes('Request failed with status code')) {
     message = '系统接口异常'
-  } else if (message.includes('token')) {
-    message = '登录异常请重新登录'
-    router.replace('/login')
   }
   ElMessage({
     message,

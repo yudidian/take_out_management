@@ -54,6 +54,16 @@
       width="320"
       align="center"
       prop="number"
+    >
+      <template #default="scope">
+        <span :class="scope.row.status === 2 ? 'red-font': ''">{{ scope.row.number }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="下单时间"
+      prop="checkoutTime"
+      width="340"
+      align="center"
     />
     <el-table-column
       label="收货人姓名"
@@ -76,12 +86,6 @@
     <el-table-column
       label="备注"
       prop="remark"
-      width="340"
-      align="center"
-    />
-    <el-table-column
-      label="下单时间"
-      prop="checkoutTime"
       width="340"
       align="center"
     />
@@ -161,10 +165,11 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { h, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import OrderHeader from './component/OrderHeader.vue'
 import { sendGetOrderList, sendGetOrderStatus } from '@/axios/api/orders'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
+
 // const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const keyWords = ref('')
 const orderStatusInfo = ref([])
@@ -173,13 +178,36 @@ const tableData = reactive({
   pages: []
 })
 const dialogFormVisible = ref(false)
-
+let timer
 onMounted(() => {
   getOrderList({
     page: 0,
     pageSize: 10,
     state: 0
   })
+  timer = setInterval(() => {
+    getOrderList({
+      page: 0,
+      pageSize: 10,
+      state: 0
+    })
+  }, 3000)
+})
+onBeforeUnmount(() => {
+  clearInterval(timer)
+})
+watch(() => tableData.total, (newVal, oldValue) => {
+  if (oldValue !== 0) {
+    ElNotification({
+      title: '新的订单',
+      message: h('i', { style: 'color: teal' }, '你有新的订单待查看'),
+      offset: 100,
+      duration: 0,
+      onClose: () => {
+        console.log(123)
+      }
+    })
+  }
 })
 const getOrderList = async (params) => {
   const res = await sendGetOrderList(params)
@@ -277,5 +305,9 @@ const searchHandler = async (val) => {
       width: 720px;
     }
   }
+}
+.red-font{
+  color: red;
+  font-weight: 900;
 }
 </style>
