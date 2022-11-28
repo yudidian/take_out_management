@@ -19,6 +19,27 @@
 <script setup>
 import MenuIndex from './menu/MenuIndex.vue'
 import HeaderIndex from './header/headerIndex.vue'
+import { sendGetOrdersCount } from '@/axios/api/sourceData'
+import { useStore } from 'vuex'
+const store = useStore()
+const getOrdersCount = async (flag) => {
+  const res = await sendGetOrdersCount()
+  if (flag) {
+    store.commit('setTotalMessage', {
+      newTotal: res.info.allCount,
+      oldTotal: res.info.allCount
+    })
+  } else {
+    store.commit('setTotalMessage', {
+      newTotal: res.info.allCount,
+      oldTotal: store.getters.totalMessage.oldTotal
+    })
+  }
+}
+getOrdersCount(true)
+setInterval(() => {
+  getOrdersCount(false)
+}, 3000)
 </script>
 
 <style scoped lang="scss">
