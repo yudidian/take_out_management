@@ -4,7 +4,6 @@
     ref="multipleTableRef"
     :data="tableData.pages"
     style="width: 100%"
-    v-loading="tableData.pages.length<=0"
   >
     <el-table-column type="expand">
       <template #default="props">
@@ -202,16 +201,22 @@ watch(() => tableData.total, (newVal, oldValue) => {
       title: '新的订单',
       message: h('i', { style: 'color: teal' }, '你有新的订单待查看'),
       offset: 100,
-      duration: 0,
-      onClose: () => {
-        console.log(123)
-      }
+      duration: 0
     })
   }
 })
 const getOrderList = async (params) => {
   const res = await sendGetOrderList(params)
   if (res.code === 1) {
+    // 总数没变就更新数据了
+    if (res.info.total === 0) {
+      tableData.pages = []
+      tableData.total = 0
+      return
+    }
+    if (tableData.total === res.info.total) {
+      return
+    }
     tableData.pages = res.info.records
     tableData.total = res.info.total
   } else {

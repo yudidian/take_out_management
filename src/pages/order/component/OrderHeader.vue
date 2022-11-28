@@ -26,7 +26,7 @@ const options = [
   },
   {
     value: '2',
-    label: '带出餐'
+    label: '待出餐'
   },
   {
     value: '3',
