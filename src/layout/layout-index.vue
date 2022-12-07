@@ -9,7 +9,7 @@
         </el-main>
         <el-footer>
           <p class="footer">
-            @考拉烘焙坊
+            @考拉外卖
           </p>
         </el-footer>
       </el-container>

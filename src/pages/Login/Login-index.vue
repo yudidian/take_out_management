@@ -16,7 +16,7 @@
           <div class="login-form-title">
             <img
               src="@/assets/logo.png"
-              alt="考拉烘焙坊"
+              alt="考拉外卖"
             >
           </div>
           <el-form-item prop="username">
@@ -63,8 +63,8 @@ import { useStore } from 'vuex'
 const store = useStore()
 const loading = ref(false)
 const loginForm = reactive({
-  username: 'admin',
-  password: '123456'
+  username: '',
+  password: ''
 })
 const loginFormRef = ref(null)
 const rules = reactive({
@@ -79,17 +79,14 @@ const rules = reactive({
 })
 
 const submitForm = async (formEl) => {
-  loginForm.value = true
   await formEl.validate((valid, fields) => {
     if (valid) {
       store.dispatch('toLogin', loginForm)
-      loginForm.value = false
     } else {
       ElMessage({
         message: '请补全信息',
         type: 'warning'
       })
-      loginForm.value = false
     }
   })
 }

@@ -24,7 +24,6 @@ export default {
   actions: {
     async toLogin ({ commit }, data) {
       const res = await login(data)
-      console.log(res)
       if (res.code === 1) {
         commit('changeToken', res.data.token)
         commit('changeUsername', res.data.username)

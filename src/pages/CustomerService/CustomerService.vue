@@ -12,12 +12,13 @@
           :src="IMG_URL + item[0].userAvatar"
           alt="img"
         >
-        <span>消息条数{{ item.length }}</span>
+        <span class="username">用户名：{{ item[0].userName }}</span>
+        <span class="count">消息条数：{{ item.length }}</span>
       </li>
     </ul>
     <el-drawer
       v-model="drawer"
-      title="I'm outer Drawer"
+      title="消息回复"
       size="50%"
     >
       <ul
@@ -58,6 +59,8 @@
       </ul>
       <div class="bottom-review">
         <el-input
+          maxlength="300"
+          show-word-limit
           v-model="reviewMessage"
           type="textarea"
           placeholder="请输入内容"
@@ -123,6 +126,7 @@ const sendMessage = async () => {
 <style scoped lang="scss">
 .message-wrapper{
   .message-item{
+    cursor: pointer;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -131,6 +135,13 @@ const sendMessage = async () => {
       width: 40px;
       height: 40px;
       margin-right: 20px;
+    }
+    .username{
+      font-weight: 900;
+    }
+    .count{
+      margin-left: 20px;
+      color: red;
     }
   }
 }
@@ -143,7 +154,7 @@ const sendMessage = async () => {
     .left-review{
       justify-self: flex-start;
       width: 100%;
-      height: 80px;
+      height: auto;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -153,6 +164,7 @@ const sendMessage = async () => {
         margin-right: 10px;
       }
       .review-right {
+        width: 400px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -161,15 +173,17 @@ const sendMessage = async () => {
           font-weight: 900;
         }
         .review-message{
+          padding: 10px;
           font-size: 18px;
           background-color: #e1e1e1;
           border-radius: 5px;
+          overflow-wrap: anywhere;
         }
       }
     }
     .right-review{
       width: 100%;
-      height: 80px;
+      height: auto;
       display: flex;
       align-items: center;
       margin-left: auto;
@@ -181,6 +195,7 @@ const sendMessage = async () => {
       }
       .review-right {
         display: flex;
+        width: 70%;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-end;
@@ -188,12 +203,22 @@ const sendMessage = async () => {
           font-weight: 900;
         }
         .review-message{
+          padding: 10px;
+          overflow-wrap: anywhere;
           font-size: 18px;
           background-color: #e1e1e1;
           border-radius: 5px;
         }
       }
     }
+  }
+}
+.bottom-review{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  .el-button{
+    margin-top: 10px;
   }
 }
 </style>
