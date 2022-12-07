@@ -79,6 +79,14 @@
           <span>评论管理</span>
         </template>
       </el-menu-item>
+      <el-menu-item index="/customerService">
+        <el-icon>
+          <Tickets />
+        </el-icon>
+        <template #title>
+          <span>消息管理</span>
+        </template>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

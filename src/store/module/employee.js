@@ -6,7 +6,8 @@ export default {
   state () {
     return {
       token: localStorage.getItem('token') || '',
-      username: localStorage.getItem('username') || ''
+      username: localStorage.getItem('username') || '',
+      userId: localStorage.getItem('userId') || ''
     }
   },
   mutations: {
@@ -15,16 +16,22 @@ export default {
     },
     changeUsername (state, value) {
       state.username = value
+    },
+    changeUserId (state, value) {
+      state.userId = value
     }
   },
   actions: {
     async toLogin ({ commit }, data) {
       const res = await login(data)
+      console.log(res)
       if (res.code === 1) {
         commit('changeToken', res.data.token)
         commit('changeUsername', res.data.username)
+        commit('changeUserId', res.data.userId)
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('username', res.data.username)
+        localStorage.setItem('userId', res.data.userId)
         await router.replace('/')
         ElMessage({
           type: 'success',

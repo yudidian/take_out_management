@@ -128,7 +128,7 @@
           size="small"
           type="danger"
           :disabled="score.row.status !== 2"
-          @click="sendOrder(score.row)"
+          @click="sendOrder(score.row, score.$index)"
         >
           <span style="font-weight: 900; font-size: 16px">出餐</span>
         </el-button>
@@ -256,7 +256,7 @@ const getOrderStatus = async (params) => {
     })
   }
 }
-const sendOrder = (row) => {
+const sendOrder = (row, index) => {
   ElMessageBox.confirm(
     '是否确认出餐?',
     '提示',
@@ -271,6 +271,7 @@ const sendOrder = (row) => {
         number: row.number,
         flag: 1
       })
+      tableData.pages[index].status = 3
       ElMessage.success('出餐成功')
     })
     .catch(() => {
