@@ -82,6 +82,7 @@ import { nextTick, onMounted, ref, watch } from 'vue'
 import Websocket from '@/utils/websocket'
 import { useStore } from 'vuex'
 const listContent = ref()
+const WEB_SOCKET_URL = import.meta.env.DEV ? import.meta.env.VITE_LOCAL_WEBSOCK : import.meta.env.VITE_SERVER_WEBSOCK
 const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const store = useStore()
 const socket = ref(null)
@@ -100,7 +101,7 @@ watch(messageList, () => {
   })
 }, { deep: true })
 const init = async () => {
-  socket.value = new Websocket(`ws://localhost:8089/websocket/chart?managerId=${store.getters.userId}`)
+  socket.value = new Websocket(`${WEB_SOCKET_URL}/websocket/chart?managerId=${store.getters.userId}`)
   socket.value.ws.onmessage = msg => {
     messageList.value = JSON.parse(msg.data)
   }
