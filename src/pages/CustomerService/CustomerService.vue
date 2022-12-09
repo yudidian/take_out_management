@@ -118,7 +118,7 @@ const sendMessage = async () => {
   socket.value.send({
     message: reviewMessage.value,
     userId: userId.value,
-    managerId: store.getters.userId
+    managerId: store.getters.userId.toString()
   })
   reviewMessage.value = ''
 }
