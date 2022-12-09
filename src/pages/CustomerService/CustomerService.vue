@@ -1,7 +1,14 @@
 <template>
   <div>
     <p>消息列表</p>
-    <ul class="message-wrapper">
+    <el-empty
+      description="暂无消息"
+      v-if="Object.keys(messageList).length === 0"
+    />
+    <ul
+      class="message-wrapper"
+      v-else
+    >
       <li
         v-for="item in messageList"
         :key="item"
@@ -97,7 +104,9 @@ onMounted(() => {
 watch(messageList, () => {
   drawerData.value = messageList.value[userId.value]
   nextTick(() => {
-    listContent.value.scrollTop = listContent.value.scrollHeight
+    if (listContent.value) {
+      listContent.value.scrollTop = listContent.value.scrollHeight
+    }
   })
 }, { deep: true })
 const init = async () => {

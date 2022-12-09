@@ -16,6 +16,7 @@ export default defineComponent({
   setup () {
     const store = useStore()
     onMounted(() => {
+      window.innerWidth < 1200 && store.dispatch('getIsCollapse', true)
       window.addEventListener('resize', lodash.throttle((e) => {
         if (e.target.innerWidth < 1200) {
           store.dispatch('getIsCollapse', true)

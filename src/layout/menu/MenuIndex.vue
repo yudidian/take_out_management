@@ -118,6 +118,7 @@ const defineUrl = ref(sessionStorage.getItem('url') || '/')
 <style scoped lang="scss">
 .content{
   display: flex;
+  background-color: #343744;
   flex-direction: column;
 }
 .logo {
