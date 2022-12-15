@@ -64,3 +64,36 @@ export const sendChangeDishDescription = (data) => {
     data
   })
 }
+// 获取轮播图
+export const sendGetSwiperList = (data) => {
+  return request({
+    url: '/swiper',
+    method: 'get'
+  })
+}
+// 添加轮播图
+export const sendAddSwiperList = (data) => {
+  return request({
+    url: '/swiper',
+    method: 'post',
+    data
+  })
+}
+// 修改轮播图
+export const sendUpdateSwiperList = (data) => {
+  return request({
+    url: '/swiper',
+    method: 'put',
+    data
+  })
+}
+// 删除轮播图
+export const sendDeleteSwiperList = (id) => {
+  return request({
+    url: '/swiper',
+    method: 'delete',
+    params: {
+      id
+    }
+  })
+}

@@ -39,22 +39,36 @@
           <span>分类管理</span>
         </template>
       </el-menu-item>
-      <el-menu-item index="/cuisine">
-        <el-icon>
-          <ForkSpoon />
-        </el-icon>
+      <el-sub-menu index="1">
         <template #title>
+          <el-icon><ForkSpoon /></el-icon>
           <span>菜品管理</span>
         </template>
-      </el-menu-item>
-      <el-menu-item index="/cuisine/description">
-        <el-icon>
-          <ForkSpoon />
-        </el-icon>
-        <template #title>
-          <span>菜品描述管理</span>
-        </template>
-      </el-menu-item>
+        <el-menu-item index="/cuisine">
+          <el-icon>
+            <EditPen />
+          </el-icon>
+          <template #title>
+            <span>菜品详情管理</span>
+          </template>
+        </el-menu-item>
+        <el-menu-item index="/cuisine/description">
+          <el-icon>
+            <ChatSquare />
+          </el-icon>
+          <template #title>
+            <span>菜品描述管理</span>
+          </template>
+        </el-menu-item>
+        <el-menu-item index="/swiperManager">
+          <el-icon>
+            <Postcard />
+          </el-icon>
+          <template #title>
+            <span>菜品轮播图管理</span>
+          </template>
+        </el-menu-item>
+      </el-sub-menu>
       <el-menu-item index="/menu">
         <el-icon>
           <Management />
@@ -81,7 +95,7 @@
       </el-menu-item>
       <el-menu-item index="/customerService">
         <el-icon>
-          <Tickets />
+          <ChatLineSquare />
         </el-icon>
         <template #title>
           <span>消息管理</span>
@@ -98,7 +112,11 @@ import {
   ForkSpoon,
   Tickets,
   Management,
-  Platform
+  Platform,
+  EditPen,
+  ChatSquare,
+  Postcard,
+  ChatLineSquare
 } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
 import { ref, watch } from 'vue'
@@ -146,7 +164,40 @@ const defineUrl = ref(sessionStorage.getItem('url') || '/')
   height: calc(100% - 95px);
   overflow-y: hidden;
   background-color: #343744;
-  .el-menu-item,.el-sub-menu{
+  :deep(.el-sub-menu){
+    background-color: #343744!important;
+    width: 160px;
+    border-radius:0 50px 50px 0;
+    color: #8c939d;
+    .el-sub-menu__title{
+      color: #8c939d;
+      &:hover:not(.is-active){
+        border-radius:0 50px 50px 0;
+        color: #fff;
+        background-color: #8c939d;
+      }
+    }
+    .el-menu{
+      width: 160px;
+      background-color: #343744;
+      .el-menu-item{
+        min-width: 180px!important;
+        width: 160px!important;
+        height: 50px;
+        margin-bottom: 10px;
+        border-radius:0 50px 50px 0;
+        color: #8c939d;
+        &:hover:not(.is-active){
+          color: #fff;
+          background-color: #8c939d;
+        }
+        .el-menu{
+          z-index: 99;
+        }
+      }
+    }
+  }
+  .el-menu-item{
     width: 160px;
     height: 50px;
     margin-bottom: 10px;
@@ -156,13 +207,13 @@ const defineUrl = ref(sessionStorage.getItem('url') || '/')
       color: #fff;
       background-color: #8c939d;
     }
+    .el-menu{
+      z-index: 99;
+    }
   }
   .is-active{
-    width: 160px;
-    height: 50px;
-    border-radius:0 50px 50px 0;
     background-color: #FFC200;
-    color: #2a2a2a;
+    color: #2a2a2a!important;
   }
 }
 

@@ -51,6 +51,14 @@ const router = [
         }
       },
       {
+        path: '/swiperManager',
+        name: 'SwiperManager',
+        component: () => import('@/pages/SwiperManager/SwiperManager.vue'),
+        meta: {
+          title: '菜品轮播图管理'
+        }
+      },
+      {
         path: '/cuisine/description',
         name: 'cuisineDescription',
         component: () => import('@/pages/CuisineDescription/CuisineDescription.vue'),
