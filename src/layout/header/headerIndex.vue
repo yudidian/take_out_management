@@ -66,7 +66,7 @@ import { useStore } from 'vuex'
 import Breadcrumb from './Breadcrumb-index.vue'
 import { ref } from '@vue/reactivity'
 import { ElNotification } from 'element-plus'
-
+import { clearAllTimer } from '@/utils'
 const router = useRouter()
 const store = useStore()
 const getters = store.getters
@@ -76,8 +76,8 @@ const changeCollapse = () => {
   store.dispatch('getIsCollapse', !getters.isCollapse)
 }
 const handlerExit = () => {
-  localStorage.setItem('token', '')
-  localStorage.setItem('username', '')
+  localStorage.clear()
+  clearAllTimer()
   router.replace('/login')
 }
 const fullScreenHandler = () => {

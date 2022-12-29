@@ -55,7 +55,6 @@
   </div>
 </template>
 <script setup>
-import { ElMessage } from 'element-plus'
 import { reactive, ref } from 'vue'
 import { User, Unlock } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
@@ -79,14 +78,9 @@ const rules = reactive({
 })
 
 const submitForm = async (formEl) => {
-  await formEl.validate((valid, fields) => {
+  await formEl.validate((valid) => {
     if (valid) {
       store.dispatch('toLogin', loginForm)
-    } else {
-      ElMessage({
-        message: '请补全信息',
-        type: 'warning'
-      })
     }
   })
 }

@@ -5,6 +5,9 @@ export default {
   userId: (state) => {
     return state.employee.userId
   },
+  permission: (state) => {
+    return state.employee.permission
+  },
   isCollapse: (state) => {
     return state.common.isCollapse
   },

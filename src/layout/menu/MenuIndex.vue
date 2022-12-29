@@ -6,6 +6,7 @@
       <img
         v-if="!isCollapse"
         src="@/assets/logo.png"
+        alt=""
       >
       <span v-else>koala</span>
     </div>
@@ -15,115 +16,72 @@
       :router="true"
       :default-active="defineUrl"
     >
-      <el-menu-item index="/dataDashboard">
-        <el-icon>
-          <Platform />
-        </el-icon>
-        <template #title>
-          <span>大数据看板</span>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="/admin">
-        <el-icon>
-          <Avatar />
-        </el-icon>
-        <template #title>
-          <span>员工管理</span>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="/class">
-        <el-icon>
-          <Grid />
-        </el-icon>
-        <template #title>
-          <span>分类管理</span>
-        </template>
-      </el-menu-item>
       <el-sub-menu index="1">
         <template #title>
-          <el-icon><ForkSpoon /></el-icon>
-          <span>菜品管理</span>
+          <el-icon>
+            <Platform />
+          </el-icon>
+          <span>大数据</span>
         </template>
-        <el-menu-item index="/cuisine">
+        <el-menu-item index="/dataDashboard">
           <el-icon>
-            <EditPen />
+            <Platform />
           </el-icon>
           <template #title>
-            <span>菜品详情管理</span>
-          </template>
-        </el-menu-item>
-        <el-menu-item index="/cuisine/description">
-          <el-icon>
-            <ChatSquare />
-          </el-icon>
-          <template #title>
-            <span>菜品描述管理</span>
-          </template>
-        </el-menu-item>
-        <el-menu-item index="/swiperManager">
-          <el-icon>
-            <Postcard />
-          </el-icon>
-          <template #title>
-            <span>菜品轮播图管理</span>
+            <span>大数据看板</span>
           </template>
         </el-menu-item>
       </el-sub-menu>
-      <el-menu-item index="/menu">
-        <el-icon>
-          <Management />
-        </el-icon>
+      <el-sub-menu
+        v-for="(item, index) in menuList"
+        :index="(index + 2).toString()"
+        :key="index"
+      >
         <template #title>
-          <span>套餐管理</span>
+          <el-icon>
+            <Platform />
+          </el-icon>
+          <span>{{ item.desp }}</span>
         </template>
-      </el-menu-item>
-      <el-menu-item index="/order">
-        <el-icon>
-          <Tickets />
-        </el-icon>
-        <template #title>
-          <span>订单管理</span>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="/review">
-        <el-icon>
-          <Tickets />
-        </el-icon>
-        <template #title>
-          <span>评论管理</span>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="/customerService">
-        <el-icon>
-          <ChatLineSquare />
-        </el-icon>
-        <template #title>
-          <span>消息管理</span>
-        </template>
-      </el-menu-item>
+        <el-menu-item
+          v-for="router in item.children"
+          :index="router.path"
+          :key="router.path"
+        >
+          <el-icon>
+            <Platform />
+          </el-icon>
+          <template #title>
+            <span>{{ router.desp }}</span>
+          </template>
+        </el-menu-item>
+      </el-sub-menu>
     </el-menu>
   </div>
 </template>
 
 <script setup lang="ts">
 import {
-  Avatar,
-  Grid,
-  ForkSpoon,
-  Tickets,
-  Management,
-  Platform,
-  EditPen,
-  ChatSquare,
-  Postcard,
-  ChatLineSquare
+  // Avatar,
+  // Grid,
+  // ForkSpoon,
+  // Tickets,
+  // Management,
+  Platform
+  // EditPen,
+  // ChatSquare,
+  // Postcard,
+  // ChatLineSquare
 } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { getMenu, getUserRouter } from '@/router/PermissionRouter'
+const menuList = ref([])
 const route = useRoute()
 const store = useStore()
 const isCollapse = ref(store.getters.isCollapse)
+menuList.value = getMenu(getUserRouter().children)
 watch(() => store.getters.isCollapse, (val) => {
   isCollapse.value = val
 }, { immediate: true })

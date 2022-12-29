@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { getRouters } from './PermissionRouter'
 import router from './routers'
 import { okTip } from '@/utils/messageTip'
 const routes = router
@@ -7,6 +8,11 @@ const myRouter = createRouter({
   history: createWebHashHistory(),
   routes
 })
+// 获取权限路由
+const routerList = getRouters(localStorage.getItem('permission') || [])
+console.log('routerList', routerList)
+// 动态添加路由
+myRouter.addRoute(routerList)
 myRouter.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   // const username= localStorage.getItem('username')

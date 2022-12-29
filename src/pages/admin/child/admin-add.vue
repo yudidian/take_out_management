@@ -90,8 +90,8 @@ const form = reactive({
 const checkUsername = (rule, value, callback) => {
   if (value.trim().length <= 0) {
     callback(new Error('用户账号是必需的'))
-  } else if (!(/^[a-z0-9]{6,10}$/.test(value))) {
-    callback(new Error('用户账号只能有小写字母和数字组成且长度为6到10位'))
+  } else if (!(/^[a-z]{2,20}$/.test(value))) {
+    callback(new Error('用户账号只能有小写字母和数字组成且长度为2到20位'))
   } else {
     callback()
   }
@@ -109,7 +109,7 @@ const checkPhone = (rule, value, callback) => {
 const rules = reactive({
   name: [
     { required: true, message: '用户名是必填的', trigger: 'blur' },
-    { min: 2, max: 10, message: '用户名长度为3到10', trigger: 'blur' }
+    { min: 2, max: 10, message: '用户名长度为2到10', trigger: 'blur' }
   ],
   username: [
     { required: true },
