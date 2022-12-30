@@ -1,6 +1,6 @@
 import { RouterView } from 'vue-router'
 let USER_ROUTER
-const PERMISSION = {
+export const PERMISSION = {
   // 员工管理权限
   EMPLOYEE_MANAGER: 1002,
   // 菜品分类管理权限
@@ -22,7 +22,9 @@ const PERMISSION = {
   // 客服中心
   CUSTOMER_SERVICE: 1011,
   // 添加套餐
-  MENU_ADD: 1012
+  MENU_ADD: 1012,
+  // 给用户添加权限
+  ADD_USER_PERMISSION: 1013
 }
 const menuGroup = {
   EMPLOYEE_MANAGER: 1,
@@ -31,7 +33,8 @@ const menuGroup = {
   MENU_MANAGER: 4,
   ORDER_MANAGER: 5,
   REVIEW_MANGER: 6,
-  CUSTOMER_SERVICE: 7
+  CUSTOMER_SERVICE: 7,
+  PERMISSION_GROUP: 99
 }
 const menuName = {
   [menuGroup.EMPLOYEE_MANAGER]: '员工管理',
@@ -170,8 +173,14 @@ const router = [
       keepAlive: false,
       index: 17
     }
+  },
+  {
+    id: PERMISSION.ADD_USER_PERMISSION,
+    desp: '添加用户权限',
+    group: menuGroup.PERMISSION_GROUP
   }
 ]
+// 获取用户路由
 export function getRouters (permissionList) {
   if (permissionList === undefined) {
     return
@@ -183,9 +192,11 @@ export function getRouters (permissionList) {
   for (const routerElement of router) {
     if (routerElement.children) {
       const res = checkChild(routerElement.children, permissionList)
-      userRouters.push({ ...routerElement, children: res })
+      if (res.length > 0) {
+        userRouters.push({ ...routerElement, children: res })
+      }
     } else {
-      if (permissionList.find(item => routerElement.id === parseInt(item))) {
+      if (permissionList.find(item => routerElement.id === parseInt(item)) && routerElement.group !== 99) {
         userRouters.push(routerElement)
       }
     }
@@ -202,12 +213,13 @@ export function getRouters (permissionList) {
 function checkChild (childArr, permissionList) {
   const childRouters = []
   for (const childRouter of childArr) {
-    if (permissionList.find(item => childRouter.id === parseInt(item))) {
+    if (permissionList.find(item => childRouter.id === parseInt(item)) && childRouter.group !== 99) {
       childRouters.push(childRouter)
     }
   }
   return childRouters
 }
+// 获取用户菜单
 export const getMenu = (routers) => {
   const userMenu = {}
   const menuList = []
@@ -235,5 +247,11 @@ export const getMenu = (routers) => {
     })
   }
   return menuList
+}
+export const checkPermission = (id) => {
+  const permission = localStorage.getItem('permission')
+  if (!permission) return false
+  const permissionList = permission.split(',')
+  return permissionList.find(item => id === parseInt(item))
 }
 export const getUserRouter = () => USER_ROUTER
