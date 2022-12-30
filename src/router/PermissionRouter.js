@@ -24,7 +24,9 @@ export const PERMISSION = {
   // 添加套餐
   MENU_ADD: 1012,
   // 给用户添加权限
-  ADD_USER_PERMISSION: 1013
+  ADD_USER_PERMISSION: 1013,
+  // 禁用用户权限
+  FORBIDDEN_USER: 1014
 }
 const menuGroup = {
   EMPLOYEE_MANAGER: 1,
@@ -113,6 +115,7 @@ const router = [
     children: [
       {
         id: PERMISSION.MENU_MANAGER,
+        desp: '套餐管理',
         path: '',
         name: 'menu',
         component: () => import('@/pages/menu/menu-index.vue')
@@ -121,6 +124,7 @@ const router = [
         id: PERMISSION.MENU_ADD,
         path: 'add',
         name: 'menu-add',
+        desp: '添加套餐',
         component: () => import('@/pages/menu/menu-add.vue'),
         meta: {
           title: '添加套餐'
@@ -177,6 +181,11 @@ const router = [
   {
     id: PERMISSION.ADD_USER_PERMISSION,
     desp: '添加用户权限',
+    group: menuGroup.PERMISSION_GROUP
+  },
+  {
+    id: PERMISSION.ADD_USER_PERMISSION,
+    desp: '禁用用户权限',
     group: menuGroup.PERMISSION_GROUP
   }
 ]
@@ -255,3 +264,39 @@ export const checkPermission = (id) => {
   return permissionList.find(item => id === parseInt(item))
 }
 export const getUserRouter = () => USER_ROUTER
+function addChildType (children, permissionList) {
+  const permissionTypeList = []
+  for (const childrenEl of children) {
+    const type = permissionList.includes(childrenEl.id.toString())
+    permissionTypeList.push({
+      id: childrenEl.id.toString(),
+      desp: childrenEl.desp,
+      type
+    })
+  }
+  return permissionTypeList
+}
+// function getUserPermissionList () {
+//   const permission = localStorage.getItem('permission')
+//   if (!permission) return []
+//   return permission.split(',')
+// }
+// 获取所有权限列表
+export const getPermissionType = (permissionList) => {
+  const userPermissionList = permissionList
+  const permissionTypeList = []
+  for (const routerElement of router) {
+    if (routerElement.children) {
+      const res = addChildType(routerElement.children, permissionList)
+      permissionTypeList.push(...res)
+    } else {
+      const type = userPermissionList.includes(routerElement.id.toString())
+      permissionTypeList.push({
+        id: routerElement.id.toString(),
+        desp: routerElement.desp,
+        type
+      })
+    }
+  }
+  return permissionTypeList
+}

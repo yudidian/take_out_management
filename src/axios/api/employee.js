@@ -32,3 +32,11 @@ export const updateEmployee = (data) => {
     data
   })
 }
+// 添加权限
+export const updatePermission = (data) => {
+  return request({
+    url: '/employee/permission',
+    method: 'PUT',
+    data
+  })
+}
