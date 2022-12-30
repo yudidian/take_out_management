@@ -65,12 +65,18 @@
             编辑
           </el-button>
           <el-button
-            v-if="username === 'admin'"
             size="small"
             type="danger"
             @click="handleStop(scope.row)"
           >
             {{ scope.row.status === 1 ? '禁用' : '启用' }}
+          </el-button>
+          <el-button
+            size="small"
+            type="danger"
+            @click="permissionHandler(scope.row)"
+          >
+            权限编辑
           </el-button>
         </template>
       </el-table-column>
@@ -89,7 +95,8 @@
   </div>
   <el-dialog
     v-model="dialogFormVisible"
-    title="Shipping address"
+    :destroy-on-close="true"
+    title="修改员工信息"
   >
     <el-form
       ref="ruleFormRef"
@@ -138,6 +145,17 @@
       </span>
     </template>
   </el-dialog>
+  <el-dialog
+    v-model="permissionInfo.showAddPermission"
+    :destroy-on-close="true"
+    title="修改员工信息"
+  >
+    <AddPermission
+      :permission-list="permissionInfo.permissionList"
+      @close-dialog="permissionInfo.showAddPermission = $event"
+      :id="permissionInfo.permissionId"
+    />
+  </el-dialog>
 </template>
 
 <script setup>
@@ -148,13 +166,19 @@ import {
 import { onMounted, reactive, ref } from 'vue'
 import { employeeInfo, updateEmployee } from '@/axios/api/employee'
 import { ElMessage } from 'element-plus'
-
-const username = localStorage.getItem('username')
+import AddPermission from './child/AddPermission.vue'
+import { checkPermission, PERMISSION } from '@/router/PermissionRouter'
+import { errorTip } from '@/utils/messageTip'
 const keyWords = ref('')// 搜索关键词
 const tableData = ref([])// 表数据
 const pageSize = ref(100) // 每一页的大小
 const currentPage = ref(1) // 当前页号
 const total = ref(0) // 获取数据总条数
+const permissionInfo = reactive({
+  showAddPermission: false,
+  permissionList: [],
+  permissionId: ''
+})
 const getEmployeeInfo = async () => {
   const res = await employeeInfo({
     page: currentPage.value,
@@ -193,6 +217,7 @@ const handleEdit = (info) => {
   form.id = info.id
 }
 const handleStop = async (info) => {
+  if (!checkPermission(PERMISSION.FORBIDDEN_USER)) return errorTip('无权限')
   await updateEmployee({
     id: info.id,
     status: 0
@@ -237,7 +262,7 @@ const submitForm = async (ruleFormRef) => {
         message: res.msg
       })
       dialogFormVisible.value = false
-      getEmployeeInfo()
+      await getEmployeeInfo()
     } else {
       ElMessage.error({
         message: '请补全表单'
@@ -245,6 +270,12 @@ const submitForm = async (ruleFormRef) => {
       dialogFormVisible.value = false
     }
   })
+}
+const permissionHandler = (row) => {
+  if (!checkPermission(PERMISSION.ADD_USER_PERMISSION)) return errorTip('无权限')
+  permissionInfo.permissionId = row.id
+  permissionInfo.permissionList = row.permission.split(',')
+  permissionInfo.showAddPermission = true
 }
 </script>
 
