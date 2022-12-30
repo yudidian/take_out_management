@@ -11,7 +11,6 @@ import {
   UserFilled
 } from '@element-plus/icons-vue'
 import { markRaw } from 'vue'
-import { PieChart } from 'echarts/charts'
 let USER_ROUTER
 export const PERMISSION = {
   // 员工管理权限
@@ -168,7 +167,7 @@ const router = [
     desp: '订单管理',
     path: '/order',
     name: 'order',
-    icon: markRaw(PieChart),
+    icon: markRaw(Tickets),
     component: () => import('@/pages/order/order-index.vue'),
     meta: {
       title: '订单管理'
