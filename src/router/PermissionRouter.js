@@ -1,4 +1,17 @@
 import { RouterView } from 'vue-router'
+import {
+  Avatar,
+  ChatLineRound,
+  DishDot, EditPen, Headset,
+  KnifeFork, Menu,
+  Message,
+  Operation,
+  Plus, Reading, ShoppingCart,
+  Tickets,
+  UserFilled
+} from '@element-plus/icons-vue'
+import { markRaw } from 'vue'
+import { PieChart } from 'echarts/charts'
 let USER_ROUTER
 export const PERMISSION = {
   // 员工管理权限
@@ -40,18 +53,28 @@ const menuGroup = {
 }
 const menuName = {
   [menuGroup.EMPLOYEE_MANAGER]: '员工管理',
-  [menuGroup.CLASS_MANAGER]: '分裂管理',
+  [menuGroup.CLASS_MANAGER]: '分类管理',
   [menuGroup.CUISINE_MANAGER]: '菜品管理',
   [menuGroup.MENU_MANAGER]: '套餐管理',
   [menuGroup.ORDER_MANAGER]: '订单管理',
   [menuGroup.REVIEW_MANGER]: '评论管理',
   [menuGroup.CUSTOMER_SERVICE]: '消息管理'
 }
+const menuIcon = {
+  [menuGroup.EMPLOYEE_MANAGER]: markRaw(UserFilled),
+  [menuGroup.CLASS_MANAGER]: markRaw(Operation),
+  [menuGroup.CUISINE_MANAGER]: markRaw(KnifeFork),
+  [menuGroup.MENU_MANAGER]: markRaw(DishDot),
+  [menuGroup.ORDER_MANAGER]: markRaw(Tickets),
+  [menuGroup.REVIEW_MANGER]: markRaw(ChatLineRound),
+  [menuGroup.CUSTOMER_SERVICE]: markRaw(Message)
+}
 const router = [
   {
     id: PERMISSION.EMPLOYEE_MANAGER,
     group: menuGroup.EMPLOYEE_MANAGER,
     desp: '员工管理',
+    icon: markRaw(Avatar),
     path: '/admin',
     name: 'admin',
     component: () => import('@/pages/admin/admin-index.vue'),
@@ -63,6 +86,7 @@ const router = [
     id: PERMISSION.CLASS_MANAGER,
     group: menuGroup.CLASS_MANAGER,
     desp: '分类管理',
+    icon: markRaw(Operation),
     path: '/class',
     name: 'class',
     component: () => import('@/pages/class/class-index.vue'),
@@ -74,6 +98,7 @@ const router = [
     id: PERMISSION.CUISINE_MANAGER,
     group: menuGroup.CUISINE_MANAGER,
     desp: '菜品管理',
+    icon: markRaw(Menu),
     path: '/cuisine',
     name: 'cuisine',
     component: () => import('@/pages/cuisine/cuisine-index.vue'),
@@ -85,6 +110,7 @@ const router = [
     id: PERMISSION.SWIPER_MANAGER,
     group: menuGroup.CUISINE_MANAGER,
     desp: '菜品轮播图管理',
+    icon: markRaw(Reading),
     path: '/swiperManager',
     name: 'SwiperManager',
     component: () => import('@/pages/SwiperManager/SwiperManager.vue'),
@@ -96,6 +122,7 @@ const router = [
     id: PERMISSION.CUISINE_DESCRIPTION,
     group: menuGroup.CUISINE_MANAGER,
     desp: '菜品描述管理',
+    icon: markRaw(EditPen),
     path: '/cuisine/description',
     name: 'cuisineDescription',
     component: () => import('@/pages/CuisineDescription/CuisineDescription.vue'),
@@ -107,6 +134,7 @@ const router = [
     id: PERMISSION.MENU_MANAGER,
     group: menuGroup.MENU_MANAGER,
     desp: '套餐管理',
+    icon: markRaw(Menu),
     path: '/menu',
     component: RouterView,
     meta: {
@@ -116,6 +144,7 @@ const router = [
       {
         id: PERMISSION.MENU_MANAGER,
         desp: '套餐管理',
+        icon: markRaw(DishDot),
         path: '',
         name: 'menu',
         component: () => import('@/pages/menu/menu-index.vue')
@@ -125,6 +154,7 @@ const router = [
         path: 'add',
         name: 'menu-add',
         desp: '添加套餐',
+        icon: markRaw(Plus),
         component: () => import('@/pages/menu/menu-add.vue'),
         meta: {
           title: '添加套餐'
@@ -138,6 +168,7 @@ const router = [
     desp: '订单管理',
     path: '/order',
     name: 'order',
+    icon: markRaw(PieChart),
     component: () => import('@/pages/order/order-index.vue'),
     meta: {
       title: '订单管理'
@@ -149,6 +180,7 @@ const router = [
     desp: '评论管理',
     path: '/review',
     name: 'review',
+    icon: markRaw(ShoppingCart),
     component: () => import('@/pages/review/ReviewPage.vue'),
     meta: {
       title: '评论管理'
@@ -158,6 +190,7 @@ const router = [
     id: PERMISSION.EMPLOYEE_add,
     group: menuGroup.EMPLOYEE_MANAGER,
     desp: '添加员工',
+    icon: markRaw(Plus),
     path: '/admin/add',
     name: 'admin-add',
     component: () => import('@/pages/admin/child/admin-add.vue'),
@@ -169,6 +202,7 @@ const router = [
     id: PERMISSION.CUSTOMER_SERVICE,
     group: menuGroup.CUSTOMER_SERVICE,
     desp: '客服中心',
+    icon: markRaw(Headset),
     path: '/customerService',
     name: 'CustomerService',
     component: () => import('@/pages/CustomerService/CustomerService.vue'),
@@ -236,14 +270,16 @@ export const getMenu = (routers) => {
     if (userMenu[router.group]) {
       userMenu[router.group].children.push({
         path: router.path,
-        desp: router.desp
+        desp: router.desp,
+        icon: router.icon
       })
     } else {
       userMenu[router.group] = {
         children: [
           {
             path: router.path,
-            desp: router.desp
+            desp: router.desp,
+            icon: router.icon
           }
         ]
       }
@@ -252,6 +288,7 @@ export const getMenu = (routers) => {
   for (const key in userMenu) {
     menuList.push({
       desp: menuName[key],
+      icon: menuIcon[key],
       children: userMenu[key].children
     })
   }

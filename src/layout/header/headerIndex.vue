@@ -57,7 +57,7 @@
     </el-dropdown>
     <el-switch
       inline-prompt
-      style="margin-left: 10px"
+      style="margin-left: 10px;"
       v-model="themeValue"
       :active-icon="Moon"
       :inactive-icon="Sunny"
@@ -135,6 +135,12 @@ const showTip = () => {
   display: flex;
   align-items: center;
   background-color: var(--el-bg-color);
+  :deep(.el-switch__action) {
+    background-color: var(--el-switch-color);
+  }
+  :deep(.el-switch__core .el-switch__inner .is-icon) {
+    color: var(--el-switch-color);
+  }
   .el-input {
     width: 180px;
     margin-left: auto;

@@ -39,7 +39,7 @@
       >
         <template #title>
           <el-icon>
-            <Platform />
+            <component :is="item.icon" />
           </el-icon>
           <span>{{ item.desp }}</span>
         </template>
@@ -49,7 +49,7 @@
           :key="router.path"
         >
           <el-icon>
-            <Platform />
+            <component :is="router.icon" />
           </el-icon>
           <template #title>
             <span>{{ router.desp }}</span>
@@ -61,18 +61,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  // Avatar,
-  // Grid,
-  // ForkSpoon,
-  // Tickets,
-  // Management,
-  Platform
-  // EditPen,
-  // ChatSquare,
-  // Postcard,
-  // ChatLineSquare
-} from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -170,7 +158,7 @@ const defineUrl = ref(sessionStorage.getItem('url') || '/')
     }
   }
   .is-active{
-    background-color: #FFC200;
+    background-color: var(--el-color-primary);
     color: #2a2a2a!important;
   }
 }

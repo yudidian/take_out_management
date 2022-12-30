@@ -8,7 +8,7 @@
         @keyup.enter="handlerSearch"
       />
       <el-button
-        color="#FFC200"
+        type="primary"
         :icon="Plus"
         @click="$router.push('/admin/add')"
       >

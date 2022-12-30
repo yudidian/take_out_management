@@ -1,6 +1,10 @@
 :root{
     color-scheme: dark light;
-    --el-color-white: #ffffff;
+    --dhy-header-font-color-1: #6d75ee;
+    --dhy-header-font-color-2: #e538e2;
+    --dhy-header-font-color-3: #f81313;
+    --el-switch-color: #fdfdfd;
+    --el-color-white: #000000;
     --el-color-black: #000000;
     --el-color-primary: #FFC200;
     --el-color-primary-light-3: #fac315;
@@ -8,7 +12,7 @@
     --el-color-primary-light-7: #ffe79d;
     --el-color-primary-light-8: #fcedbe;
     --el-color-primary-light-9: #ecf5ff;
-    --el-color-primary-dark-2: #337ecc;
+    --el-color-primary-dark-2: #f8db7e;
     --el-color-success: #67c23a;
     --el-color-success-light-3: #95d475;
     --el-color-success-light-5: #b3e19d;

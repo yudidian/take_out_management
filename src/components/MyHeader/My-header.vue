@@ -67,15 +67,15 @@ const operationHandler = (type) => {
       border-color: #6d75ee;
       cursor: pointer;
       &:nth-child(1){
-        color: #6d75ee;
+        color: var(--dhy-header-font-color-1);
         border-right: 1px solid #5e5d5d;
       }
       &:nth-child(2){
-        color: #e538e2;
+        color: var(--dhy-header-font-color-2);
         border-right: 1px solid #5e5d5d;
       }
       &:nth-child(3){
-        color: #f81313;
+        color: var(--dhy-header-font-color-3);
         margin-right: 10px;
       }
     }

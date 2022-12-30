@@ -58,7 +58,7 @@
       property="updateTime"
     >
       <template #default="scorp">
-        <span style="color: red">{{ dayjs(scorp.row.updateTime).format('YYYY-MM-DD HH:ss:mm') }}</span>
+        <span style="color: var(--dhy-header-font-color-3)">{{ dayjs(scorp.row.updateTime).format('YYYY-MM-DD HH:ss:mm') }}</span>
       </template>
     </el-table-column>
     <el-table-column
