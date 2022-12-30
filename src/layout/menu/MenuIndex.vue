@@ -90,8 +90,13 @@ const defineUrl = ref(sessionStorage.getItem('url') || '/')
   height: 95px;
   background-color: #343744;
   transition: width 0.25s;
+  display: flex;
+  justify-content: flex-start;
   img {
-    width: 200px;
+    margin-left: 16px;
+    width: 100px;
+    height: 95px;
+    object-position: 50% 50%;
   }
 }
 .collapse-logo{

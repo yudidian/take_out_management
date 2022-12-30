@@ -88,4 +88,9 @@ const submitForm = async (formEl) => {
 
 <style scoped lang="scss">
 @import "./index.scss";
+.login-form-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
