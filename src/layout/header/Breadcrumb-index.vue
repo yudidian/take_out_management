@@ -32,6 +32,6 @@ const arrPath = computed(() => {
 }
 :deep(.el-breadcrumb__item:last-child .el-breadcrumb__inner){
   font-size: 18px;
-  color: #000000;
+  color: var(--el-bg-color-icon);
 }
 </style>

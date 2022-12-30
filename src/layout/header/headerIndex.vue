@@ -1,6 +1,7 @@
 <template>
   <el-header>
     <el-icon
+      style="color:var(--el-bg-color-icon);"
       :size="40"
       @click="changeCollapse()"
     >
@@ -14,12 +15,14 @@
       :prefix-icon="Search"
     />
     <el-icon
+      style="color:var(--el-bg-color-icon);"
       :size="30"
       v-if="!isFullscreen"
     >
       <FullScreen @click="fullScreenHandler" />
     </el-icon>
     <el-icon
+      style="color:var(--el-bg-color-icon);"
       :size="30"
       v-else
     >
@@ -30,7 +33,10 @@
       class="item"
       @click="showTip"
     >
-      <el-icon :size="30">
+      <el-icon
+        :size="30"
+        style="color:var(--el-bg-color-icon);"
+      >
         <Bell />
       </el-icon>
     </el-badge>
@@ -49,6 +55,13 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
+    <el-switch
+      inline-prompt
+      style="margin-left: 10px"
+      v-model="themeValue"
+      :active-icon="Moon"
+      :inactive-icon="Sunny"
+    />
   </el-header>
 </template>
 <script lang="ts" setup>
@@ -59,7 +72,9 @@ import {
   Search,
   FullScreen,
   Bell,
-  SwitchButton
+  SwitchButton,
+  Moon,
+  Sunny
 } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -67,11 +82,20 @@ import Breadcrumb from './Breadcrumb-index.vue'
 import { ref } from '@vue/reactivity'
 import { ElNotification } from 'element-plus'
 import { clearAllTimer } from '@/utils'
+import { watch } from 'vue'
 const router = useRouter()
 const store = useStore()
 const getters = store.getters
 const KeyWords = ref('')
 const isFullscreen = ref(false)
+const themeValue = ref(true)
+watch(themeValue, val => {
+  if (!val) {
+    window.document.documentElement.setAttribute('class', 'dark')
+  } else {
+    window.document.documentElement.removeAttribute('class')
+  }
+})
 const changeCollapse = () => {
   store.dispatch('getIsCollapse', !getters.isCollapse)
 }
@@ -110,7 +134,7 @@ const showTip = () => {
 .el-header {
   display: flex;
   align-items: center;
-
+  background-color: var(--el-bg-color);
   .el-input {
     width: 180px;
     margin-left: auto;

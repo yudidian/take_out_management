@@ -38,7 +38,7 @@ defineProps({
 
 <style scoped lang="scss">
 .my-image {
-  width: 100%;
+  width: v-bind(width);
   height: 100%;
   padding: 0 5px;
   .image-slot {

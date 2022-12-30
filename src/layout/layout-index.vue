@@ -51,5 +51,6 @@ setInterval(() => {
 .el-container{
   position: relative;
   height: 100vh;
+  background-color: var(--el-bg-color);
 }
 </style>
