@@ -1,7 +1,5 @@
 import { login } from '@/axios/api/employee'
 import { ElMessage } from 'element-plus'
-import router from '../../router'
-import { getUserRouter } from '@/router/PermissionRouter'
 export default {
   namespace: true,
   state () {
@@ -38,12 +36,11 @@ export default {
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('username', res.data.username)
         localStorage.setItem('userId', res.data.userId)
-        await router.replace('/')
-        getUserRouter(res.data.permission)
         ElMessage({
           type: 'success',
           message: '登录成功'
         })
+        window.location.reload()
       } else {
         ElMessage({
           type: 'error',

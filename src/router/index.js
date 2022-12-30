@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { getRouters } from './PermissionRouter'
 import router from './routers'
-import { okTip } from '@/utils/messageTip'
 const routes = router
 
 const myRouter = createRouter({
@@ -10,7 +9,6 @@ const myRouter = createRouter({
 })
 // 获取权限路由
 const routerList = getRouters(localStorage.getItem('permission') || [])
-console.log('routerList', routerList)
 // 动态添加路由
 myRouter.addRoute(routerList)
 myRouter.beforeEach((to, from, next) => {
@@ -18,9 +16,7 @@ myRouter.beforeEach((to, from, next) => {
   // const username= localStorage.getItem('username')
   if (token) {
     if (to.path === '/login') {
-      // 登录了就不用再去登录
-      okTip('无需重复登录')
-      next(from.path)
+      return next(from.path)
     }
     next()
   } else {
