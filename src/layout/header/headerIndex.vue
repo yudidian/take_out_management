@@ -34,12 +34,20 @@
       @click="showTip"
     >
       <el-icon
-        :size="30"
+        :size="34"
         style="color:var(--el-bg-color-icon);"
       >
         <Bell />
       </el-icon>
     </el-badge>
+    <el-switch
+      inline-prompt
+      size="large"
+      style="margin-right: 20px;"
+      v-model="themeValue"
+      :active-icon="Moon"
+      :inactive-icon="Sunny"
+    />
     <el-dropdown>
       <span class="el-dropdown-link">
         <el-avatar
@@ -55,13 +63,6 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <el-switch
-      inline-prompt
-      style="margin-left: 10px;"
-      v-model="themeValue"
-      :active-icon="Moon"
-      :inactive-icon="Sunny"
-    />
   </el-header>
 </template>
 <script lang="ts" setup>
@@ -151,7 +152,8 @@ const showTip = () => {
   }
 
   .el-badge {
-    margin-right: 30px;
+    margin-top: 2px;
+    margin-right: 20px;
   }
   .el-avatar{
     cursor: pointer;
