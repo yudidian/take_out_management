@@ -252,6 +252,7 @@ export function getRouters (permissionList) {
   }
   return USER_ROUTER
 }
+// 遍历子路由
 function checkChild (childArr, permissionList) {
   const childRouters = []
   for (const childRouter of childArr) {
@@ -293,6 +294,7 @@ export const getMenu = (routers) => {
   }
   return menuList
 }
+// 权限检查
 export const checkPermission = (id) => {
   const permission = localStorage.getItem('permission')
   if (!permission) return false
