@@ -91,7 +91,7 @@ onMounted(() => {
       {
         type: 'pie',
         radius: ['74%', '80%'],
-        center: ['47.5%', '50%'],
+        center: ['47%', '54.5%'],
         avoidLabelOverlap: false,
         label: {
           show: false,
@@ -112,51 +112,54 @@ onMounted(() => {
       }
     ]
   })
+  window.addEventListener('resize', () => {
+    myChart.resize()
+  })
 })
 </script>
 
 <style scoped lang="scss">
 .left-tow {
-  width: 300px;
-  height: 220px;
-  margin-top: 46px;
+  width: vw(300);
+  height: vh(220);
+  margin-top: vh(46);
 }
 .message{
   position: absolute;
-  top: 120px;
-  left: 80px;
+  top: vh(120);
+  left: vw(80);
   .count{
     color: #fffdef;
-    font-size: 50px;
+    font-size: font(50);
     font-weight: 900;
     span{
-      font-size: 20px;
-      margin-left: -10px;
+      font-size: font(20);
+      margin-left: vw(-10);
     }
   }
   .review{
     color: rgb(140, 152, 191);;
-    font-size: 12px;
+    font-size: font(12);
     text-align: center;
   }
 }
 .total-content{
   position: absolute;
-  top: 40px;
-  right: 20px;
-  width: 228px;
-  height: 140px;
+  top: vh(40);
+  right: vw(20);
+  width: vw(228);
+  height: vh(140);
   color: rgb(140, 152, 191);
   font-weight: 900;
-  font-size: 20px;
+  font-size: font(20);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   .all-count{
-    margin-top: 42px;
+    margin-top: vh(42);
     .number{
-      font-size: 60px;
+      font-size: font(60);
       color: #fffdef;
     }
     .unit{
@@ -164,45 +167,45 @@ onMounted(() => {
     }
   }
   .all-review{
-    font-size: 16px;
-    margin-right: 6px;
+    font-size: font(16);
+    margin-right: vw(6);
     margin-left: auto;
     font-weight: 400;
   }
 }
 .data-source{
   position: absolute;
-  bottom: 120px;
+  bottom: vh(120);
   width: 100%;
   color: rgb(140, 152, 191);
-  font-size: 12px;
+  font-size: font(12);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   .phone,.web{
-    margin-left: 46px;
-    margin-bottom: 20px;
+    margin-left: vw(46);
+    margin-bottom: vh(20);
     .title{
-      margin-left: 10px;
-      margin-bottom: 8px;
+      margin-left: vw(10);
+      margin-bottom: vh(8);
     }
     .content{
       position: relative;
       display: flex;
-      margin-left: 10px;
+      margin-left: vw(10);
       .name{
-        font-size: 12px;
+        font-size: font(12);
         font-weight: 600;
         color: #fffdef;
       }
       & > .count{
         position: absolute;
         right: 0;
-        bottom: 2px;
+        bottom: vh(2);
         margin-left: auto;
-        margin-right: 90px;
+        margin-right: vw(90);
         font-weight: 900;
-        font-size: 24px;
+        font-size: font(24);
         color: #ffffff;
       }
     }
@@ -210,28 +213,28 @@ onMounted(() => {
 }
 .sale-count {
   position: absolute;
-  bottom: 20px;
+  bottom: vh(20);
   width: 100%;
-  height: 100px;
+  height: vh(100);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   .count-one{
     color: #ffffff;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-bottom: vh(10);
+    margin-top: vh(10);
     .all-count{
-      font-size: 14px;
+      font-size: font(14);
     }
     .number{
-      font-size: 30px;
+      font-size: font(30);
       font-weight: 900;
     }
   }
   .info{
     color: #BCC9D4;
-    font-size: 14px;
+    font-size: font(14);
   }
 }
 </style>

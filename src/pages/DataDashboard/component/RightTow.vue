@@ -55,30 +55,31 @@ defineProps({
 <style  lang="scss">
 .header {
   display: flex;
-  height: 80px;
+  height: vh(80);
   .left {
-    margin-left: 32px;
+    margin-left: vw(32);
     display: flex;
     align-items: center;
     img{
-      margin-top: 2px;
-      width: 24px;
+      margin-top: vh(2);
+      width: vw(24);
     }
     .name{
       color: #fffdef;
       font-weight: 900;
-      margin-left: 10px;
-      font-size: 18px;
-      padding-top: 4px;
+      margin-left: vw(10);
+      font-size: font(18);
+      padding-top: vh(4);
     }
   }
   .right{
-    width: 124px;
-    padding-top: 34px;
+    width: vw(140);
+    padding-top: vh(32);
+    white-space: nowrap;
     color: #fffdef;
     font-weight: 900;
-    margin-right: 10px;
-    font-size: 12px;
+    margin-right: vw(10);
+    font-size: font(12);
     margin-left: auto;
   }
 }
@@ -89,29 +90,29 @@ defineProps({
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: vh(24);
     width: 100%;
-    height: 96px;
+    height: vh(96);
     .item-left{
-      margin-left: 50px;
+      margin-left: vw(50);
       img{
-        width: 60px;
+        width: vw(60);
       }
     }
     .item-center{
-      width: 230px;
+      width: vw(230);
       color: #fffdef;
       font-weight: 900;
-      margin-left: 20px;
+      margin-left: vw(20);
       .top{
-        padding: 0 10px 0 0;
-        font-size: 16px;
+        padding: 0 vw(10) 0 0;
+        font-size: font(16);
         color: rgb(140, 152, 191);
-        margin-bottom: 10px;
+        margin-bottom: vh(10);
       }
       .bottom{
-        padding: 0 10px 0 0;
-        font-size: 12px;
+        padding: 0 vw(10) 0 0;
+        font-size: font(12);
       }
     }
     .item-right{

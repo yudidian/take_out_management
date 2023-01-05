@@ -4,6 +4,13 @@ import eslintPlugin from 'vite-plugin-eslint'
 import * as path from 'path'
 import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "@/style/utils/computedSize.scss";'
+      }
+    }
+  },
   plugins: [
     vue(),
     eslintPlugin({

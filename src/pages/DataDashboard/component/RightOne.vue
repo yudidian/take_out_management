@@ -23,7 +23,7 @@
       <span
         class="left"
         @click="$router.replace('/index')"
-      >返回控制面板</span>
+      >控制面板</span>
       <div class="right">
         <div class="now">
           当前时间：{{ nowTime !== '' ? nowTime: '2001-01-15 08:08:08' }}
@@ -61,28 +61,28 @@ onBeforeUnmount(() => {
   height: 100%;
   .right-header{
     display: flex;
-    height: 70px;
+    height: vh(70);
     color: #fffdef;
     font-weight: 900;
-    font-size: 18px;
+    font-size: font(18);
     .left {
-      margin-top: 28px;
-      margin-left: 76px;
+      margin-top: vh(28);
+      margin-left: vw(100);
       .left-user{
-        font-size: 12px;
+        font-size: font(12);
         color: rgb(140, 152, 191);
       }
     }
     .right{
-      margin-top: 32px;
-      margin-right: 45px;
+      margin-top: vh(32);
+      margin-right: vw(45);
       margin-left: auto;
       span{
-        font-size: 12px;
+        font-size: font(12);
         font-weight: 900;
       }
       img{
-        width: 16px;
+        width: vw(16);
       }
     }
   }
@@ -90,21 +90,22 @@ onBeforeUnmount(() => {
     width: 100%;
     display: flex;
     color: rgb(140, 152, 191);
-    font-size: 12px;
-    margin-top: 20px;
+    font-size: font(12);
+    margin-top: vh(20);
     .left{
       cursor: pointer;
-      width: 100px;
-      height: 30px;
-      margin-left: 20px;
+      width: vw(100);
+      height: vh(30);
+      margin-left: vw(20);
       text-align: center;
-      line-height: 30px;
+      line-height: vh(30);
+      font-size: font(12);
       border: 1px solid #8C98BFFF;
     }
     .right{
       width: auto;
       margin-left: auto;
-      margin-right: 20px;
+      margin-right: vw(20);
     }
   }
 }

@@ -1,9 +1,11 @@
 <template>
   <div class="left-1-header">
-    <img
-      src="../image/left-1-logo.png"
-      alt=""
-    >
+    <div class="header-image">
+      <img
+        src="../image/left-1-logo.png"
+        alt=""
+      >
+    </div>
     <span class="title">
       数据概览
     </span>
@@ -82,6 +84,9 @@ const setLeft1 = () => {
       }
     ]
   })
+  window.addEventListener('resize', () => {
+    myEcharts.resize()
+  })
 }
 onMounted(() => {
   setLeft1()
@@ -89,25 +94,32 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+
 .left-1-header {
   width: 100%;
-  height: 50px;
+  height: vh(50);
   position: relative;
-
-  img {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .header-image {
     position: absolute;
-    top: 25px;
-    left: 25px;
-    width: 30px;
-    height: 30px;
+    top: vh(26);
+    left: vw(25);
+    width: vw(30);
+    height: vh(30);
+    img{
+      width: 100%;
+      object-position: center;
+    }
   }
 
   .title {
     position: absolute;
-    top: 29px;
-    left: 62px;
+    top: vh(29);
+    left: vw(62);
     overflow: unset;
-    font-size: 16px;
+    font-size: font(16);
     text-overflow: unset;
     white-space: unset;
     color: rgb(255, 255, 255);
@@ -124,23 +136,23 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     .user-title{
-      margin-top: 30px;
-      margin-left: 20px;
-      font-size: 14px;
+      margin-top: vh(30);
+      margin-left: vw(20);
+      font-size: font(14);
       font-weight: 600;
       color: #BCC9D4;
     }
     .user-count{
       margin-top: 10px;
       color: #ffffff;
-      margin-left: 20px;
+      margin-left: vw(20);
       font-weight: 900;
-      font-size: 46px;
+      font-size: font(46);
     }
   }
   .right{
     flex: 1;
-    height: 140px;
+    height: vh(140);
   }
 }
 </style>

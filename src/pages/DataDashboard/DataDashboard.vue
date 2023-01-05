@@ -1,6 +1,9 @@
 <template>
-  <div class="data-content">
-    <div class="content-left">
+  <el-row class="data-content">
+    <el-col
+      :lg="7"
+      class="content-left hidden-md-and-down"
+    >
       <div class="left-1">
         <LeftOne :left-one="scoreData.leftOne" />
       </div>
@@ -10,8 +13,11 @@
       <div class="left-3">
         <LeftThree />
       </div>
-    </div>
-    <div class="content-center">
+    </el-col>
+    <el-col
+      :lg="11"
+      class="content-center"
+    >
       <div class="center-1">
         <CenterOne
           :center-one="scoreData.centerOne"
@@ -55,16 +61,19 @@
       <div class="center-4">
         <CenterFours />
       </div>
-    </div>
-    <div class="content-right">
+    </el-col>
+    <el-col
+      :lg="6"
+      class="content-right hidden-md-and-down"
+    >
       <div class="right-1">
         <RightOne :all-count="scoreData.leftOne.allCount" />
       </div>
       <div class="right-2">
         <RightTow :right-tow="scoreData.rightTow" />
       </div>
-    </div>
-  </div>
+    </el-col>
+  </el-row>
   <Teleport
     to="body"
     v-if="show"
@@ -160,8 +169,8 @@ const getScoreData = async () => {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: vw(1980);
+  height: vh(1080);
   z-index: 99;
   overflow: hidden;
   background: rgb(15, 42, 66);
@@ -170,12 +179,12 @@ const getScoreData = async () => {
   flex-direction: column;
   align-items: center;
   img{
-    width: 120px;
+    width: vw(120);
   }
   .message{
-    width: 120px;
+    width: vw(120);
     text-align: center;
-    font-size: 26px;
+    font-size: font(26);
     font-weight: 900;
     color: #fffdef;
   }
@@ -189,31 +198,31 @@ const getScoreData = async () => {
   background-size: 100%;
   display: flex;
   .content-left{
-    width: 519px;
+    width: vw(519);
     .left-1{
-      width: 519px;
-      height: 200px;
-      border-radius: 20px;
+      width: vw(519);
+      height: vh(200);
+      border-radius: vw(20);
       background: url("./image/left-1.png") no-repeat;
       background-size: cover;
-      margin-bottom: 20px;
+      margin-bottom: vh(20);
       &-header{
         width: 100%;
-        height: 50px;
+        height: vh(50);
         position: relative;
         img{
           position: absolute;
-          top: 25px;
-          left: 25px;
-          width: 30px;
-          height: 30px;
+          top: vh(25);
+          left: vw(25);
+          width: vw(30);
+          height: vh(30);
         }
         .title{
           position: absolute;
-          top: 29px;
-          left: 62px;
+          top: vh(29);
+          left: vw(62);
           overflow: unset;
-          font-size: 16px;
+          font-size: font(16);
           text-overflow: unset;
           white-space: unset;
           color: rgb(255, 255, 255);
@@ -230,41 +239,41 @@ const getScoreData = async () => {
           display: flex;
           flex-direction: column;
           .user-title{
-            margin-top: 30px;
-            margin-left: 20px;
-            font-size: 14px;
+            margin-top: vh(30);
+            margin-left: vw(20);
+            font-size: font(14);
             font-weight: 600;
             color: #BCC9D4;
           }
           .user-count{
-            margin-top: 10px;
+            margin-top: vh(10);
             color: #ffffff;
-            margin-left: 20px;
+            margin-left: vw(20);
             font-weight: 900;
-            font-size: 46px;
+            font-size: font(46);
           }
         }
         .right{
           flex: 1;
-          height: 140px;
+          height: vh(140);
         }
       }
     }
     .left-2{
       position: relative;
-      width: 519px;
-      height: 531px;
+      width: vw(519);
+      height: vh(513);
       overflow: hidden;
-      border-radius: 20px;
+      border-radius: vw(20);
       background: url("./image/left-2.png") no-repeat;
       background-size: cover;
-      margin-bottom: 20px;
+      margin-bottom: vh(20);
     }
     .left-3{
-      width: 519px;
-      height: 280px;
+      width: vw(519);
+      height: vh(280);
       overflow: hidden;
-      border-radius: 20px;
+      border-radius: vw(20);
       background: url("./image/left-3.png") no-repeat;
       background-size: cover;
     }
@@ -278,13 +287,16 @@ const getScoreData = async () => {
       background-size: cover;
     }
     .center-2{
+      padding: 10px 0;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
+      align-items: center;
       width: 100%;
       height: 104px;
       .center-2-1{
-        width: 302px;
+        flex: 1;
         height: 104px;
+        border-radius: 20px;
         background: url("./image/center-2-1.png") no-repeat;
         background-size: cover;
         overflow: hidden;
@@ -293,49 +305,59 @@ const getScoreData = async () => {
           margin-left: 130px;
           color: #fffdef;
           .title{
+            white-space: nowrap;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 900;
           }
           .money{
-            font-size: 30px;
+            white-space: nowrap;
+            font-size: 26px;
             font-weight: 900;
           }
         }
       }
       .center-2-2{
-        width: 302px;
+        flex: 1;
         height: 104px;
+        border-radius: 20px;
         background: url("./image/center-2-2.png") no-repeat;
         background-size: cover;
+        overflow: hidden;
         .content{
           margin-top: 20px;
           margin-left: 130px;
           color: #fffdef;
           .title{
+            white-space: nowrap;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 900;
           }
           .money{
-            font-size: 30px;
+            white-space: nowrap;
+            font-size: 26px;
             font-weight: 900;
           }
         }
       }
       .center-2-3{
-        width: 302px;
+        flex: 1;
         height: 104px;
-        background: url("./image/center-2-3.png") no-repeat;
+        border-radius: 20px;
+        background: url("./image/center-2-1.png") no-repeat;
         background-size: cover;
+        overflow: hidden;
         .content{
           margin-top: 20px;
           margin-left: 130px;
           color: #fffdef;
           .title{
+            white-space: nowrap;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 900;
           }
           .money{
-            font-size: 30px;
+            white-space: nowrap;
+            font-size: 26px;
             font-weight: 900;
           }
         }
@@ -344,7 +366,7 @@ const getScoreData = async () => {
 
     .center-3{
       width: 100%;
-      height: 356px;
+      height: 365px;
       overflow: hidden;
       background: url("./image/center-3.png") no-repeat;
       background-size: cover;
@@ -358,17 +380,17 @@ const getScoreData = async () => {
     }
   }
   .content-right{
-    width: 472px;
+    width: vw(472);
     .right-1{
       width: 100%;
-      height: 149px;
+      height: vh(149);
       background: url("./image/right-1.png") no-repeat;
       background-size: cover;
     }
     .right-2{
       overflow: hidden;
       width: 100%;
-      height: 926px;
+      height: vh(926);
       background: url("./image/right-2.png") no-repeat;
       background-size: cover;
     }
