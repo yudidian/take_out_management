@@ -192,7 +192,7 @@ const getScoreData = async () => {
 .data-content{
   width: 100%;
   background-image: none;
-  background-color: rgb(42, 45, 60);
+  background-color: #2A2D3CFF;
   transform: scale(1);
   transform-origin: left top;
   background-size: 100%;
@@ -265,8 +265,7 @@ const getScoreData = async () => {
       height: vh(513);
       overflow: hidden;
       border-radius: vw(20);
-      background: url("./image/left-2.png") no-repeat;
-      background-size: cover;
+      background-color: #2A2D3CFF;
       margin-bottom: vh(20);
     }
     .left-3{
