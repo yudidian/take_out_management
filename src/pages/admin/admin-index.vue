@@ -17,7 +17,6 @@
     </div>
     <el-table
       :data="tableData"
-      :is-show-export="true"
       stripe
       style="width: 100%"
       v-loading="tableData.length<=0"
@@ -56,6 +55,7 @@
       </el-table-column>
       <el-table-column
         label="操作"
+        width="300"
       >
         <template #default="scope">
           <el-button
@@ -73,7 +73,7 @@
           </el-button>
           <el-button
             size="small"
-            type="danger"
+            type="primary"
             @click="permissionHandler(scope.row)"
           >
             权限编辑

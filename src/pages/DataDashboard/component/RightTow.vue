@@ -55,13 +55,13 @@ defineProps({
 <style  lang="scss">
 .header {
   display: flex;
-  height: vh(80);
+  height: 80px;
   .left {
     margin-left: vw(32);
     display: flex;
     align-items: center;
     img{
-      margin-top: vh(2);
+      margin-top: 2px;
       width: vw(24);
     }
     .name{
@@ -69,12 +69,12 @@ defineProps({
       font-weight: 900;
       margin-left: vw(10);
       font-size: font(18);
-      padding-top: vh(4);
+      padding-top: 4px;
     }
   }
   .right{
     width: vw(140);
-    padding-top: vh(32);
+    padding-top: 32px;
     white-space: nowrap;
     color: #fffdef;
     font-weight: 900;
@@ -90,9 +90,9 @@ defineProps({
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: vh(24);
+    margin-bottom: 24px;
     width: 100%;
-    height: vh(96);
+    height: 96px;
     .item-left{
       margin-left: vw(50);
       img{
@@ -108,7 +108,7 @@ defineProps({
         padding: 0 vw(10) 0 0;
         font-size: font(16);
         color: rgb(140, 152, 191);
-        margin-bottom: vh(10);
+        margin-bottom: 10px;
       }
       .bottom{
         padding: 0 vw(10) 0 0;

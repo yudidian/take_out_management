@@ -121,12 +121,12 @@ onMounted(() => {
 <style scoped lang="scss">
 .left-tow {
   width: vw(300);
-  height: vh(220);
-  margin-top: vh(46);
+  height: 220px;
+  margin-top: 46px;
 }
 .message{
   position: absolute;
-  top: vh(120);
+  top: 130px;
   left: vw(80);
   .count{
     color: #fffdef;
@@ -145,10 +145,10 @@ onMounted(() => {
 }
 .total-content{
   position: absolute;
-  top: vh(40);
+  top: 40px;
   right: vw(20);
   width: vw(228);
-  height: vh(140);
+  height: 140px;
   color: rgb(140, 152, 191);
   font-weight: 900;
   font-size: font(20);
@@ -157,7 +157,7 @@ onMounted(() => {
   justify-content: flex-start;
   align-items: center;
   .all-count{
-    margin-top: vh(42);
+    margin-top: 42px;
     .number{
       font-size: font(60);
       color: #fffdef;
@@ -175,7 +175,7 @@ onMounted(() => {
 }
 .data-source{
   position: absolute;
-  bottom: vh(120);
+  bottom: 120px;
   width: 100%;
   color: rgb(140, 152, 191);
   font-size: font(12);
@@ -184,10 +184,10 @@ onMounted(() => {
   justify-content: flex-start;
   .phone,.web{
     margin-left: vw(46);
-    margin-bottom: vh(20);
+    margin-bottom: 20px;
     .title{
       margin-left: vw(10);
-      margin-bottom: vh(8);
+      margin-bottom: 8px;
     }
     .content{
       position: relative;
@@ -201,7 +201,7 @@ onMounted(() => {
       & > .count{
         position: absolute;
         right: 0;
-        bottom: vh(2);
+        bottom: 2px;
         margin-left: auto;
         margin-right: vw(90);
         font-weight: 900;
@@ -213,17 +213,17 @@ onMounted(() => {
 }
 .sale-count {
   position: absolute;
-  bottom: vh(20);
+  bottom: 20px;
   width: 100%;
-  height: vh(100);
+  height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   .count-one{
     color: #ffffff;
-    margin-bottom: vh(10);
-    margin-top: vh(10);
+    margin-bottom: 10px;
+    margin-top: 10px;
     .all-count{
       font-size: font(14);
     }

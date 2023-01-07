@@ -61,12 +61,12 @@ onBeforeUnmount(() => {
   height: 100%;
   .right-header{
     display: flex;
-    height: vh(70);
+    height: 70px;
     color: #fffdef;
     font-weight: 900;
     font-size: font(18);
     .left {
-      margin-top: vh(28);
+      margin-top: 28px;
       margin-left: vw(100);
       .left-user{
         font-size: font(12);
@@ -74,7 +74,7 @@ onBeforeUnmount(() => {
       }
     }
     .right{
-      margin-top: vh(32);
+      margin-top: 32px;
       margin-right: vw(45);
       margin-left: auto;
       span{
@@ -91,14 +91,14 @@ onBeforeUnmount(() => {
     display: flex;
     color: rgb(140, 152, 191);
     font-size: font(12);
-    margin-top: vh(20);
+    margin-top: 20px;
     .left{
       cursor: pointer;
       width: vw(100);
-      height: vh(30);
+      height: 30px;
       margin-left: vw(20);
       text-align: center;
-      line-height: vh(30);
+      line-height: 30px;
       font-size: font(12);
       border: 1px solid #8C98BFFF;
     }

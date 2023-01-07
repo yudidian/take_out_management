@@ -24,37 +24,8 @@
         />
       </div>
       <div class="center-2">
-        <div class="center-2-1">
-          <div class="content">
-            <div class="title">
-              菜品销售额第一
-            </div>
-            <div class="money">
-              ￥ {{ scoreData.centerOne.first }}
-            </div>
-          </div>
-        </div>
-        <div class="center-2-2">
-          <div class="content">
-            <div class="title">
-              菜品销售额第二
-            </div>
-            <div class="money">
-              ￥ {{ scoreData.centerOne.second }}
-            </div>
-          </div>
-        </div>
-        <div class="center-2-3">
-          <div class="content">
-            <div class="title">
-              菜品销售额第三
-            </div>
-            <div class="money">
-              ￥ {{ scoreData.centerOne.three }}
-            </div>
-          </div>
-        </div>
-      </div>
+        <CenterTow :score-data="scoreData" />
+      </div>>
       <div class="center-3">
         <CenterThree :center-three="scoreData.centerThree" />
       </div>
@@ -97,6 +68,7 @@ import LeftTwo from './component/LeftTow.vue'
 import LeftOne from './component/LeftOne.vue'
 import CenterOne from './component/CenterOne.vue'
 import RightOne from './component/RightOne.vue'
+import CenterTow from './component/CenterTow.vue'
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import {
   sendGetAllDishInfo,
@@ -201,25 +173,25 @@ const getScoreData = async () => {
     width: vw(519);
     .left-1{
       width: vw(519);
-      height: vh(200);
+      height: 200px;
       border-radius: vw(20);
       background: url("./image/left-1.png") no-repeat;
       background-size: cover;
-      margin-bottom: vh(20);
+      margin-bottom: 20px;
       &-header{
         width: 100%;
-        height: vh(50);
+        height: 50px;
         position: relative;
         img{
           position: absolute;
-          top: vh(25);
+          top: 25px;
           left: vw(25);
           width: vw(30);
-          height: vh(30);
+          height: 30px;
         }
         .title{
           position: absolute;
-          top: vh(29);
+          top: 29px;
           left: vw(62);
           overflow: unset;
           font-size: font(16);
@@ -239,14 +211,14 @@ const getScoreData = async () => {
           display: flex;
           flex-direction: column;
           .user-title{
-            margin-top: vh(30);
+            margin-top: 30px;
             margin-left: vw(20);
             font-size: font(14);
             font-weight: 600;
             color: #BCC9D4;
           }
           .user-count{
-            margin-top: vh(10);
+            margin-top: 10px;
             color: #ffffff;
             margin-left: vw(20);
             font-weight: 900;
@@ -255,22 +227,22 @@ const getScoreData = async () => {
         }
         .right{
           flex: 1;
-          height: vh(140);
+          height: 140px;
         }
       }
     }
     .left-2{
       position: relative;
       width: vw(519);
-      height: vh(513);
+      height: 513px;
       overflow: hidden;
       border-radius: vw(20);
       background-color: #2A2D3CFF;
-      margin-bottom: vh(20);
+      margin-bottom: 20px;
     }
     .left-3{
       width: vw(519);
-      height: vh(280);
+      height: 280px;
       overflow: hidden;
       border-radius: vw(20);
       background: url("./image/left-3.png") no-repeat;
@@ -278,7 +250,7 @@ const getScoreData = async () => {
     }
   }
   .content-center{
-    width: 919px;
+    width: vw(919);
     .center-1{
       width: 100%;
       height: 302px;
@@ -292,75 +264,6 @@ const getScoreData = async () => {
       align-items: center;
       width: 100%;
       height: 104px;
-      .center-2-1{
-        flex: 1;
-        height: 104px;
-        border-radius: 20px;
-        background: url("./image/center-2-1.png") no-repeat;
-        background-size: cover;
-        overflow: hidden;
-        .content{
-          margin-top: 20px;
-          margin-left: 130px;
-          color: #fffdef;
-          .title{
-            white-space: nowrap;
-            font-size: 14px;
-            font-weight: 900;
-          }
-          .money{
-            white-space: nowrap;
-            font-size: 26px;
-            font-weight: 900;
-          }
-        }
-      }
-      .center-2-2{
-        flex: 1;
-        height: 104px;
-        border-radius: 20px;
-        background: url("./image/center-2-2.png") no-repeat;
-        background-size: cover;
-        overflow: hidden;
-        .content{
-          margin-top: 20px;
-          margin-left: 130px;
-          color: #fffdef;
-          .title{
-            white-space: nowrap;
-            font-size: 14px;
-            font-weight: 900;
-          }
-          .money{
-            white-space: nowrap;
-            font-size: 26px;
-            font-weight: 900;
-          }
-        }
-      }
-      .center-2-3{
-        flex: 1;
-        height: 104px;
-        border-radius: 20px;
-        background: url("./image/center-2-1.png") no-repeat;
-        background-size: cover;
-        overflow: hidden;
-        .content{
-          margin-top: 20px;
-          margin-left: 130px;
-          color: #fffdef;
-          .title{
-            white-space: nowrap;
-            font-size: 14px;
-            font-weight: 900;
-          }
-          .money{
-            white-space: nowrap;
-            font-size: 26px;
-            font-weight: 900;
-          }
-        }
-      }
     }
 
     .center-3{
@@ -382,14 +285,14 @@ const getScoreData = async () => {
     width: vw(472);
     .right-1{
       width: 100%;
-      height: vh(149);
+      height: 149px;
       background: url("./image/right-1.png") no-repeat;
       background-size: cover;
     }
     .right-2{
       overflow: hidden;
       width: 100%;
-      height: vh(926);
+      height: 926px;
       background: url("./image/right-2.png") no-repeat;
       background-size: cover;
     }

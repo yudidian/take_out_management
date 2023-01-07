@@ -97,17 +97,17 @@ onMounted(() => {
 
 .left-1-header {
   width: 100%;
-  height: vh(50);
+  height: 50px;
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   .header-image {
     position: absolute;
-    top: vh(26);
+    top: 26px;
     left: vw(25);
     width: vw(30);
-    height: vh(30);
+    height: 30px;
     img{
       width: 100%;
       object-position: center;
@@ -116,7 +116,7 @@ onMounted(() => {
 
   .title {
     position: absolute;
-    top: vh(29);
+    top: 29px;
     left: vw(62);
     overflow: unset;
     font-size: font(16);
@@ -136,7 +136,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     .user-title{
-      margin-top: vh(30);
+      margin-top: 30px;
       margin-left: vw(20);
       font-size: font(14);
       font-weight: 600;
@@ -152,7 +152,7 @@ onMounted(() => {
   }
   .right{
     flex: 1;
-    height: vh(140);
+    height: 140px;
   }
 }
 </style>
