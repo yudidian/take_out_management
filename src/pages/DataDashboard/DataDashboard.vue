@@ -5,13 +5,19 @@
       class="content-left hidden-md-and-down"
     >
       <div class="left-1">
-        <LeftOne :left-one="scoreData.leftOne" />
+        <LeftOne
+          ref="LeftOneDom"
+          :left-one="scoreData.leftOne"
+        />
       </div>
       <div class="left-2">
-        <LeftTwo :left-two="scoreData.leftTwo" />
+        <LeftTwo
+          ref="LeftTwoDom"
+          :left-two="scoreData.leftTwo"
+        />
       </div>
       <div class="left-3">
-        <LeftThree />
+        <LeftThree ref="LeftThreeDom" />
       </div>
     </el-col>
     <el-col
@@ -30,7 +36,7 @@
         <CenterThree :center-three="scoreData.centerThree" />
       </div>
       <div class="center-4">
-        <CenterFours />
+        <CenterFours ref="CenterFoursDom" />
       </div>
     </el-col>
     <el-col
@@ -70,6 +76,7 @@ import CenterOne from './component/CenterOne.vue'
 import RightOne from './component/RightOne.vue'
 import CenterTow from './component/CenterTow.vue'
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import _ from 'lodash'
 import {
   sendGetAllDishInfo,
   sendGetAllUser,
@@ -77,6 +84,10 @@ import {
   sendGetReviewInfo
 } from '@/axios/api/sourceData'
 import { formatNumber } from '@/utils'
+const LeftOneDom = ref(null)
+const LeftTwoDom = ref(null)
+const CenterFoursDom = ref(null)
+const LeftThreeDom = ref(null)
 const scoreData = reactive({
   leftOne: {
     allCount: '000,000'
@@ -107,10 +118,11 @@ onMounted(() => {
   getScoreData()
   timer = setTimeout(() => {
     show.value = false
-  }, 2000)
+  }, 1100)
   setInterval(() => {
     getScoreData()
   }, 5000)
+  getAllEcharts()
 })
 onBeforeUnmount(() => {
   clearInterval(timer)
@@ -134,9 +146,45 @@ const getScoreData = async () => {
   scoreData.rightTow.list = res[2].value.info.list
   scoreData.rightTow.allCount = formatNumber(res[2].value.info.allCount, 5)
 }
+const getAllEcharts = () => {
+  window.addEventListener('resize', _.throttle(() => {
+    LeftOneDom.value.myChart && LeftOneDom.value.myChart.resize()
+    LeftTwoDom.value.myChart && LeftTwoDom.value.myChart.resize()
+    LeftThreeDom.value.myChart && LeftThreeDom.value.myChart.resize()
+    CenterFoursDom.value.myChart && CenterFoursDom.value.myChart.resize()
+  }, 200))
+}
 </script>
 
 <style scoped lang="scss">
+@media screen and (min-width: 1200px){
+  .loading{
+    img{
+      width: vw(120);
+    }
+    .message{
+      width: vw(120);
+      text-align: center;
+      font-size: font(26);
+      font-weight: 900;
+      color: #fffdef;
+    }
+  }
+}
+@media screen and (max-width: 1200px){
+  .loading{
+    img{
+      width: 18%;
+    }
+    .message{
+      width: 40%;
+      text-align: center;
+      font-size: 260%;
+      font-weight: 900;
+      color: #fffdef;
+    }
+  }
+}
 .loading{
   position: fixed;
   top: 0;
@@ -150,16 +198,6 @@ const getScoreData = async () => {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  img{
-    width: vw(120);
-  }
-  .message{
-    width: vw(120);
-    text-align: center;
-    font-size: font(26);
-    font-weight: 900;
-    color: #fffdef;
-  }
 }
 .data-content{
   width: 100%;
@@ -173,7 +211,7 @@ const getScoreData = async () => {
     width: vw(519);
     .left-1{
       width: vw(519);
-      height: 200px;
+      height: 250px;
       border-radius: vw(20);
       background: url("./image/left-1.png") no-repeat;
       background-size: cover;
@@ -237,12 +275,12 @@ const getScoreData = async () => {
       height: 513px;
       overflow: hidden;
       border-radius: vw(20);
-      background-color: #2A2D3CFF;
+      background-color: #35394B;
       margin-bottom: 20px;
     }
     .left-3{
       width: vw(519);
-      height: 280px;
+      height: 290px;
       overflow: hidden;
       border-radius: vw(20);
       background: url("./image/left-3.png") no-repeat;
@@ -253,7 +291,7 @@ const getScoreData = async () => {
     width: vw(919);
     .center-1{
       width: 100%;
-      height: 302px;
+      height: 276px;
       background: url("./image/center-1.png") no-repeat;
       background-size: cover;
     }
@@ -292,7 +330,7 @@ const getScoreData = async () => {
     .right-2{
       overflow: hidden;
       width: 100%;
-      height: 926px;
+      height: 949px;
       background: url("./image/right-2.png") no-repeat;
       background-size: cover;
     }

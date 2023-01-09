@@ -71,26 +71,33 @@ defineProps({
 }
 @media screen and (max-width: 1200px){
   .center-2-1, .center-2-2, .center-2-3{
-    flex: 1;
+    width: 33.3333%;
     height: 104px;
     border-radius: 20px;
     overflow: hidden;
     background-size: 100% 100% !important;
     .content{
-      width: 100%;
+      width: 60%;
       margin-top: 20px;
       margin-left: 35%;
       color: #fffdef;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
       .title{
+        width: 100%;
+        height: 21px;
         white-space: nowrap;
         font-size: 100%;
         font-weight: 900;
       }
       .money{
+        width: 100%;
+        height: 42px;
         margin-top: 6px;
         white-space: nowrap;
-        font-size: 180%;
+        font-size: 190%;
         font-weight: 900;
       }
     }

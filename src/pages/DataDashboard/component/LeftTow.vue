@@ -65,17 +65,18 @@
 
 <script setup name="LeftTow">
 import * as echarts from 'echarts'
-import { onMounted } from 'vue'
+import { onMounted, shallowRef } from 'vue'
 defineProps({
   leftTwo: {
     type: Object,
     required: true
   }
 })
+const myChart = shallowRef(null)
 onMounted(() => {
   const chartDom = document.getElementById('leftTwo')
-  const myChart = echarts.init(chartDom)
-  myChart.setOption({
+  myChart.value = echarts.init(chartDom)
+  myChart.value.setOption({
     color: ['#7578F2', '#FF6D87'],
     tooltip: {
       trigger: 'item',
@@ -112,9 +113,9 @@ onMounted(() => {
       }
     ]
   })
-  window.addEventListener('resize', () => {
-    myChart.resize()
-  })
+})
+defineExpose({
+  myChart
 })
 </script>
 

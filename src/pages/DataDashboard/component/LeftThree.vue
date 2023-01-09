@@ -27,11 +27,11 @@
 
 <script name="LeftThree" setup>
 import * as echarts from 'echarts'
-import { onMounted } from 'vue'
-
+import { onMounted, shallowRef } from 'vue'
+const myChart = shallowRef(null)
 onMounted(() => {
   const chartDom = document.querySelector('.left-three')
-  const myChart = echarts.init(chartDom)
+  myChart.value = echarts.init(chartDom)
   const option = {
     color: ['#ff6d87', '#797dff', '#0599f5', '#05f5d9'],
     tooltip: {
@@ -180,10 +180,11 @@ onMounted(() => {
       }
     ]
   }
-
-  option && myChart.setOption(option)
+  option && myChart.value.setOption(option)
 })
-
+defineExpose({
+  myChart
+})
 </script>
 
 <style scoped lang="scss">

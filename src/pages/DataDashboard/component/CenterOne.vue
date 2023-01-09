@@ -201,7 +201,6 @@ const runNumberItem = () => {
 }
 const runItem = (items, i, end) => {
   starTimer = setTimeout(() => {
-    console.log(end)
     items[i].style.transform = `translateY(${-end}px`
     clearTimeout(starTimer)
   }, (i + 1) * 100)

@@ -26,11 +26,11 @@
 </template>
 <script name="CenterFours" setup>
 import * as echarts from 'echarts'
-import { onMounted } from 'vue'
-
+import { onMounted, shallowRef } from 'vue'
+const myChart = shallowRef(null)
 onMounted(() => {
   const chartDom = document.querySelector('.center-fours')
-  const myChart = echarts.init(chartDom)
+  myChart.value = echarts.init(chartDom)
   const option = {
     backgroundColor: 'transparent',
     color: ['#ff6d87', '#797dff'],
@@ -129,12 +129,11 @@ onMounted(() => {
     ]
   }
 
-  option && myChart.setOption(option)
-  window.addEventListener('resize', () => {
-    myChart.resize()
-  })
+  option && myChart.value.setOption(option)
 })
-
+defineExpose({
+  myChart
+})
 </script>
 
 <style scoped lang="scss">

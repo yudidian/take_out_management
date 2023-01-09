@@ -84,7 +84,7 @@ defineProps({
   }
 }
 .content{
-  margin-top: 6px;
+  margin-top: 16px;
   .item{
     cursor: pointer;
     display: flex;

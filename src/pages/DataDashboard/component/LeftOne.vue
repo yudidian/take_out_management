@@ -24,16 +24,17 @@
 
 <script setup name="LeftOne">
 import * as echarts from 'echarts'
-import { onMounted } from 'vue'
+import { onMounted, shallowRef } from 'vue'
 defineProps({
   leftOne: {
     type: Object,
     required: true
   }
 })
+const myEcharts = shallowRef(null)
 const setLeft1 = () => {
-  const myEcharts = echarts.init(document.querySelector('#left_1_echarts'))
-  myEcharts.setOption({
+  myEcharts.value = echarts.init(document.querySelector('#left_1_echarts'))
+  myEcharts.value.setOption({
     grid: {
       top: 10,
       bottom: 40
@@ -84,12 +85,12 @@ const setLeft1 = () => {
       }
     ]
   })
-  window.addEventListener('resize', () => {
-    myEcharts.resize()
-  })
 }
 onMounted(() => {
   setLeft1()
+})
+defineExpose({
+  myChart: myEcharts
 })
 </script>
 
