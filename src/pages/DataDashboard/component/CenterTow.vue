@@ -87,18 +87,27 @@ defineProps({
       text-align: center;
       .title{
         width: 100%;
-        height: 21px;
         white-space: nowrap;
-        font-size: 100%;
+        font-size: font(32);
         font-weight: 900;
       }
       .money{
         width: 100%;
-        height: 42px;
-        margin-top: 6px;
         white-space: nowrap;
-        font-size: 190%;
+        font-size: font(56);
         font-weight: 900;
+      }
+    }
+  }
+}
+@media screen and (max-width: 900px){
+  .center-2-1, .center-2-2, .center-2-3{
+    .content{
+      .title{
+        font-size: font(38);
+      }
+      .money{
+        font-size: font(70);
       }
     }
   }
