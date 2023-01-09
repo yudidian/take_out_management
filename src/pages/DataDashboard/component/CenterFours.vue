@@ -46,6 +46,14 @@ onMounted(() => {
         label: {
           backgroundColor: '#6a7985'
         }
+      },
+      formatter: (params) => {
+        return `<div>
+<p style="text-align: center">${params[0].name}销售情况</p>
+<p>${params[0].seriesName}: ${params[0].value}</p>
+<p>${params[1].seriesName}: ${params[1].value}</p>
+<p>盈利: <span style="color: red; font-weight: 900;">${params[0].value - params[1].value}</span></p>
+</div>`
       }
     },
     legend: {
@@ -73,8 +81,7 @@ onMounted(() => {
       {
         name: '销售金额',
         type: 'line',
-        stack: 'Total',
-        smooth: false,
+        smooth: true,
         symbolSize: 8,
         lineStyle: {
           width: 4
@@ -96,13 +103,12 @@ onMounted(() => {
         emphasis: {
           focus: 'series'
         },
-        data: [140, 232, 101, 264, 90, 340, 250]
+        data: [240, 232, 401, 264, 90, 240, 450]
       },
       {
         name: '成本',
         type: 'line',
-        stack: 'Total',
-        smooth: false,
+        smooth: true,
         symbolSize: 8,
         lineStyle: {
           width: 4
@@ -124,7 +130,7 @@ onMounted(() => {
         emphasis: {
           focus: 'series'
         },
-        data: [120, 282, 111, 234, 220, 340, 310]
+        data: [180, 282, 191, 294, 220, 340, 410]
       }
     ]
   }
