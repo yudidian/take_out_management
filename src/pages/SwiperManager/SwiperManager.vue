@@ -23,7 +23,11 @@
         label="创建时间"
         width="180"
         align="center"
-      />
+      >
+        <template #default="scorp">
+          <span>{{ dayjs(scorp.row.createTime).format('YYYY-MM-DD HH:ss:mm') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="createUser"
         label="添加人"
@@ -77,6 +81,7 @@
           ]"
         >
           <el-input-number
+            disabled
             v-model="form.sort"
             :controls="false"
           />
@@ -126,6 +131,7 @@
 </template>
 
 <script name="SwiperManager" setup>
+import dayjs from 'dayjs'
 import { onMounted, reactive, ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
@@ -140,7 +146,7 @@ const dialogFormVisible = ref(false)
 const tableData = ref([])
 const form = reactive({
   imageUrl: '',
-  sort: 0
+  sort: 1
 })
 onMounted(() => {
   getSwiperList()
@@ -171,7 +177,6 @@ const submitSwiper = async (el) => {
       const res = await sendAddSwiperList(form)
       if (res.code === 1) {
         form.imageUrl = ''
-        form.sort = 0
         okTip(res.msg)
         await getSwiperList()
       }
@@ -185,6 +190,7 @@ const getSwiperList = async () => {
   const res = await sendGetSwiperList()
   if (res.code === 1) {
     tableData.value = res.info
+    form.sort += res.info.length ? res.info.length : 0
   } else {
     errorTip(res.msg)
   }
@@ -194,6 +200,7 @@ const handleDelete = (index, row) => {
     const res = await sendDeleteSwiperList(row.id)
     if (res.code === 1) {
       tableData.value.splice(index, 1)
+      form.sort -= 1
       okTip('删除成功')
     } else {
       errorTip(res.msg)

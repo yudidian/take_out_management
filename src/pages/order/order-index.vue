@@ -142,7 +142,7 @@
   />
   <el-dialog
     v-model="dialogFormVisible"
-    title="编辑商品描述"
+    title="商品状态"
     destroy-on-close
     :close-on-click-modal="false"
     :width="750"
@@ -224,6 +224,7 @@ const getOrderList = async (params) => {
   }
 }
 const showOrderStatus = (row) => {
+  orderStatusInfo.value = []
   const params = {
     flag: 0,
     number: row.number
@@ -241,6 +242,12 @@ const getOrderStatus = async (params) => {
     orderStatusInfo.value.push({
       time: res.data.orderTime,
       message: '已下单'
+    })
+  }
+  if (res.data.checkoutTime) {
+    orderStatusInfo.value.push({
+      time: res.data.checkoutTime,
+      message: '已支付'
     })
   }
   if (res.data.dinnerOutTime) {

@@ -42,27 +42,47 @@
       prop="description"
       width="240"
       align="center"
-    />
+    >
+      <template #default="scorp">
+        <span>{{ scorp.row.description === null ? '暂无' : scorp.row.description }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="主料"
       prop="mainMaterial"
       align="center"
-    />
+    >
+      <template #default="scorp">
+        <span>{{ scorp.row.mainMaterial === null ? '暂无' : scorp.row.mainMaterial }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="制作方式"
       align="center"
       prop="productionMethod"
-    />
+    >
+      <template #default="scorp">
+        <span>{{ scorp.row.productionMethod === null ? '暂无' : scorp.row.productionMethod }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="分量"
       prop="count"
       align="center"
-    />
+    >
+      <template #default="scorp">
+        <span>{{ scorp.row.count === null ? '暂无' : scorp.row.count }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="口味"
       prop="taste"
       align="center"
-    />
+    >
+      <template #default="scorp">
+        <span>{{ scorp.row.taste === null ? '暂无' : scorp.row.taste }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="操作"
       align="center"
@@ -181,6 +201,8 @@
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { sendGetDishDescription, sendChangeDishDescription } from '@/axios/api/dish'
+import { okTip } from '@/utils/messageTip'
+
 const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const keyWords = ref('')
 const ruleFormRef = ref(null)
@@ -201,27 +223,37 @@ const form = ref({
 const rules = reactive({
   taste: [
     {
-      required: true, message: '请填写口味', trigger: 'blur'
+      required: true,
+      message: '请填写口味',
+      trigger: 'blur'
     }
   ],
   productionMethod: [
     {
-      required: true, message: '请填写制作方式', trigger: 'blur'
+      required: true,
+      message: '请填写制作方式',
+      trigger: 'blur'
     }
   ],
   mainMaterial: [
     {
-      required: true, message: '请填写主要原料', trigger: 'blur'
+      required: true,
+      message: '请填写主要原料',
+      trigger: 'blur'
     }
   ],
   description: [
     {
-      required: true, message: '请填写描述内容', trigger: 'blur'
+      required: true,
+      message: '请填写描述内容',
+      trigger: 'blur'
     }
   ],
   count: [
     {
-      required: true, message: '请填写数量', trigger: 'blur'
+      required: true,
+      message: '请填写数量',
+      trigger: 'blur'
     }
   ]
 })
@@ -235,6 +267,7 @@ const submitForm = async () => {
       const res = await sendChangeDishDescription(form.value)
       if (res.code === 1) {
         await getDishDescription()
+        okTip('修改成功')
         dialogFormVisible.value = false
       } else {
         ElMessage.error(res.msg)
@@ -287,18 +320,20 @@ const searchHandler = async (val) => {
 </script>
 
 <style scoped lang="scss">
-.table-image{
+.table-image {
   width: 140px;
   height: 100px;
   border-radius: 10px;
   overflow: hidden;
 }
+
 .el-dialog {
   .el-form {
     .el-form-item {
       width: 300px;
     }
-    .flavor-textArea{
+
+    .flavor-textArea {
       width: 720px;
     }
   }
