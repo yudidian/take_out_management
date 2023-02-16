@@ -26,6 +26,7 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(res => {
   if (res.data.msg === '无token') {
     localStorage.clear()
+    ElMessage.closeAll()
     // 登录过期的时候清除路由对HomePage的缓存
     ElMessage({
       message: '用户信息过期',
@@ -35,7 +36,6 @@ request.interceptors.response.use(res => {
   }
   return res.data
 }, error => {
-  console.log(error)
   let { message } = error
   if (message === 'Network Error') {
     message = '后端接口连接异常'
@@ -48,6 +48,7 @@ request.interceptors.response.use(res => {
   } else if (message.includes('Request failed with status code')) {
     message = '系统接口异常'
   }
+  ElMessage.closeAll()
   ElMessage({
     message,
     type: 'error'
