@@ -61,7 +61,7 @@ defineProps({
         font-weight: 900;
       }
       .money{
-        margin-top: 6px;
+        margin-top: 2px;
         white-space: nowrap;
         font-size: font(30);
         font-weight: 900;

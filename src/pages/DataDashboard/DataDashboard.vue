@@ -148,10 +148,10 @@ const getScoreData = async () => {
 }
 const getAllEcharts = () => {
   window.addEventListener('resize', _.throttle(() => {
-    LeftOneDom.value.myChart && LeftOneDom.value.myChart.resize()
-    LeftTwoDom.value.myChart && LeftTwoDom.value.myChart.resize()
-    LeftThreeDom.value.myChart && LeftThreeDom.value.myChart.resize()
-    CenterFoursDom.value.myChart && CenterFoursDom.value.myChart.resize()
+    LeftOneDom.value?.myChart && LeftOneDom.value.myChart.resize()
+    LeftTwoDom.value?.myChart && LeftTwoDom.value.myChart.resize()
+    LeftThreeDom.value?.myChart && LeftThreeDom.value.myChart.resize()
+    CenterFoursDom.value?.myChart && CenterFoursDom.value.myChart.resize()
   }, 200))
 }
 </script>

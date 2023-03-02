@@ -164,7 +164,7 @@
 </template>
 
 <script setup>
-import { h, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import { h, onBeforeUnmount, onMounted, onUpdated, reactive, ref, watch } from 'vue'
 import OrderHeader from './component/OrderHeader.vue'
 import { sendGetOrderList, sendGetOrderStatus } from '@/axios/api/orders'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
@@ -191,6 +191,9 @@ onMounted(() => {
       state: 0
     })
   }, 3000)
+})
+onUpdated(() => {
+  console.log('重新渲染')
 })
 onBeforeUnmount(() => {
   clearInterval(timer)

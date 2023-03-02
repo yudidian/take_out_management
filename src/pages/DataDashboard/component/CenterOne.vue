@@ -320,7 +320,7 @@ onMounted(() => {
         width: 100%;
         font-size: font(120);
         text-align: right;
-        margin-top: 30px;
+        margin-top: 42px;
         line-height: 40px;
       }
     }
@@ -329,7 +329,7 @@ onMounted(() => {
       .number-item{
         width: 100%;
         font-size: font(120);
-        margin-top: 30px;
+        margin-top: 42px;
         line-height: 40px;
       }
     }

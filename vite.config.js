@@ -39,6 +39,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     // esbuild 打包更快，但是不能去除 console.log
-    minify: 'esbuild'
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
   }
 })
