@@ -87,7 +87,11 @@
       prop="remark"
       width="340"
       align="center"
-    />
+    >
+      <template #default="scope">
+        <span>{{ scope.row.remark === "" ? "暂无备注": scope.row.remark }}</span>
+      </template>
+    </el-table-column>
     <el-table-column
       label="配送状态"
       prop="status"
