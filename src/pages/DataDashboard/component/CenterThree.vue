@@ -18,10 +18,15 @@
     class="swiper-container"
     id="swiper"
   >
-    <div class="swiper-wrapper">
+    <div
+      class="swiper-wrapper"
+      ref="slideWrapper"
+      @mouseenter="clearRun"
+      @mouseleave="addRun"
+    >
       <div
         class="swiper-slide"
-        v-for="(item, index) in centerThree.dishInfo"
+        v-for="(item, index) in centerThree.dishInfo.slice(0,5)"
         :key="item.id"
       >
         <div class="index">
@@ -51,8 +56,8 @@
 </template>
 
 <script setup name="CenterThree">
-import { nextTick, onBeforeUnmount, onMounted } from 'vue'
-import { clearAllTimer } from '@/utils'
+import { onUpdated, ref } from 'vue'
+// import { clearAllTimer } from '@/utils'
 const IMG_URL = import.meta.env.VITE_IMAGE_URL
 defineProps({
   centerThree: {
@@ -60,58 +65,46 @@ defineProps({
     required: true
   }
 })
-onMounted(() => {
-  nextTick(() => {
-    runItem()
-  })
+let runIndex = 1
+let timer
+let slideLength = 0
+let ele = null
+let slideHeight
+const slideWrapper = ref(null)
+onUpdated(() => {
+  const itemLength = slideWrapper.value.children.length
+  const itemHeight = slideWrapper.value.children[0].offsetHeight
+  if (slideLength !== itemLength) {
+    slideLength = itemLength
+    ele = slideWrapper.value
+    slideHeight = itemHeight
+    slideWrapperRun(ele, slideLength, slideHeight)
+  }
 })
-onBeforeUnmount(() => {
-  clearAllTimer()
-})
-const runItem = () => {
-  const itemHeight = 72
-  const itemWrapper = document.querySelector('.swiper-wrapper')
-  const items = document.querySelectorAll('.swiper-slide')
-  const itemsLength = items.length
-  for (let i = 1; i < itemsLength + 2; i++) {
-    if (i > itemsLength) {
-      // 到最后一个
-      setTimeout(() => {
-        itemWrapper.style.transition = 'none'
-        itemWrapper.style.transform = 'translateY(210px)'
-        runItem2()
-      }, 2000 * (itemsLength + 1))
+const slideWrapperRun = (ele, itemLength, itemHeight) => {
+  timer = setInterval(() => run(ele, itemLength, itemHeight), 2000)
+}
+const run = (ele, itemLength, itemHeight) => {
+  if (runIndex === itemLength + 1) {
+    ele.style = `transform: translateY(${3 * (itemHeight + 2)}px); transition: none;`
+    runIndex = 1
+    clearInterval(timer)
+    timer = setInterval(() => run(ele, itemLength, itemHeight), 2000)
+  } else {
+    const translateValue = ele.style.transform.match(/-?\d+/)
+    if (translateValue !== null && +translateValue[0] > 0) {
+      ele.style = `transform: translateY(${+translateValue[0] - (itemHeight + 2)}px); transition: all 1.4s;`
     } else {
-      setTimeout(() => {
-        if (itemWrapper.style.transition !== 'all 1.5s ease 0s' || itemWrapper.style.transition === '') {
-          itemWrapper.style.transition = 'all 1.5s ease 0s'
-        }
-        itemWrapper.style.transform = `translateY(${-i * itemHeight}px)`
-      }, 2000 * i)
+      ele.style = `transform: translateY(${-runIndex * (itemHeight + 2)}px); transition: all 1.4s;`
+      runIndex++
     }
   }
 }
-const runItem2 = () => {
-  const itemHeight = 72
-  const itemWrapper = document.querySelector('.swiper-wrapper')
-  const items = document.querySelectorAll('.swiper-slide')
-  const itemsLength = items.length
-  for (let i = -2; i < itemsLength + 1; i++) {
-    setTimeout(() => {
-      if (itemWrapper.style.transition !== 'all 1.5s ease 0s' || itemWrapper.style.transition === '') {
-        itemWrapper.style.transition = 'all 1.5s ease 0s'
-      }
-      itemWrapper.style.transform = `translateY(${-i * itemHeight}px)`
-    }, 2000 * (i + 3))
-    if (i === itemsLength) {
-      // 到最后一个
-      setTimeout(() => {
-        itemWrapper.style.transition = 'none'
-        itemWrapper.style.transform = 'translateY(210px)'
-        runItem2()
-      }, 2000 * (itemsLength + 3))
-    }
-  }
+const clearRun = () => {
+  clearInterval(timer)
+}
+const addRun = () => {
+  timer = setInterval(() => run(ele, slideLength, slideHeight), 2000)
 }
 </script>
 
@@ -146,19 +139,19 @@ const runItem2 = () => {
   justify-content: flex-start;
   .header-name{
     &:nth-child(1) {
-      width: 280px;
+      width: 31.1818%;
       text-align: center;
     }
     &:nth-child(2) {
-      width: 380px;
+      width: 43.1818%;
       text-align: center;
     }
     &:nth-child(3) {
-      width: 100px;
+      width: 11.3636%;
       text-align: center;
     }
     &:nth-child(4) {
-      width: 120px;
+      width: 13.3636%;
       text-align: center;
     }
   }
@@ -173,6 +166,7 @@ const runItem2 = () => {
     position: absolute;
     width: 100%;
     height: auto;
+    transform: translateY(0);
     .swiper-slide {
     width: 100%;
     height: 70px;
@@ -184,10 +178,10 @@ const runItem2 = () => {
     margin-top: 2px;
     align-items: center;
     .index{
-      width: 40px;
+      width: 6.1948%;
     }
     .image{
-      width: 40px;
+      width: 5.1948%;
       height: 40px;
       overflow: hidden;
       border-radius: 10px;
@@ -201,24 +195,24 @@ const runItem2 = () => {
     .name{
       font-size: 14px;
       text-align: center;
-      width: 130px;
+      width: 16.88%;
     }
     .description{
       font-size: 12px;
       padding: 0 10px;
       text-overflow: ellipsis;
       text-align: center;
-      width: 360px;
+      width: 35.75%;
       overflow: hidden;
       white-space: nowrap;
     }
     .price{
-      width: 120px;
+      width: 13.58%;
       text-align: center;
       color: #797dff;
     }
      .sales{
-       width: 80px;
+       width: 10.3896%;
        text-align: center;
        margin-left: 10px;
        color: #ff6d87;;
@@ -229,5 +223,20 @@ const runItem2 = () => {
 
 .swiper-container-free-mode > .swiper-wrapper {
   transition-timing-function: linear;
+}
+@media screen and (max-width: 1200px) {
+  .table-header {
+    margin-top: 45px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .table-header {
+    margin-top: 40px;
+  }
+}
+@media screen and (max-width: 960px) {
+  .table-header {
+    margin-top: 27px;
+  }
 }
 </style>
