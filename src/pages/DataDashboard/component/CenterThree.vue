@@ -26,7 +26,7 @@
     >
       <div
         class="swiper-slide"
-        v-for="(item, index) in centerThree.dishInfo.slice(0,5)"
+        v-for="(item, index) in centerThree.dishInfo"
         :key="item.id"
       >
         <div class="index">
@@ -56,8 +56,8 @@
 </template>
 
 <script setup name="CenterThree">
-import { onUpdated, ref } from 'vue'
-// import { clearAllTimer } from '@/utils'
+import { onBeforeUnmount, onUpdated, ref } from 'vue'
+import { clearAllTimer } from '@/utils'
 const IMG_URL = import.meta.env.VITE_IMAGE_URL
 defineProps({
   centerThree: {
@@ -80,6 +80,9 @@ onUpdated(() => {
     slideHeight = itemHeight
     slideWrapperRun(ele, slideLength, slideHeight)
   }
+})
+onBeforeUnmount(() => {
+  clearAllTimer()
 })
 const slideWrapperRun = (ele, itemLength, itemHeight) => {
   timer = setInterval(() => run(ele, itemLength, itemHeight), 2000)
