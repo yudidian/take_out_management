@@ -188,7 +188,7 @@ const setCountNumber = (count) => {
 }
 const runNumberItem = () => {
   // 获取元素精确高度
-  const wrapperHeight = document.querySelector('.number-wrapper').getBoundingClientRect().height
+  const wrapperHeight = document.querySelector('.number-wrapper')?.getBoundingClientRect().height
   // 获取需要滚动的元素
   const items = document.querySelectorAll('#number-content')
   // 计算出每个元素需要滚动的距离

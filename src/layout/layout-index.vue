@@ -21,6 +21,8 @@ import MenuIndex from './menu/MenuIndex.vue'
 import HeaderIndex from './header/headerIndex.vue'
 import { sendGetOrdersCount } from '@/axios/api/sourceData'
 import { useStore } from 'vuex'
+import { onBeforeUnmount } from 'vue'
+let timer = null
 const store = useStore()
 const getOrdersCount = async (flag) => {
   const res = await sendGetOrdersCount()
@@ -37,9 +39,13 @@ const getOrdersCount = async (flag) => {
   }
 }
 getOrdersCount(true)
-setInterval(() => {
+timer = setInterval(() => {
   getOrdersCount(false)
 }, 3000)
+
+onBeforeUnmount(() => {
+  clearInterval(timer)
+})
 </script>
 
 <style scoped lang="scss">

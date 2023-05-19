@@ -90,11 +90,20 @@ const getters = store.getters
 const KeyWords = ref('')
 const isFullscreen = ref(false)
 const themeValue = ref(true)
+const mp3Url = '/src/layout/newOrder.mp3'
+const player = new Audio(mp3Url)
+let isPlaying = false
 watch(themeValue, val => {
   if (!val) {
     window.document.documentElement.setAttribute('class', 'dark')
   } else {
     window.document.documentElement.removeAttribute('class')
+  }
+})
+
+watch(() => store.getters.totalMessage.newTotal - store.getters.totalMessage.oldTotal, () => {
+  if (!isPlaying) {
+    player.play() // 播放 mp3这个音频对象
   }
 })
 const changeCollapse = () => {
@@ -129,6 +138,28 @@ const showTip = () => {
     }
   })
 }
+player.addEventListener('play', function () {
+  console.log('play()和autoplay开始播放时触发 ')
+  if (!isPlaying) {
+    isPlaying = true
+  }
+}, false)
+player.addEventListener('pause', function () {
+  console.log('暂停触发')
+}, false)
+player.addEventListener('playing', function () {
+  console.log('正在播放时触发。')
+  if (!isPlaying) {
+    isPlaying = true
+  }
+}, false)
+player.addEventListener('timeupdate', function () {
+  console.log('播放时间改变')
+}, false)
+player.addEventListener('ended', function () {
+  console.log('播放结束')
+  isPlaying = false
+}, false)
 </script>
 
 <style scoped lang="scss">
