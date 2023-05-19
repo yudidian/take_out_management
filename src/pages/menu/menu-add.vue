@@ -193,6 +193,7 @@ import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import { getCategory, getDish, addSetmeal, getMealById, updateMeal } from '@/axios/api/setMeal'
 
+const IMG_URL = import.meta.env.VITE_IMAGE_URL
 const router = useRouter()
 const route = useRoute()
 const checkListName = ref([])
@@ -221,7 +222,8 @@ onMounted(() => {
 const sendAddDish = async () => {
   let res
   if (route.query.id) {
-    res = await updateMeal(form.value)
+    const data = { ...form.value }
+    res = await updateMeal(data)
   } else {
     res = await addSetmeal(form.value)
   }
@@ -246,7 +248,7 @@ const sendCategory = () => {
 // 图片上传成功
 const handleAvatarSuccess = (response) => {
   form.value.image = response.msg
-  imageUrl.value = `http://localhost:8080/download?fileName=${response.msg}`
+  imageUrl.value = `${IMG_URL}${response.msg}`
 }
 // 图片上传之前
 const beforeAvatarUpload = (rawFile) => {
@@ -318,82 +320,97 @@ const sendMealById = async (id) => {
     checkList.value = res.info.setmealDishes
     checkListName.value = res.info.setmealDishes.map(item => item.name)
     categoryValue.value = res.info.categoryName
-    imageUrl.value = `http://localhost:8080/download?fileName=${res.info.image}`
+    imageUrl.value = `${IMG_URL}${res.info.image}`
   }
 }
 </script>
 
 <style scoped lang="scss">
-.el-form{
-  .el-form-item-first{
+.el-form {
+  .el-form-item-first {
     display: flex;
     align-items: center;
   }
-  .el-form-item{
+
+  .el-form-item {
     width: 427px;
     margin-right: 40px;
-    padding-bottom:20px;
-    :deep(.el-form-item__label){
+    padding-bottom: 20px;
+
+    :deep(.el-form-item__label) {
       line-height: 40px;
       font-size: 14px;
       color: #818693;
     }
-    .el-input{
+
+    .el-input {
       width: 400px;
       height: 40px;
     }
-    .el-button{
+
+    .el-button {
       width: 120px;
       height: 40px;
       color: #2a2a2a;
     }
-    :deep(.el-select){
+
+    :deep(.el-select) {
       width: 200px;
       height: 40px;
-      .el-input__wrapper{
+
+      .el-input__wrapper {
         width: 200px;
         height: 38px;
       }
     }
   }
-  :deep(.item-dish){
+
+  :deep(.item-dish) {
     width: 750px;
-    .el-form-item__content{
-      .el-table{
+
+    .el-form-item__content {
+      .el-table {
         border: 1px solid #ede7e7;
         margin-top: 20px;
       }
     }
   }
-  :deep(.flavor-image){
-    .avatar-uploader{
+
+  :deep(.flavor-image) {
+    .avatar-uploader {
       width: 200px;
       height: 160px;
       border: 2px dashed #a1a1a1;
       display: flex;
       justify-content: center;
       align-items: center;
-      .el-upload{
-        img{
+
+      .el-upload {
+        img {
           width: 204px;
           height: 164px;
         }
-        .avatar-uploader-icon{
+
+        .avatar-uploader-icon {
           font-size: 30px;
         }
       }
     }
   }
-  .flavor-textArea{
+
+  .flavor-textArea {
     width: 750px;
   }
-  .footer{
+
+  .footer {
     width: 750px;
-    :deep(.el-form-item__content){
+
+    :deep(.el-form-item__content) {
       width: 100%;
       display: flex;
       justify-content: center;
-      .el-button{
+
+      .el-button {
         margin: 0 40px;
       }
     }

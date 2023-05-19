@@ -102,6 +102,7 @@
     :title="flag ? '编辑商品': '修改商品'"
     destroy-on-close
     :close-on-click-modal="false"
+    @close="closeHandler"
   >
     <el-form
       :model="form"
@@ -509,6 +510,9 @@ const closeHandler = () => {
     description: '',
     price: 0
   }
+  dishFlavorsData.forEach(item => {
+    item.disabled = false
+  })
   imageUrl.value = ''
   categoryValue.value = ''
   selectFlavorData.value = []

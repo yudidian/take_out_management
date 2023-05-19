@@ -29,7 +29,7 @@
       <SwitchButton @click="fullScreenHandler" />
     </el-icon>
     <el-badge
-      :value="store.getters.totalMessage.newTotal - store.getters.totalMessage.oldTotal"
+      :value="store.getters.totalMessage.newTotal - store.getters.totalMessage.oldTotal > 0 ? store.getters.totalMessage.newTotal - store.getters.totalMessage.oldTotal : 0"
       class="item"
       @click="showTip"
     >
@@ -90,7 +90,7 @@ const getters = store.getters
 const KeyWords = ref('')
 const isFullscreen = ref(false)
 const themeValue = ref(true)
-const mp3Url = '/src/layout/newOrder.mp3'
+const mp3Url = 'http://47.109.54.152:8888/down/fg1kypnNLbnY.mp3'
 const player = new Audio(mp3Url)
 let isPlaying = false
 watch(themeValue, val => {
@@ -102,7 +102,7 @@ watch(themeValue, val => {
 })
 
 watch(() => store.getters.totalMessage.newTotal - store.getters.totalMessage.oldTotal, () => {
-  if (!isPlaying) {
+  if (!isPlaying && (store.getters.totalMessage.newTotal - store.getters.totalMessage.oldTotal > 0)) {
     player.play() // 播放 mp3这个音频对象
   }
 })

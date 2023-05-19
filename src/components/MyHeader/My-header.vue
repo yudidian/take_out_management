@@ -2,7 +2,7 @@
   <div class="header">
     <el-input
       v-model="keyWords"
-      placeholder="请输入菜品名称"
+      :placeholder="inputText"
       :suffix-icon="Search"
       @blur="emits('getKeyWords',keyWords)"
     />
@@ -37,6 +37,10 @@ defineProps({
   isShowBulk: {
     type: Boolean,
     default: true
+  },
+  inputText: {
+    type: String,
+    default: '请输入菜品名称'
   }
 })
 const operationHandler = (type) => {

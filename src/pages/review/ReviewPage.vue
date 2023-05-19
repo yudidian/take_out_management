@@ -3,6 +3,7 @@
     @show-dialog="dialogFormVisible = $event"
     @get-key-words="searchHandler"
     :is-show-bulk="false"
+    input-text="请输入评论内容"
   />
   <el-table
     ref="multipleTableRef"
@@ -262,6 +263,11 @@ const reviewUserHandler = async () => {
   dialogFormVisible.value = false
   if (res.code === 1) {
     ElMessage.success(res.msg)
+    await getAllReviews({
+      page: 0,
+      pageSize: 10,
+      keyWords: keyWords.value
+    })
   } else {
     return ElMessage.error(res.msg)
   }
@@ -269,7 +275,11 @@ const reviewUserHandler = async () => {
 // 搜索功能
 const searchHandler = async (val) => {
   keyWords.value = val
-  await getAllReviews()
+  await getAllReviews({
+    page: 0,
+    pageSize: 10,
+    keyWords: val
+  })
 }
 </script>
 

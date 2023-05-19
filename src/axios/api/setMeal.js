@@ -43,9 +43,9 @@ export const updateMeal = (data) => {
 }
 export const deleteMeal = (params) => {
   return request({
-    url: '/setmeal/list',
-    method: 'delete',
-    params
+    url: '/setmeal/list/delete',
+    method: 'post',
+    data: params
   })
 }
 export const forbiddenMeal = (data) => {
